@@ -9,9 +9,9 @@ export default function HarrodsPage() {
   useEffect(() => {
     const generateHtml = async () => {
       try {
-        const response = await fetch(
-          "/api/generate-website?proxy=true&path=/en/home_page"
-        );
+        const response = await fetch("/api/generate-website", {
+          method: "POST",
+        });
         if (response.ok) {
           setHtmlReady(true);
         } else {
@@ -53,28 +53,18 @@ export default function HarrodsPage() {
   };
 
   useEffect(() => {
-    const progressInterval = simulateProgress();
+    const interval = simulateProgress();
     return () => {
-      if (progressInterval) {
-        clearInterval(progressInterval);
-      }
+      if (interval) clearInterval(interval);
     };
   }, [loading, progress]);
 
   return (
-    <div className="relative flex flex-col items-center justify-center w-full h-screen bg-gray-50 overflow-x-hidden">
-      <style>
-        {`
-          @font-face {
-            font-family: 'Prompt-Bold';
-            src: url('/api/generate-harrods?font=Prompt-Bold') format('truetype');
-          }
-        `}
-      </style>
+    <div className="reltive flex flex-col items-center justify-center w-full h-screen bg-gray-50 overflow-x-hidden">
       {loading && (
         <>
           <div className="text-gray-600 text-lg animate-pulse">
-            Generating Richy Home Page... Please wait.
+            Generating Harrods page... Please wait.
           </div>
           {/* Progress Bar */}
           <div className="absolute top-0 w-full bg-gray-200 h-1 mt-4">
