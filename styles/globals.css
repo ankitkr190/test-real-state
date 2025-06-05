@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* @font-face {
+  font-family: "PingFang";
+  src: url("../public/fonts/pingfang-sc-regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "PingFang", sans-serif;
+}
+
+.markdown-content {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.hide-scrollbar {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.markdown-content p,
+.markdown-content ul,
+.markdown-content ol,
+.markdown-content li {
+  margin: 0;
+  padding: 0;
+}
+
+.loader {
+  width: 26px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side, #856630 90%, #0000);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  20% {
+    background-position: 0% 0%, 50% 50%, 100% 50%;
+  }
+  40% {
+    background-position: 0% 100%, 50% 0%, 100% 50%;
+  }
+  60% {
+    background-position: 0% 50%, 50% 100%, 100% 0%;
+  }
+  80% {
+    background-position: 0% 50%, 50% 50%, 100% 100%;
+  }
+}
+
+.swiper-pagination-bullet {
+  background: #dfdfdf !important;
+  opacity: 1 !important;
+}
+.swiper-pagination-bullet-active {
+  background: #856630 !important;
+  opacity: 1 !important;
+}
