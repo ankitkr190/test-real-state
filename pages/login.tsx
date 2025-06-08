@@ -1,3 +1,10 @@
+/**
+ * Description:
+ * This is the login page of the website
+ * It will display the login form
+ * It will display the login form
+ */
+
 import React, { useCallback, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +19,7 @@ function LoginPage() {
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       <Head>
         <title>Richy | Login</title>
       </Head>
@@ -20,7 +27,7 @@ function LoginPage() {
         <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
           <div className="flex items-center justify-center mb-6">
             <Image
-              src="/richy.webp"
+              src="/richy.svg"
               alt="Richy Logo"
               width={100}
               height={100}
@@ -97,7 +104,7 @@ function LoginPage() {
           </div>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 }
 

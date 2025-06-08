@@ -1,6 +1,7 @@
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function HarrodsScreenshot() {
+export default function PageScreenshot() {
   const [imageReady, setImageReady] = useState(false);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -22,6 +23,7 @@ export default function HarrodsScreenshot() {
         }
       } catch (err) {
         setError("Network error");
+        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -78,9 +80,11 @@ export default function HarrodsScreenshot() {
       {!loading && imageReady && !error && (
         <div className="relative w-full h-full flex items-center justify-center bg-white">
           <div className="w-screen h-screen overflow-auto">
-            <img
+            <Image
               src="/harrods.webp"
               alt="Harrods Screenshot"
+              width={1080}
+              height={1080}
               className="w-full"
               onLoad={handleImageLoad}
               onError={handleImageError}
