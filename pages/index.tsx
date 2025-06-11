@@ -32,6 +32,8 @@ function HomePage() {
       </Head>
 
       <section className="relative flex min-h-screen flex-col items-center overflow-x-hidden">
+        
+        
         <ClonePage
           pageName="Richy Group"
           pageUrl="https://www.richy.co.th/en/home_page"
