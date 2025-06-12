@@ -6,10 +6,22 @@
  */
 
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 
 const ClonePage = dynamic(() => import("@/components/ClonerPage"), {
+  ssr: false,
+});
+
+const BotIcon = dynamic(() => import("@/components/BotIcon"), {
+  ssr: false,
+});
+
+const SearchSection = dynamic(() => import("@/components/SearchSection"), {
+  ssr: false,
+});
+
+const ResultSection = dynamic(() => import("@/components/ResultSection"), {
   ssr: false,
 });
 
@@ -25,6 +37,26 @@ declare global {
 }
 
 function HomePage() {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isResultOpen, setIsResultOpen] = useState(false);
+
+  const handleBotIconClick = () => {
+    setIsSearchOpen(true);
+  };
+
+  const handleCloseOverlay = () => {
+    setIsSearchOpen(false);
+  };
+
+  const handleOpenResult = () => {
+    setIsSearchOpen(false);
+    setIsResultOpen(true);
+  };
+
+  const handleCloseResult = () => {
+    setIsResultOpen(false);
+  };
+
   return (
     <React.Fragment>
       <Head>
@@ -32,13 +64,26 @@ function HomePage() {
       </Head>
 
       <section className="relative flex min-h-screen flex-col items-center overflow-x-hidden">
-        
-        
         <ClonePage
           pageName="Richy Group"
           pageUrl="https://www.richy.co.th/en/home_page"
-        />
-      </section>
+        />        
+      </section>      
+      
+      <div className="fixed bottom-10 right-10 z-50" onClick={handleBotIconClick}>
+        <BotIcon />
+      </div>
+      
+      <SearchSection 
+        isOpen={isSearchOpen}
+        onClose={handleCloseOverlay}
+        onOpenResult={handleOpenResult}
+      />
+      
+      <ResultSection 
+        isOpen={isResultOpen}
+        onClose={handleCloseResult}
+      />
     </React.Fragment>
   );
 }
