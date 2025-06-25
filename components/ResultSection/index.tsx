@@ -13,11 +13,11 @@ function ResultSection({ isOpen, onClose }: ResultSectionProps) {
   return (
     <>
       <div 
-        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 z-[80] bg-black/50 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
       />
       
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-[90] flex items-center justify-center p-4">
         <div className="relative bg-[#FCF9E6] rounded-2xl shadow-2xl w-full max-w-5xl h-[700px] flex flex-col animate-in fade-in zoom-in-95 duration-300">
           <div className="flex items-center justify-between px-8 py-4 border-b border-[#0D3D21]">
             <div className="flex items-center gap-3">

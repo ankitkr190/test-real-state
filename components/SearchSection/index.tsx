@@ -5,9 +5,10 @@ interface SearchSectionProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenResult: () => void;
+  onOpenVoice: () => void;
 }
 
-function SearchSection({ isOpen, onClose, onOpenResult }: SearchSectionProps) {
+function SearchSection({ isOpen, onClose, onOpenResult, onOpenVoice }: SearchSectionProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState({
     flag: "/uk.svg",
@@ -91,6 +92,14 @@ function SearchSection({ isOpen, onClose, onOpenResult }: SearchSectionProps) {
   const handleSearch = () => {
     if (searchValue.trim()) {
       onOpenResult();
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (searchValue.trim()) {
+      handleSearch();
+    } else {
+      onOpenVoice();
     }
   };
 
@@ -193,7 +202,7 @@ function SearchSection({ isOpen, onClose, onOpenResult }: SearchSectionProps) {
               <button
                 className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full px-5 rounded-bl-[30px] hover:from-green-400 transition-all duration-200"
                 type="button"
-                onClick={handleSearch}
+                onClick={handleButtonClick}
               >
                 <img
                   src={searchValue.trim() ? "/send1.svg" : "/mic2.svg"}

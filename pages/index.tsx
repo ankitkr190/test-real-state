@@ -21,6 +21,10 @@ const SearchSection = dynamic(() => import("@/components/SearchSection"), {
   ssr: false,
 });
 
+const VoiceModule = dynamic(() => import("@/components/VoiceModule"), {
+  ssr: false,
+});
+
 const ResultSection = dynamic(() => import("@/components/ResultSection"), {
   ssr: false,
 });
@@ -38,6 +42,7 @@ declare global {
 
 function HomePage() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isVoiceOpen, setIsVoiceOpen] = useState(false);
   const [isResultOpen, setIsResultOpen] = useState(false);
 
   const handleBotIconClick = () => {
@@ -48,12 +53,34 @@ function HomePage() {
     setIsSearchOpen(false);
   };
 
+  const handleOpenVoice = () => {
+    setIsSearchOpen(false);
+    setIsVoiceOpen(true);
+  };
+
+  const handleCloseVoice = () => {
+    setIsVoiceOpen(false);
+  };
+
+  const handleBackToSearch = () => {
+    setIsVoiceOpen(false);
+    setIsSearchOpen(true);
+  };
+
   const handleOpenResult = () => {
     setIsSearchOpen(false);
+    setIsVoiceOpen(false);
     setIsResultOpen(true);
   };
 
   const handleCloseResult = () => {
+    setIsResultOpen(false);
+  };
+
+  // Ensure only one modal is open at a time
+  const handleCloseAll = () => {
+    setIsSearchOpen(false);
+    setIsVoiceOpen(false);
     setIsResultOpen(false);
   };
 
@@ -75,9 +102,17 @@ function HomePage() {
       </div>
       
       <SearchSection 
-        isOpen={isSearchOpen}
+        isOpen={isSearchOpen && !isVoiceOpen && !isResultOpen}
         onClose={handleCloseOverlay}
         onOpenResult={handleOpenResult}
+        onOpenVoice={handleOpenVoice}
+      />
+      
+      <VoiceModule 
+        isOpen={isVoiceOpen && !isResultOpen}
+        onClose={handleCloseVoice}
+        onOpenResult={handleOpenResult}
+        onBackToSearch={handleBackToSearch}
       />
       
       <ResultSection 
