@@ -8,6 +8,31 @@ interface ResultSectionProps {
 function ResultSection({ isOpen, onClose }: ResultSectionProps) {
   const [searchValue, setSearchValue] = useState("");
 
+  const handleSend = () => {
+    if (searchValue.trim()) {
+      // Here you would typically handle sending the message
+      console.log('Sending message:', searchValue);
+      
+      // Reset the input
+      setSearchValue("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSend();
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (searchValue.trim()) {
+      handleSend();
+    } else {
+      // Handle microphone click (could open voice module)
+      console.log('Microphone clicked');
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -42,6 +67,7 @@ function ResultSection({ isOpen, onClose }: ResultSectionProps) {
                   placeholder="Ask Richy"
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
                 />
               </div>            
               <div className="flex items-center mt-2 justify-between">
@@ -53,22 +79,21 @@ function ResultSection({ isOpen, onClose }: ResultSectionProps) {
                   <button
                     className="text-[#1A7A4B] hover:bg-[#E6F9F0] rounded-full p-2"
                     type="button"
+                    onClick={handleButtonClick}
                   >
-                    <img
-                      src="/mic.svg"
-                      alt="Microphone"
-                      className="h-7 w-7"
-                    />
-                  </button>
-                  <button
-                    className="ml-2 text-[#1A7A4B] hover:bg-[#E6F9F0] rounded-full p-2"
-                    type="submit"
-                  >
-                    <img
-                      src="/send.svg"
-                      alt="Send"
-                      className="h-7 w-7"
-                    />
+                    {searchValue.trim() ? (
+                      <img
+                        src="/send.svg"
+                        alt="Send"
+                        className="h-7 w-7"
+                      />
+                    ) : (
+                      <img
+                        src="/mic.svg"
+                        alt="Microphone"
+                        className="h-7 w-7"
+                      />
+                    )}
                   </button>
                 </div>
               </div>

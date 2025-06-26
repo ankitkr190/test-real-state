@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaMicrophone, FaStop } from "react-icons/fa";
 
+// Speech Recognition API declarations
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
+
 interface VoiceModuleProps {
   isOpen: boolean;
   onClose: () => void;
@@ -18,15 +26,20 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
   const [isRecording, setIsRecording] = useState(false);
   const [audioLevel, setAudioLevel] = useState(0);
   const [transcript, setTranscript] = useState("");
+  const [liveTranscript, setLiveTranscript] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number | null>(null);
+  const recognitionRef = useRef<any>(null);
   
   useEffect(() => {
     if (isOpen) {
       setTranscript("");
+      setLiveTranscript("");
+      setIsProcessing(false);
       setSelectedLang({
         flag: "/uk.svg",
         label: "EN",
@@ -47,6 +60,9 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
       }
       if (audioContextRef.current) {
         audioContextRef.current.close();
+      }
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
       }
     };
   }, []);
@@ -101,6 +117,35 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
       
+      // Initialize speech recognition
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognitionRef.current = new SpeechRecognition();
+        
+        recognitionRef.current.continuous = true;
+        recognitionRef.current.interimResults = true;
+        recognitionRef.current.lang = selectedLang.value === 'en' ? 'en-US' : 
+                                      selectedLang.value === 'th' ? 'th-TH' : 'zh-CN';
+        
+        recognitionRef.current.onresult = (event: any) => {
+          let interim = '';
+          let final = '';
+          
+          for (let i = 0; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              final += transcript;
+            } else {
+              interim += transcript;
+            }
+          }
+          
+          setLiveTranscript(final + interim);
+        };
+        
+        recognitionRef.current.start();
+      }
+      
       audioContextRef.current = new AudioContext();
       const source = audioContextRef.current.createMediaStreamSource(stream);
       analyserRef.current = audioContextRef.current.createAnalyser();
@@ -116,9 +161,14 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
       
       mediaRecorderRef.current.onstop = () => {
         const audioBlob = new Blob(chunks, { type: 'audio/wav' });
-        // Audio Service Integration for now DUMMY TEXT
+        setIsProcessing(true);
+        
+        // Use the live transcript as final transcript if available, otherwise use dummy text
+        const finalTranscript = liveTranscript.trim() || "I'm looking for a 2-bedroom apartment in downtown area";
+        
         setTimeout(() => {
-          setTranscript("I'm looking for a 2-bedroom apartment in downtown area");
+          setTranscript(finalTranscript);
+          setIsProcessing(false);
           setTimeout(() => {
             onOpenResult();
           }, 1500);
@@ -127,6 +177,7 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
       
       mediaRecorderRef.current.start();
       setIsRecording(true);
+      setLiveTranscript("");
       visualizeAudio();
       
     } catch (error) {
@@ -140,6 +191,10 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
       mediaRecorderRef.current.stop();
       setIsRecording(false);
       setAudioLevel(0);
+      
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
       
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop());
@@ -187,7 +242,8 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
   const handleLanguageChange = (option: typeof langOptions[0]) => {
     setSelectedLang(option);
     setDropdownOpen(false);
-    setTranscript(""); 
+    setTranscript("");
+    setLiveTranscript("");
   };
 
   const handleBackToSearch = () => {
@@ -316,8 +372,19 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
               
               <div className="text-center mb-4">
                 {isRecording ? (
-                  <p className="text-red-600 font-medium text-lg animate-pulse">
-                    {currentContent.listeningText}
+                  <div>
+                    <p className="text-red-600 font-medium text-lg animate-pulse mb-2">
+                      {currentContent.listeningText}
+                    </p>
+                    {liveTranscript && (
+                      <div className="bg-white rounded-lg px-4 py-3 shadow-md max-w-2xl mx-auto">
+                        <p className="text-[#0D3D21] font-medium">"{liveTranscript}"</p>
+                      </div>
+                    )}
+                  </div>
+                ) : isProcessing ? (
+                  <p className="text-[#0D3D21] font-medium text-lg">
+                    {currentContent.processingText}
                   </p>
                 ) : transcript ? (
                   <p className="text-[#0D3D21] font-medium text-lg">
@@ -330,7 +397,7 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
                 )}
               </div>
               
-              {transcript && (
+              {transcript && !isRecording && (
                 <div className="bg-white rounded-lg px-4 py-3 shadow-md max-w-2xl mb-4">
                   <p className="text-[#0D3D21] font-medium">"{transcript}"</p>
                 </div>
