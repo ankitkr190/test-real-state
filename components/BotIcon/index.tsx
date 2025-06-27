@@ -19,7 +19,7 @@ function BotIcon() {
           key={src}
           src={src}
           alt="Richy Logo"
-          className={`h-7 w-7 absolute transition-transform duration-300 ease-in-out ${
+          className={`h-7 w-9 absolute transition-transform duration-300 ease-in-out ${
             index === currentImage ? "opacity-100" : "opacity-0"
           }`}
         />
