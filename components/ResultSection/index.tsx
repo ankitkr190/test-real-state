@@ -10,10 +10,8 @@ function ResultSection({ isOpen, onClose }: ResultSectionProps) {
 
   const handleSend = () => {
     if (searchValue.trim()) {
-      // Here you would typically handle sending the message
       console.log('Sending message:', searchValue);
       
-      // Reset the input
       setSearchValue("");
     }
   };
@@ -28,7 +26,6 @@ function ResultSection({ isOpen, onClose }: ResultSectionProps) {
     if (searchValue.trim()) {
       handleSend();
     } else {
-      // Handle microphone click (could open voice module)
       console.log('Microphone clicked');
     }
   };
@@ -75,53 +72,29 @@ function ResultSection({ isOpen, onClose }: ResultSectionProps) {
                   <span className="text-[#0D3D21] font-sans text-sm mr-2">Powered by</span>
                   <img src="/prediqt.webp" alt="PrediQt Logo" className="h-5" />
                 </div>
-                <div className="flex items-center gap-2 relative">
-                  {/* Microphone button that slides in from the right when typing */}
-                  <div className={`transition-all duration-300 ease-in-out ${
-                    searchValue.trim() 
-                      ? 'opacity-100 transform translate-x-0' 
-                      : 'opacity-0 transform translate-x-8 pointer-events-none'
-                  }`}>
-                    <button
-                      className="text-[#1A7A4B] hover:bg-[#E6F9F0] rounded-full p-2 transition-colors duration-200"
-                      type="button"
-                      onClick={() => {
-                        console.log('Microphone clicked');
-                      }}
-                    >
-                      <img
-                        src="/mic.svg"
-                        alt="Microphone"
-                        className="h-7 w-7"
-                      />
-                    </button>
-                  </div>
-                  
-                  {/* Main button that morphs between mic and send */}
+                <div className="flex items-center">
                   <button
                     className="text-[#1A7A4B] hover:bg-[#E6F9F0] rounded-full p-2 transition-all duration-200"
                     type="button"
-                    onClick={searchValue.trim() ? handleSend : () => console.log('Microphone clicked')}
+                    onClick={handleButtonClick}
                   >
                     <div className="relative h-7 w-7">
-                      {/* Microphone icon */}
                       <img
                         src="/mic.svg"
                         alt="Microphone"
                         className={`absolute inset-0 h-7 w-7 transition-all duration-300 ease-in-out ${
                           searchValue.trim() 
-                            ? 'opacity-0 transform scale-75 rotate-90' 
+                            ? 'opacity-0 transform scale-75 rotate-12' 
                             : 'opacity-100 transform scale-100 rotate-0'
                         }`}
                       />
-                      {/* Send icon */}
                       <img
                         src="/send.svg"
                         alt="Send"
                         className={`absolute inset-0 h-7 w-7 transition-all duration-300 ease-in-out ${
                           searchValue.trim() 
                             ? 'opacity-100 transform scale-100 rotate-0' 
-                            : 'opacity-0 transform scale-75 rotate-90'
+                            : 'opacity-0 transform scale-75 rotate-12'
                         }`}
                       />
                     </div>

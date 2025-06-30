@@ -204,11 +204,26 @@ function SearchSection({ isOpen, onClose, onOpenResult, onOpenVoice }: SearchSec
                 type="button"
                 onClick={handleButtonClick}
               >
-                <img
-                  src={searchValue.trim() ? "/send1.svg" : "/mic2.svg"}
-                  alt={searchValue.trim() ? "Send" : "Microphone"}
-                  className="h-7 w-7 transition-all duration-200"
-                />
+                <div className="relative h-7 w-7">
+                  <img
+                    src="/mic2.svg"
+                    alt="Microphone"
+                    className={`absolute inset-0 h-7 w-7 transition-all duration-300 ease-in-out ${
+                      searchValue.trim() 
+                        ? 'opacity-0 transform scale-75 rotate-12' 
+                        : 'opacity-100 transform scale-100 rotate-0'
+                    }`}
+                  />
+                  <img
+                    src="/send1.svg"
+                    alt="Send"
+                    className={`absolute inset-0 h-7 w-7 transition-all duration-300 ease-in-out ${
+                      searchValue.trim() 
+                        ? 'opacity-100 transform scale-100 rotate-0' 
+                        : 'opacity-0 transform scale-75 rotate-12'
+                    }`}
+                  />
+                </div>
               </button>
             </div>
             <p className="text-center text-[#2e2e2e] text-lg mb-6">

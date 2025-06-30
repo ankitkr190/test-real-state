@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaMicrophone, FaStop } from "react-icons/fa";
+import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
 
 // Speech Recognition API declarations
 declare global {
@@ -345,7 +345,7 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
             <div className="flex flex-col items-center mb-6">
               <div className="relative mb-4">
                 <button
-                  className={`flex items-center justify-center w-32 h-32 rounded-full transition-all duration-300 relative z-10 ${
+                  className={`flex items-center justify-center w-20 h-20 rounded-full transition-all duration-300 relative z-10 ${
                     isRecording 
                       ? 'bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg' 
                       : 'bg-gradient-to-br from-[#00804A] to-[#0D3D21] hover:from-green-500 hover:to-green-600 shadow-xl'
@@ -353,11 +353,18 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
                   onClick={handleMicClick}
                   type="button"
                 >
-                  {isRecording ? (
-                    <FaStop className="text-white text-3xl" />
-                  ) : (
-                    <FaMicrophone className="text-white text-3xl" />
-                  )}
+                  <div className="relative w-10 h-10 flex items-center justify-center">
+                    <FaMicrophone 
+                      className={`absolute text-white text-4xl transition-all duration-500 ease-in-out ${
+                        isRecording ? 'opacity-0 scale-75' : 'opacity-100 scale-100'
+                      }`} 
+                    />
+                    <FaMicrophoneSlash 
+                      className={`absolute text-white text-4xl transition-all duration-500 ease-in-out ${
+                        isRecording ? 'opacity-100 scale-110 rotate-3 animate-pulse' : 'opacity-0 scale-75 -rotate-12'
+                      }`} 
+                    />
+                  </div>
                 </button>
                 
                 {isRecording && (
@@ -373,9 +380,6 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
               <div className="text-center mb-4">
                 {isRecording ? (
                   <div>
-                    <p className="text-red-600 font-medium text-lg animate-pulse mb-2">
-                      {currentContent.listeningText}
-                    </p>
                     {liveTranscript && (
                       <div className="bg-white rounded-lg px-4 py-3 shadow-md max-w-2xl mx-auto">
                         <p className="text-[#0D3D21] font-medium">"{liveTranscript}"</p>
