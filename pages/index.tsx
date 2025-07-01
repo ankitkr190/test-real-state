@@ -8,6 +8,7 @@
 import Head from "next/head";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import UserMessage from '../components/ui/umsg';
 
 const ClonePage = dynamic(() => import("@/components/ClonerPage"), {
   ssr: false,
