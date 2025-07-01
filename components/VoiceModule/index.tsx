@@ -361,7 +361,7 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
                     />
                     <FaMicrophoneSlash 
                       className={`absolute text-white text-4xl transition-all duration-500 ease-in-out ${
-                        isRecording ? 'opacity-100 scale-110 rotate-3 animate-pulse' : 'opacity-0 scale-75 -rotate-12'
+                        isRecording ? 'opacity-100 scale-110 animate-pulse' : 'opacity-0 scale-75 -rotate-12'
                       }`} 
                     />
                   </div>
