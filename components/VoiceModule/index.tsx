@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useRef } from "react";
-import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
+import { FaMicrophone } from "react-icons/fa";
+import { IoSend } from "react-icons/io5";
 
 // Speech Recognition API declarations
 declare global {
@@ -34,7 +35,6 @@ function VoiceModule({
   const [audioLevel, setAudioLevel] = useState(0);
   const [transcript, setTranscript] = useState("");
   const [liveTranscript, setLiveTranscript] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -46,7 +46,6 @@ function VoiceModule({
     if (isOpen) {
       setTranscript("");
       setLiveTranscript("");
-      setIsProcessing(false);
       setSelectedLang({
         flag: "/uk.svg",
         label: "EN",
@@ -81,7 +80,6 @@ function VoiceModule({
       description:
         "Press and hold the microphone to start speaking, or tap to start/stop recording.",
       listeningText: "Listening...",
-      processingText: "Processing your request...",
       backToText: "Back to Text",
     },
     th: {
@@ -91,7 +89,6 @@ function VoiceModule({
       description:
         "กดค้างไมโครโฟนเพื่อเริ่มพูด หรือแตะเพื่อเริ่ม/หยุดการบันทึก",
       listeningText: "กำลังฟัง...",
-      processingText: "กำลังประมวลผลคำขอของคุณ...",
       backToText: "กลับไปพิมพ์ข้อความ",
     },
     zh: {
@@ -99,7 +96,6 @@ function VoiceModule({
       subtitle: "说出您的房地产需求 — Richy 会倾听并帮助您！",
       description: "按住麦克风开始说话，或点击开始/停止录音。",
       listeningText: "正在倾听...",
-      processingText: "正在处理您的请求...",
       backToText: "返回文字输入",
     },
   };
@@ -178,21 +174,12 @@ function VoiceModule({
       };
 
       mediaRecorderRef.current.onstop = () => {
-        // const audioBlob = new Blob(chunks, { type: "audio/wav" });
-        setIsProcessing(true);
+        const finalTranscript = liveTranscript.trim();
 
-        // Use the live transcript as final transcript if available, otherwise use dummy text
-        const finalTranscript =
-          liveTranscript.trim() ||
-          "I'm looking for a 2-bedroom apartment in downtown area";
-
-        setTimeout(() => {
-          setTranscript(finalTranscript);
-          setIsProcessing(false);
-          setTimeout(() => {
-            onOpenResult();
-          }, 1500);
-        }, 2000);
+        setTranscript(finalTranscript);
+        setTimeout(async () => {
+          onOpenResult();
+        }, 200);
       };
 
       mediaRecorderRef.current.start();
@@ -283,16 +270,16 @@ function VoiceModule({
         onClick={onClose}
       />
 
-      <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
-        <div className="relative bg-[#FCF9E6] rounded-2xl shadow-2xl w-full max-w-7xl h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
+      <div className="fixed inset-0 z-[70] flex items-center justify-center p-2 sm:p-4">
+        <div className="relative bg-[#FCF9E6] rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-7xl h-[90vh] sm:h-[80vh] md:h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
           <button
-            className="absolute top-6 left-6 flex items-center justify-center w-10 h-10 bg-white rounded-full shadow hover:bg-gray-50 transition-colors"
+            className="absolute top-4 sm:top-6 left-4 sm:left-6 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full shadow hover:bg-gray-50 transition-colors"
             onClick={handleBackToSearch}
             type="button"
             title={currentContent.backToText}
           >
             <svg
-              className="w-5 h-5 text-[#4D8D67]"
+              className="w-4 h-4 sm:w-5 sm:h-5 text-[#4D8D67]"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -302,23 +289,23 @@ function VoiceModule({
             </svg>
           </button>
 
-          <div className="flex justify-center items-center w-full mt-8 mb-2">
-            <img src="/richy.svg" alt="Richy Logo" className="h-20" />
+          <div className="flex justify-center items-center w-full mt-4 sm:mt-6 md:mt-8 mb-2">
+            <img src="/richy.svg" alt="Richy Logo" className="h-16 sm:h-18 md:h-20" />
           </div>
-          <div className="absolute top-6 right-16">
+          <div className="absolute top-4 sm:top-6 right-4 sm:right-8 md:right-16">
             <button
-              className="flex items-center gap-2 bg-white rounded px-3 py-2 shadow"
+              className="flex items-center gap-1 sm:gap-2 bg-white rounded px-2 sm:px-3 py-1 sm:py-2 shadow text-sm sm:text-base"
               onClick={() => setDropdownOpen((open) => !open)}
               type="button"
             >
               <img
                 src={selectedLang.flag}
                 alt={selectedLang.label}
-                className="w-6 h-6 rounded"
+                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded"
               />
-              <span>{selectedLang.label}</span>
+              <span className="hidden sm:inline">{selectedLang.label}</span>
               <svg
-                className="ml-1 w-3 h-3"
+                className="w-2 h-2 sm:w-3 sm:h-3"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -328,20 +315,20 @@ function VoiceModule({
               </svg>
             </button>
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl border-1 border-[#4D8D67] shadow z-[100] py-2">
+              <div className="absolute right-0 mt-2 w-28 sm:w-32 bg-white rounded-lg border-1 border-[#4D8D67] shadow z-[100] py-1">
                 {langOptions.map((option) => (
                   <button
                     key={option.value}
-                    className="flex items-center w-full px-4 py-3 hover:bg-green-100 gap-4"
+                    className="flex items-center w-full px-2 sm:px-3 py-1.5 sm:py-2 hover:bg-green-100 gap-1 sm:gap-2 cursor-pointer"
                     onClick={() => handleLanguageChange(option)}
                     type="button"
                   >
                     <img
                       src={option.flag}
                       alt={option.label}
-                      className="w-8 h-8 rounded"
+                      className="w-4 h-4 sm:w-5 sm:h-5 rounded"
                     />
-                    <span className="text-lg text-[#0D3D21]">
+                    <span className="text-xs sm:text-sm text-[#0D3D21]">
                       {option.label}
                     </span>
                   </button>
@@ -350,23 +337,23 @@ function VoiceModule({
             )}
           </div>
           <button
-            className="absolute top-7 right-8 text-2xl text-gray-400 hover:text-gray-600"
+            className="absolute top-4 sm:top-6 md:top-7 right-2 sm:right-4 md:right-8 text-xl sm:text-2xl text-gray-400 hover:text-gray-600"
             onClick={onClose}
           >
             &times;
           </button>
-          <div className="flex flex-col items-center justify-center w-full px-8 py-8">
-            <h1 className="font-sans text-4xl md:text-5xl font-bold mb-2 mt-4 text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1">
+          <div className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8">
+            <h1 className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2 mt-2 sm:mt-4 text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1">
               {currentContent.title}
             </h1>
-            <h2 className="font-sans text-xl md:text-2xl font-medium mb-6 text-center text-[#4D8D67]">
+            <h2 className="font-sans text-lg sm:text-xl md:text-2xl font-medium mb-4 sm:mb-6 text-center text-[#4D8D67] px-2">
               {currentContent.subtitle}
             </h2>
 
-            <div className="flex flex-col items-center mb-6">
-              <div className="relative mb-4">
+            <div className="flex flex-col items-center mb-4 sm:mb-6">
+              <div className="relative mb-3 sm:mb-4">
                 <button
-                  className={`flex items-center justify-center w-20 h-20 rounded-full transition-all duration-300 relative z-10 ${
+                  className={`flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-full transition-all duration-300 relative z-10 ${
                     isRecording
                       ? "bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg"
                       : "bg-gradient-to-br from-[#00804A] to-[#0D3D21] hover:from-green-500 hover:to-green-600 shadow-xl"
@@ -374,19 +361,19 @@ function VoiceModule({
                   onClick={handleMicClick}
                   type="button"
                 >
-                  <div className="relative w-10 h-10 flex items-center justify-center">
+                  <div className="relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center">
                     <FaMicrophone
-                      className={`absolute text-white text-4xl transition-all duration-500 ease-in-out ${
+                      className={`absolute text-white text-2xl sm:text-3xl md:text-4xl transition-all duration-500 ease-in-out ${
                         isRecording
                           ? "opacity-0 scale-75"
                           : "opacity-100 scale-100"
                       }`}
                     />
-                    <FaMicrophoneSlash
-                      className={`absolute text-white text-4xl transition-all duration-500 ease-in-out ${
+                    <IoSend
+                      className={`absolute text-white text-2xl sm:text-3xl md:text-4xl transition-all duration-500 ease-in-out ${
                         isRecording
                           ? "opacity-100 scale-110 animate-pulse"
-                          : "opacity-0 scale-75 -rotate-12"
+                          : "opacity-0 scale-75"
                       }`}
                     />
                   </div>
@@ -394,7 +381,7 @@ function VoiceModule({
 
                 {isRecording && (
                   <div
-                    className="absolute inset-0 rounded-full border-4 border-red-400 animate-pulse pointer-events-none"
+                    className="absolute inset-0 rounded-full border-2 sm:border-3 md:border-4 border-red-400 animate-pulse pointer-events-none"
                     style={{
                       transform: `scale(${1 + audioLevel * 0.3})`,
                       opacity: 0.6 + audioLevel * 0.4,
@@ -403,37 +390,29 @@ function VoiceModule({
                 )}
               </div>
 
-              <div className="text-center mb-4">
+              <div className="text-center mb-3 sm:mb-4 px-2">
                 {isRecording ? (
                   <div>
                     {liveTranscript && (
-                      <div className="bg-white rounded-lg px-4 py-3 shadow-md max-w-2xl mx-auto">
-                        <p className="text-[#0D3D21] font-medium">
+                      <div className="bg-white rounded-lg px-3 sm:px-4 py-2 sm:py-3 shadow-md max-w-xs sm:max-w-lg md:max-w-2xl mx-auto">
+                        <p className="text-[#0D3D21] font-medium text-sm sm:text-base">
                           {`"${liveTranscript}"`}
                         </p>
                       </div>
                     )}
                   </div>
-                ) : isProcessing ? (
-                  <p className="text-[#0D3D21] font-medium text-lg">
-                    {currentContent.processingText}
-                  </p>
                 ) : transcript ? (
-                  <p className="text-[#0D3D21] font-medium text-lg">
-                    {currentContent.processingText}
-                  </p>
+                  <div className="bg-white rounded-lg px-3 sm:px-4 py-2 sm:py-3 shadow-md max-w-xs sm:max-w-lg md:max-w-2xl mx-auto">
+                    <p className="text-[#0D3D21] font-medium text-sm sm:text-base">
+                      {`"${transcript}"`}
+                    </p>
+                  </div>
                 ) : (
-                  <p className="text-[#2e2e2e] text-lg">
+                  <p className="text-[#2e2e2e] text-sm sm:text-base md:text-lg">
                     {currentContent.description}
                   </p>
                 )}
               </div>
-
-              {transcript && !isRecording && (
-                <div className="bg-white rounded-lg px-4 py-3 shadow-md max-w-2xl mb-4">
-                  <p className="text-[#0D3D21] font-medium">{`"${transcript}"`}</p>
-                </div>
-              )}
             </div>
           </div>
         </div>

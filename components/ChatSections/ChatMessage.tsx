@@ -31,9 +31,9 @@ function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
 
             {message.products?.length > 0 && (
               <div className="pt-2 overflow-auto">
-                <div className="flex flex-col items-start gap-4 pb-2 px-2">
+                <div className="flex flex-col items-start gap-2 sm:gap-3 md:gap-4 pb-2 px-1 sm:px-2">
                   {message.products.map((product, pid) => (
-                    <div className="sm:w-7/12 w-full" key={pid}>
+                    <div className="w-full sm:w-9/12 md:w-8/12 lg:w-7/12" key={pid}>
                       <SingleProductCard
                         name={product.name}
                         brand={product.brand}

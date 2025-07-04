@@ -48,11 +48,11 @@ function SingleProductCard({
   }, [image]);
 
   return (
-    <div className="flex flex-col gap-2 min-w-[250px] rounded-[20px] shadow-md p-2 bg-white">
-      <div className="relative w-full h-[249px]">
+    <div className="flex flex-col gap-1.5 sm:gap-2 min-w-[200px] sm:min-w-[250px] rounded-[16px] sm:rounded-[20px] shadow-md p-1.5 sm:p-2 bg-white">
+      <div className="relative w-full h-[180px] sm:h-[220px] md:h-[249px]">
         {isLoading ? (
           <div className="w-full h-full flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#856829]"></div>
+            <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-[#856829]"></div>
           </div>
         ) : (
           <Swiper
@@ -70,7 +70,7 @@ function SingleProductCard({
                 <img
                   src={url || image[index]}
                   alt={name}
-                  className="w-full h-full object-contain rounded-lg"
+                  className="w-full h-full object-contain rounded-md sm:rounded-lg"
                   draggable={false}
                 />
               </SwiperSlide>
@@ -81,16 +81,16 @@ function SingleProductCard({
       </div>
 
       <div className="">
-        <p className="mb-1.5 sm:text-[14px] text-[12px] font-normal text-[#171717] line-clamp-1 capitalize">
+        <p className="mb-1 sm:mb-1.5 text-[11px] sm:text-[12px] md:text-[14px] font-normal text-[#171717] line-clamp-1 capitalize">
           {brand}
         </p>
-        <h2 className="mb-1.5 sm:text-[18px] text-[16px] font-semibold line-clamp-3">
+        <h2 className="mb-1 sm:mb-1.5 text-[14px] sm:text-[16px] md:text-[18px] font-semibold line-clamp-2 sm:line-clamp-3">
           {name}
         </h2>
-        <p className="sm:text-[14px] text-[12px] font-normal mt-0.5 text-[#616161] line-clamp-3">
+        <p className="text-[11px] sm:text-[12px] md:text-[14px] font-normal mt-0.5 text-[#616161] line-clamp-2 sm:line-clamp-3">
           {details}
         </p>
-        <p className="mt-1.5 sm:text-[18px] text-[16px] font-bold text-[#171717]">
+        <p className="mt-1 sm:mt-1.5 text-[14px] sm:text-[16px] md:text-[18px] font-bold text-[#171717]">
           £{Number(price.toString().replace(/\s*GBP$/, "")).toFixed(2)}
         </p>
       </div>
@@ -98,7 +98,7 @@ function SingleProductCard({
         href={link || "/"}
         target="_blank"
         rel="noopener noreferrer"
-        className={`bg-[#856829] border px-6 py-1.5 mt-1 w-full text-white font-medium rounded-lg cursor-pointer text-center text-sm`}
+        className={`bg-[#856829] border px-4 sm:px-6 py-1 sm:py-1.5 mt-0.5 sm:mt-1 w-full text-white font-medium rounded-md sm:rounded-lg cursor-pointer text-center text-xs sm:text-sm`}
       >
         See Details
       </a>

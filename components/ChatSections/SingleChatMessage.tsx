@@ -26,26 +26,26 @@ function SingleChatMessage({
     <>
       <div
         className={`flex ${isSelf ? "justify-end" : "justify-start"} w-full ${
-          hideName ? "pt-0" : "pt-4"
+          hideName ? "pt-0" : "pt-2 sm:pt-3 md:pt-4"
         }`}
       >
         <div
-          className={`flex flex-col items-start gap-2 ${
+          className={`flex flex-col items-start gap-1 sm:gap-2 ${
             isSelf ? "mr-0" : "ml-0"
           }`}
         >
           <div
             className={`${
               isSelf
-                ? "bg-[#DFF5E3] text-[#0D3D21] rounded-[8px] p-2" //for user
-                : "bg-transparent text-[#171717] rounded-none py-3" // for agent
+                ? "bg-[#DFF5E3] text-[#0D3D21] rounded-[8px] p-2 sm:p-3" //for user
+                : "bg-transparent text-[#171717] rounded-none py-2 sm:py-3" // for agent
             } 
-            text-[16px] whitespace-pre-line mt-1`}
+            text-[14px] sm:text-[16px] whitespace-pre-line mt-1`}
           >
             {isSelf ? (
               message
             ) : (
-              <div className="markdown-content w-[90%] max-w-[700px] mx-auto overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0 text-[15px]">
+              <div className="markdown-content w-full sm:w-[95%] md:w-[90%] max-w-[700px] mx-auto overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0 text-[13px] sm:text-[14px] md:text-[15px]">
                 <ReactMarkdown>{message}</ReactMarkdown>
               </div>
             )}
@@ -54,8 +54,8 @@ function SingleChatMessage({
       </div>
 
       {!isSelf && (
-        <div className="mb-4 w-full flex justify-between items-center">
-          <div className="w-7/12 flex justify-start items-center gap-x-2">
+        <div className="mb-2 sm:mb-3 md:mb-4 w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
+          <div className="flex justify-start items-center gap-x-2 sm:gap-x-3">
             <button
               className={`cursor-pointer active:opacity-60 text-gray-700`}
               onClick={() => setIsMuted(!isMuted)}
@@ -63,8 +63,9 @@ function SingleChatMessage({
               <Image
                 src={isMuted ? "/mute.svg" : "/unmute.svg"}
                 alt="speaker"
-                width={16}
-                height={16}
+                width={14}
+                height={14}
+                className="sm:w-4 sm:h-4"
               />
             </button>
             <button
@@ -72,7 +73,13 @@ function SingleChatMessage({
               aria-label="Like"
               title="Like"
             >
-              <Image src={"/like.svg"} alt="like" width={14} height={14} />
+              <Image 
+                src={"/like.svg"} 
+                alt="like" 
+                width={12} 
+                height={12}
+                className="sm:w-[14px] sm:h-[14px]"
+              />
             </button>
             <button
               className="cursor-pointer active:opacity-60 text-gray-700"
@@ -82,13 +89,14 @@ function SingleChatMessage({
               <Image
                 src={"/dislike.svg"}
                 alt="dislike"
-                width={14}
-                height={14}
+                width={12}
+                height={12}
+                className="sm:w-[14px] sm:h-[14px]"
               />
             </button>
           </div>
-          <div className="w-5/12">
-            <p className="text-[12px] font-light text-[#4E4E4E] text-end">
+          <div className="w-full sm:w-auto">
+            <p className="text-[10px] sm:text-[12px] font-light text-[#4E4E4E] text-start sm:text-end">
               {date
                 .toLocaleString("en-GB", {
                   day: "2-digit",

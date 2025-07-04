@@ -27,8 +27,8 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
   };
 
   return (
-    <div className="px-8 pb-8">
-      <div className="bg-white rounded-2xl shadow-lg flex flex-col px-6 py-4">
+    <div className="px-4 sm:px-6 md:px-8 pb-4 sm:pb-6 md:pb-8">
+      <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg flex flex-col px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center">
           <textarea
             onKeyDown={handleKeyDown}
@@ -41,26 +41,26 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
             style={{ height: "auto" }}
           />
         </div>
-        <div className="flex items-center mt-2 justify-between">
-          <div className="flex items-center">
-            <span className="text-[#0D3D21] font-sans text-sm mr-2">
+        <div className="flex flex-col sm:flex-row sm:items-center mt-2 justify-between gap-2 sm:gap-0">
+          <div className="flex items-center justify-center sm:justify-start">
+            <span className="text-[#0D3D21] font-sans text-xs sm:text-sm mr-2">
               Powered by
             </span>
             <Image
               src="/prediqt.webp"
               alt="PrediQt Logo"
-              width={70}
-              height={70}
-              className="h-full object-contain"
+              width={60}
+              height={60}
+              className="h-8 sm:h-10 w-auto object-contain"
             />
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center justify-center sm:justify-end">
             <button
               className="text-[#1A7A4B] hover:bg-[#E6F9F0] rounded-full p-2 transition-all duration-200"
               type="button"
               onClick={handleSubmit}
             >
-              <div className="relative md:size-6 size-5 rounded-full">
+              <div className="relative size-5 sm:size-6 rounded-full">
                 <Image
                   src="/mic.svg"
                   alt="Microphone"
