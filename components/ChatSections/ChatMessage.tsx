@@ -40,7 +40,7 @@ function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
                         details={product.productDescription}
                         image={product.imageUrls}
                         price={product.price}
-                        link={product.harrodsLink || "/"}
+                        link={product.webLink || "/"}
                       />
                     </div>
                   ))}

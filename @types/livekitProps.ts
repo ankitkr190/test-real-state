@@ -22,7 +22,7 @@ export interface ProductsProps {
   productDescription: string;
   price: string;
   imageUrls: string[];
-  harrodsLink?: string;
+  webLink?: string;
 }
 
 export type ChatMessageType = {
