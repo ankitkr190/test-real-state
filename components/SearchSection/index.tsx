@@ -90,20 +90,20 @@ function SearchSection({
         onClick={onClose}
       />
 
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="relative bg-[#FCF9E6] rounded-2xl shadow-2xl w-full max-w-7xl h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
-          <div className="flex justify-center items-center w-full pt-8 pb-2">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
+        <div className="relative bg-[#FCF9E6] rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-7xl h-[90vh] sm:h-[80vh] md:h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
+          <div className="flex justify-center items-center w-full pt-4 sm:pt-6 md:pt-8 pb-2">
             <Image
               src="/richy.svg"
               width={140}
               height={80}
               alt="Richy Logo"
-              className="h-full"
+              className="h-16 sm:h-20 md:h-full"
             />
           </div>
-          <div className="absolute top-6 right-16">
+          <div className="absolute top-4 sm:top-6 right-4 sm:right-8 md:right-16">
             <button
-              className="flex items-center gap-2 bg-white rounded px-3 py-2 shadow"
+              className="flex items-center gap-1 sm:gap-2 bg-white rounded px-2 sm:px-3 py-1 sm:py-2 shadow text-sm sm:text-base"
               onClick={() => setDropdownOpen((open) => !open)}
               type="button"
             >
@@ -112,11 +112,11 @@ function SearchSection({
                 alt={selectedLang.label}
                 width={24}
                 height={24}
-                className="w-6 h-6 rounded"
+                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded"
               />
-              <span>{selectedLang.label}</span>
+              <span className="hidden sm:inline">{selectedLang.label}</span>
               <svg
-                className="ml-1 w-3 h-3"
+                className="w-2 h-2 sm:w-3 sm:h-3"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -126,22 +126,22 @@ function SearchSection({
               </svg>
             </button>
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl border-1 border-[#4D8D67] shadow z-10 py-2">
+              <div className="absolute right-0 mt-2 w-28 sm:w-32 bg-white rounded-lg border-1 border-[#4D8D67] shadow z-10 py-1">
                 {langOptions.map((option) => (
                   <button
                     key={option.value}
-                    className="flex items-center w-full px-4 py-3 hover:bg-green-100 gap-4 cursor-pointer"
+                    className="flex items-center w-full px-2 sm:px-3 py-1.5 sm:py-2 hover:bg-green-100 gap-1 sm:gap-2 cursor-pointer"
                     onClick={() => handleLanguageChange(option)}
                     type="button"
                   >
                     <Image
                       src={option.flag}
                       alt={option.label}
-                      width={32}
-                      height={32}
-                      className="w-8 h-8 rounded"
+                      width={20}
+                      height={20}
+                      className="w-4 h-4 sm:w-5 sm:h-5 rounded"
                     />
-                    <span className="text-lg text-[#0D3D21]">
+                    <span className="text-xs sm:text-sm text-[#0D3D21]">
                       {option.label}
                     </span>
                   </button>
@@ -150,20 +150,20 @@ function SearchSection({
             )}
           </div>
           <button
-            className="absolute top-7 right-8 text-2xl text-gray-400 hover:text-gray-600"
+            className="absolute top-4 sm:top-6 md:top-7 right-2 sm:right-4 md:right-8 text-xl sm:text-2xl text-gray-400 hover:text-gray-600"
             onClick={onClose}
           >
             &times;
           </button>
-          <div className="flex flex-col items-center justify-center w-full px-8 py-8">
-            <h1 className="font-sans text-4xl md:text-5xl font-bold mb-6 mt-4 text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1">
+          <div className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8">
+            <h1 className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 mt-2 sm:mt-4 text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1">
               {currentContent.title}
             </h1>
-            <div className="flex items-center w-full max-w-3xl bg-[#181B2B] rounded-full overflow-hidden mb-4 drop-shadow-xl">
-              <div className="flex items-center flex-1 px-6 py-3">
-                <FaSearch className="text-white text-xl mr-3" />
+            <div className="flex items-center w-full max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-3xl bg-[#181B2B] rounded-full overflow-hidden mb-4 drop-shadow-xl">
+              <div className="flex items-center flex-1 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
+                <FaSearch className="text-white text-base sm:text-lg md:text-xl mr-2 sm:mr-3" />
                 <input
-                  className="flex-1 bg-transparent outline-none text-white text-lg placeholder-gray-400"
+                  className="flex-1 bg-transparent outline-none text-white text-sm sm:text-base md:text-lg placeholder-gray-400"
                   placeholder={currentContent.placeholder}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
@@ -171,17 +171,17 @@ function SearchSection({
                 />
               </div>
               <button
-                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full px-5 rounded-bl-[30px] hover:from-green-400 transition-all duration-200"
+                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full px-3 sm:px-4 md:px-5 rounded-bl-[30px] hover:from-green-400 transition-all duration-200"
                 type="button"
                 onClick={handleButtonClick}
               >
-                <div className="relative h-7 w-7">
+                <div className="relative h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7">
                   <Image
                     src="/mic2.svg"
                     alt="Microphone"
                     width={28}
                     height={28}
-                    className={`absolute inset-0 h-7 w-7 transition-all duration-300 ease-in-out ${
+                    className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
                       searchValue.trim()
                         ? "opacity-0 transform scale-75 rotate-12"
                         : "opacity-100 transform scale-100 rotate-0"
@@ -192,7 +192,7 @@ function SearchSection({
                     alt="Send"
                     width={28}
                     height={28}
-                    className={`absolute inset-0 h-7 w-7 transition-all duration-300 ease-in-out ${
+                    className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
                       searchValue.trim()
                         ? "opacity-100 transform scale-100 rotate-0"
                         : "opacity-0 transform scale-75 rotate-12"
@@ -201,18 +201,18 @@ function SearchSection({
                 </div>
               </button>
             </div>
-            <p className="text-center text-[#2e2e2e] text-lg mb-6">
+            <p className="text-center text-[#2e2e2e] text-sm sm:text-base md:text-lg mb-4 sm:mb-6 px-2">
               {currentContent.description}
               <br />
               <span className="text-[#0D3D21]">
                 {currentContent.subDescription}
               </span>
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center">
               {currentContent.suggestions.map((text) => (
                 <button
                   key={text}
-                  className="bg-white rounded-full px-5 py-2 shadow text-[#1A7A4B] font-medium hover:bg-[#F3F3F3]"
+                  className="bg-white rounded-full px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 shadow text-[#1A7A4B] font-medium hover:bg-[#F3F3F3] text-xs sm:text-sm md:text-base"
                   onClick={() => handleSuggestionClick(text)}
                   type="button"
                 >

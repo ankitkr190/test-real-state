@@ -154,7 +154,7 @@ function ChatBody({
   return (
     <div
       ref={containerRef}
-      className="flex-1 overflow-y-auto px-8 py-6 bg-transparent m-0 flex flex-col"
+      className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 py-6 bg-transparent m-0 flex flex-col"
     >
       <ChatMessage
         messages={chatList}
