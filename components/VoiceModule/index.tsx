@@ -177,9 +177,9 @@ function VoiceModule({
         const finalTranscript = liveTranscript.trim();
 
         setTranscript(finalTranscript);
-        setTimeout(() => {
+        setTimeout(async () => {
           onOpenResult();
-        }, 3000);
+        }, 200);
       };
 
       mediaRecorderRef.current.start();
