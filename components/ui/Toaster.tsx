@@ -70,7 +70,7 @@ export function Toaster({
   duration = DEFAULT_PROPS.duration,
   closeButton = DEFAULT_PROPS.closeButton,
   className = "",
-  maxToasts = DEFAULT_PROPS.maxToasts,
+  // maxToasts = DEFAULT_PROPS.maxToasts,
   expand = DEFAULT_PROPS.expand,
   animationDuration = DEFAULT_PROPS.animationDuration,
 }: ToasterProps): ReactElement | null {
