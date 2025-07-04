@@ -12,6 +12,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: "PingFang", sans-serif;
+  --lk-va-bar-gap: 4px;
+  --lk-va-bar-width: 4px;
+  --lk-va-border-radius: 2px;
 }
 
 .markdown-content {

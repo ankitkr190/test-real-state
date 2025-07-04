@@ -32,3 +32,8 @@ export type ChatMessageType = {
   isSelf: boolean;
   timestamp: number;
 };
+
+export interface ChannelCartProps {
+  id: string;
+  quantity: number;
+}
