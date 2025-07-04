@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable @next/next/no-img-element */
+import React, { useState } from "react";
 
 interface CardUIProps {
   projectName: string;
@@ -19,7 +20,7 @@ const CardUI: React.FC<CardUIProps> = ({
   amenities,
   price,
   images,
-  onViewDetails
+  onViewDetails,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -54,16 +55,36 @@ const CardUI: React.FC<CardUIProps> = ({
               onClick={prevImage}
               className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md transition-all duration-200"
             >
-              <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="w-4 h-4 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             </button>
             <button
               onClick={nextImage}
               className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md transition-all duration-200"
             >
-              <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg
+                className="w-4 h-4 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </button>
           </>
@@ -78,10 +99,10 @@ const CardUI: React.FC<CardUIProps> = ({
                 onClick={() => goToImage(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-200 ${
                   index === currentImageIndex
-                    ? 'bg-green-500'
+                    ? "bg-green-500"
                     : index === 1
-                    ? 'bg-gray-300'
-                    : 'bg-white/60'
+                    ? "bg-gray-300"
+                    : "bg-white/60"
                 }`}
               />
             ))}
@@ -93,7 +114,9 @@ const CardUI: React.FC<CardUIProps> = ({
       <div className="p-5">
         {/* Project Title */}
         <div className="mb-3">
-          <h2 className="text-sm font-bold text-gray-900 mb-1">{projectName}</h2>
+          <h2 className="text-sm font-bold text-gray-900 mb-1">
+            {projectName}
+          </h2>
           <p className="text-gray-600 text-xs">{projectOwner}</p>
         </div>
 
@@ -102,7 +125,11 @@ const CardUI: React.FC<CardUIProps> = ({
           {/* Size */}
           <div className="flex items-center text-gray-700">
             <div className="w-6 h-6 bg-green-100 rounded-md flex items-center justify-center mr-3">
-              <img src="/chat/chatico-size.svg" alt="Size" className="w-4 h-4" />
+              <img
+                src="/chat/chatico-size.svg"
+                alt="Size"
+                className="w-4 h-4"
+              />
             </div>
             <span className="text-xs">{size}</span>
           </div>
@@ -110,7 +137,11 @@ const CardUI: React.FC<CardUIProps> = ({
           {/* Location */}
           <div className="flex items-center text-gray-700">
             <div className="w-6 h-6 bg-green-100 rounded-md flex items-center justify-center mr-3">
-              <img src="/chat/chatico-location.svg" alt="Location" className="w-4 h-4" />
+              <img
+                src="/chat/chatico-location.svg"
+                alt="Location"
+                className="w-4 h-4"
+              />
             </div>
             <span className="text-xs">{location}</span>
           </div>
@@ -118,7 +149,11 @@ const CardUI: React.FC<CardUIProps> = ({
           {/* Amenities */}
           <div className="flex items-center text-gray-700">
             <div className="w-6 h-6 bg-green-100 rounded-md flex items-center justify-center mr-3">
-              <img src="/chat/chatico-amenities.svg" alt="Amenities" className="w-4 h-4" />
+              <img
+                src="/chat/chatico-amenities.svg"
+                alt="Amenities"
+                className="w-4 h-4"
+              />
             </div>
             <span className="text-xs">{amenities}</span>
           </div>
@@ -129,9 +164,7 @@ const CardUI: React.FC<CardUIProps> = ({
 
         {/* Price and CTA */}
         <div className="flex items-center justify-between">
-          <div className="text-lg font-bold text-gray-900">
-            {price}
-          </div>
+          <div className="text-lg font-bold text-gray-900">{price}</div>
           <button
             onClick={onViewDetails}
             className="bg-green-50 text-green-700 px-4 py-1.5 rounded-full text-xs font-medium hover:bg-green-100 transition-colors duration-200 border border-green-200"

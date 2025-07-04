@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useRef } from "react";
 import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
 
@@ -16,7 +18,12 @@ interface VoiceModuleProps {
   onBackToSearch: () => void;
 }
 
-function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceModuleProps) {
+function VoiceModule({
+  isOpen,
+  onClose,
+  onOpenResult,
+  onBackToSearch,
+}: VoiceModuleProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState({
     flag: "/uk.svg",
@@ -34,7 +41,7 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const recognitionRef = useRef<any>(null);
-  
+
   useEffect(() => {
     if (isOpen) {
       setTranscript("");
@@ -56,7 +63,7 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
         cancelAnimationFrame(animationFrameRef.current);
       }
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current.getTracks().forEach((track) => track.stop());
       }
       if (audioContextRef.current) {
         audioContextRef.current.close();
@@ -66,20 +73,23 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
       }
     };
   }, []);
-  
+
   const content = {
     en: {
       title: "Hi, tell me what you need!",
       subtitle: "Speak your real estate need — Richy will listen and help!",
-      description: "Press and hold the microphone to start speaking, or tap to start/stop recording.",
+      description:
+        "Press and hold the microphone to start speaking, or tap to start/stop recording.",
       listeningText: "Listening...",
       processingText: "Processing your request...",
       backToText: "Back to Text",
     },
     th: {
       title: "สวัสดี บอกฉันว่าคุณต้องการอะไร!",
-      subtitle: "พูดความต้องการด้านอสังหาริมทรัพย์ของคุณ — Richy จะฟังและช่วยเหลือ!",
-      description: "กดค้างไมโครโฟนเพื่อเริ่มพูด หรือแตะเพื่อเริ่ม/หยุดการบันทึก",
+      subtitle:
+        "พูดความต้องการด้านอสังหาริมทรัพย์ของคุณ — Richy จะฟังและช่วยเหลือ!",
+      description:
+        "กดค้างไมโครโฟนเพื่อเริ่มพูด หรือแตะเพื่อเริ่ม/หยุดการบันทึก",
       listeningText: "กำลังฟัง...",
       processingText: "กำลังประมวลผลคำขอของคุณ...",
       backToText: "กลับไปพิมพ์ข้อความ",
@@ -91,9 +101,9 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
       listeningText: "正在倾听...",
       processingText: "正在处理您的请求...",
       backToText: "返回文字输入",
-    }
+    },
   };
-  
+
   const langOptions = [
     {
       flag: "/uk.svg",
@@ -116,21 +126,29 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
-      
+
       // Initialize speech recognition
-      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (
+        "webkitSpeechRecognition" in window ||
+        "SpeechRecognition" in window
+      ) {
+        const SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
         recognitionRef.current = new SpeechRecognition();
-        
+
         recognitionRef.current.continuous = true;
         recognitionRef.current.interimResults = true;
-        recognitionRef.current.lang = selectedLang.value === 'en' ? 'en-US' : 
-                                      selectedLang.value === 'th' ? 'th-TH' : 'zh-CN';
-        
+        recognitionRef.current.lang =
+          selectedLang.value === "en"
+            ? "en-US"
+            : selectedLang.value === "th"
+            ? "th-TH"
+            : "zh-CN";
+
         recognitionRef.current.onresult = (event: any) => {
-          let interim = '';
-          let final = '';
-          
+          let interim = "";
+          let final = "";
+
           for (let i = 0; i < event.results.length; i++) {
             const transcript = event.results[i][0].transcript;
             if (event.results[i].isFinal) {
@@ -139,33 +157,35 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
               interim += transcript;
             }
           }
-          
+
           setLiveTranscript(final + interim);
         };
-        
+
         recognitionRef.current.start();
       }
-      
+
       audioContextRef.current = new AudioContext();
       const source = audioContextRef.current.createMediaStreamSource(stream);
       analyserRef.current = audioContextRef.current.createAnalyser();
       analyserRef.current.fftSize = 256;
       source.connect(analyserRef.current);
-      
+
       mediaRecorderRef.current = new MediaRecorder(stream);
       const chunks: BlobPart[] = [];
-      
+
       mediaRecorderRef.current.ondataavailable = (event) => {
         chunks.push(event.data);
       };
-      
+
       mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+        // const audioBlob = new Blob(chunks, { type: "audio/wav" });
         setIsProcessing(true);
-        
+
         // Use the live transcript as final transcript if available, otherwise use dummy text
-        const finalTranscript = liveTranscript.trim() || "I'm looking for a 2-bedroom apartment in downtown area";
-        
+        const finalTranscript =
+          liveTranscript.trim() ||
+          "I'm looking for a 2-bedroom apartment in downtown area";
+
         setTimeout(() => {
           setTranscript(finalTranscript);
           setIsProcessing(false);
@@ -174,14 +194,13 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
           }, 1500);
         }, 2000);
       };
-      
+
       mediaRecorderRef.current.start();
       setIsRecording(true);
       setLiveTranscript("");
       visualizeAudio();
-      
     } catch (error) {
-      console.error('Error accessing microphone:', error);
+      console.error("Error accessing microphone:", error);
       setIsRecording(false);
     }
   };
@@ -191,21 +210,21 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
       mediaRecorderRef.current.stop();
       setIsRecording(false);
       setAudioLevel(0);
-      
+
       if (recognitionRef.current) {
         recognitionRef.current.stop();
       }
-      
+
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current.getTracks().forEach((track) => track.stop());
         streamRef.current = null;
       }
-      
+
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;
       }
-      
+
       if (audioContextRef.current) {
         audioContextRef.current.close();
         audioContextRef.current = null;
@@ -215,19 +234,19 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
 
   const visualizeAudio = () => {
     if (!analyserRef.current) return;
-    
+
     const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
-    
+
     const updateAudioLevel = () => {
       if (!analyserRef.current || !isRecording) return;
-      
+
       analyserRef.current.getByteFrequencyData(dataArray);
       const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
       setAudioLevel(average / 255);
-      
+
       animationFrameRef.current = requestAnimationFrame(updateAudioLevel);
     };
-    
+
     updateAudioLevel();
   };
 
@@ -239,7 +258,7 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
     }
   };
 
-  const handleLanguageChange = (option: typeof langOptions[0]) => {
+  const handleLanguageChange = (option: (typeof langOptions)[0]) => {
     setSelectedLang(option);
     setDropdownOpen(false);
     setTranscript("");
@@ -259,14 +278,14 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
 
   return (
     <>
-      <div 
+      <div
         className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
       />
-      
-      <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">      
-        <div className="relative bg-[#FCF9E6] rounded-2xl shadow-2xl w-full max-w-7xl h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">        
-          <button 
+
+      <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+        <div className="relative bg-[#FCF9E6] rounded-2xl shadow-2xl w-full max-w-7xl h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
+          <button
             className="absolute top-6 left-6 flex items-center justify-center w-10 h-10 bg-white rounded-full shadow hover:bg-gray-50 transition-colors"
             onClick={handleBackToSearch}
             type="button"
@@ -282,10 +301,10 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
-          
+
           <div className="flex justify-center items-center w-full mt-8 mb-2">
             <img src="/richy.svg" alt="Richy Logo" className="h-20" />
-          </div>        
+          </div>
           <div className="absolute top-6 right-16">
             <button
               className="flex items-center gap-2 bg-white rounded px-3 py-2 shadow"
@@ -322,18 +341,20 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
                       alt={option.label}
                       className="w-8 h-8 rounded"
                     />
-                    <span className="text-lg text-[#0D3D21]">{option.label}</span>
+                    <span className="text-lg text-[#0D3D21]">
+                      {option.label}
+                    </span>
                   </button>
                 ))}
               </div>
             )}
-          </div>        
-          <button 
+          </div>
+          <button
             className="absolute top-7 right-8 text-2xl text-gray-400 hover:text-gray-600"
             onClick={onClose}
           >
             &times;
-          </button>        
+          </button>
           <div className="flex flex-col items-center justify-center w-full px-8 py-8">
             <h1 className="font-sans text-4xl md:text-5xl font-bold mb-2 mt-4 text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1">
               {currentContent.title}
@@ -341,48 +362,55 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
             <h2 className="font-sans text-xl md:text-2xl font-medium mb-6 text-center text-[#4D8D67]">
               {currentContent.subtitle}
             </h2>
-            
+
             <div className="flex flex-col items-center mb-6">
               <div className="relative mb-4">
                 <button
                   className={`flex items-center justify-center w-20 h-20 rounded-full transition-all duration-300 relative z-10 ${
-                    isRecording 
-                      ? 'bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg' 
-                      : 'bg-gradient-to-br from-[#00804A] to-[#0D3D21] hover:from-green-500 hover:to-green-600 shadow-xl'
+                    isRecording
+                      ? "bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg"
+                      : "bg-gradient-to-br from-[#00804A] to-[#0D3D21] hover:from-green-500 hover:to-green-600 shadow-xl"
                   }`}
                   onClick={handleMicClick}
                   type="button"
                 >
                   <div className="relative w-10 h-10 flex items-center justify-center">
-                    <FaMicrophone 
+                    <FaMicrophone
                       className={`absolute text-white text-4xl transition-all duration-500 ease-in-out ${
-                        isRecording ? 'opacity-0 scale-75' : 'opacity-100 scale-100'
-                      }`} 
+                        isRecording
+                          ? "opacity-0 scale-75"
+                          : "opacity-100 scale-100"
+                      }`}
                     />
-                    <FaMicrophoneSlash 
+                    <FaMicrophoneSlash
                       className={`absolute text-white text-4xl transition-all duration-500 ease-in-out ${
-                        isRecording ? 'opacity-100 scale-110 animate-pulse' : 'opacity-0 scale-75 -rotate-12'
-                      }`} 
+                        isRecording
+                          ? "opacity-100 scale-110 animate-pulse"
+                          : "opacity-0 scale-75 -rotate-12"
+                      }`}
                     />
                   </div>
                 </button>
-                
+
                 {isRecording && (
-                  <div className="absolute inset-0 rounded-full border-4 border-red-400 animate-pulse pointer-events-none"
-                       style={{
-                         transform: `scale(${1 + audioLevel * 0.3})`,
-                         opacity: 0.6 + audioLevel * 0.4
-                       }}>
-                  </div>
+                  <div
+                    className="absolute inset-0 rounded-full border-4 border-red-400 animate-pulse pointer-events-none"
+                    style={{
+                      transform: `scale(${1 + audioLevel * 0.3})`,
+                      opacity: 0.6 + audioLevel * 0.4,
+                    }}
+                  ></div>
                 )}
               </div>
-              
+
               <div className="text-center mb-4">
                 {isRecording ? (
                   <div>
                     {liveTranscript && (
                       <div className="bg-white rounded-lg px-4 py-3 shadow-md max-w-2xl mx-auto">
-                        <p className="text-[#0D3D21] font-medium">"{liveTranscript}"</p>
+                        <p className="text-[#0D3D21] font-medium">
+                          {`"${liveTranscript}"`}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -400,10 +428,10 @@ function VoiceModule({ isOpen, onClose, onOpenResult, onBackToSearch }: VoiceMod
                   </p>
                 )}
               </div>
-              
+
               {transcript && !isRecording && (
                 <div className="bg-white rounded-lg px-4 py-3 shadow-md max-w-2xl mb-4">
-                  <p className="text-[#0D3D21] font-medium">"{transcript}"</p>
+                  <p className="text-[#0D3D21] font-medium">{`"${transcript}"`}</p>
                 </div>
               )}
             </div>

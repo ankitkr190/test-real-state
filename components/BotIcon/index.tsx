@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 
 function BotIcon() {
@@ -6,11 +7,11 @@ function BotIcon() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
+      setCurrentImage((prev) => (prev + 1) % images?.length);
     }, 500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
   return (
     <div className="flex items-center justify-center w-12 h-12 bg-[#FCF9E6] rounded-full shadow-lg relative overflow-hidden">
