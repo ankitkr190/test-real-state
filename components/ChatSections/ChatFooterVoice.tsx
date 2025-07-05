@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from "react";
 import { ChatMessage as ComponentsChatMessage } from "@livekit/components-react";
 import { useBrowserSpeech } from "../hooks/useBrowserSpeech";
