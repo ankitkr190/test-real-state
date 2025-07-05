@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 
@@ -16,66 +16,13 @@ function VoiceModule({
   onOpenResult,
   onBackToSearch,
 }: VoiceModuleProps) {
+  const [isRecording, setIsRecording] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState({
     flag: "/uk.svg",
     label: "EN",
     value: "en",
   });
-
-  const [isRecording, setIsRecording] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      setSelectedLang({
-        flag: "/uk.svg",
-        label: "EN",
-        value: "en",
-      });
-      setDropdownOpen(false);
-      setIsRecording(false);
-    }
-  }, [isOpen]);
-
-  const content = {
-    en: {
-      title: "Hi, tell me what you need!",
-      subtitle: "Speak your real estate need — Richy will listen and help!",
-      description: "Tap to start/stop speaking.",
-      backToText: "Back to Text",
-    },
-    th: {
-      title: "สวัสดี บอกฉันว่าคุณต้องการอะไร!",
-      subtitle:
-        "พูดความต้องการด้านอสังหาริมทรัพย์ของคุณ — Richy จะฟังและช่วยเหลือ!",
-      description: "กดค้างไมโครโฟนเพื่อเริ่มพูด หรือแตะเพื่อเริ่ม/หยุดการบันทึก",
-      backToText: "กลับไปพิมพ์ข้อความ",
-    },
-    zh: {
-      title: "您好，告诉我您需要什么！",
-      subtitle: "说出您的房地产需求 — Richy 会倾听并帮助您！",
-      description: "按住麦克风开始说话，或点击开始/停止录音。",
-      backToText: "返回文字输入",
-    },
-  };
-
-  const langOptions = [
-    {
-      flag: "/uk.svg",
-      label: "English",
-      value: "en",
-    },
-    {
-      flag: "/th.svg",
-      label: "แบบไทย",
-      value: "th",
-    },
-    {
-      flag: "/ch.svg",
-      label: "中国人",
-      value: "zh",
-    },
-  ];
 
   const handleMicClick = () => {
     if (isRecording) {
@@ -132,7 +79,11 @@ function VoiceModule({
           </button>
 
           <div className="flex justify-center items-center w-full mt-4 sm:mt-6 md:mt-8 mb-2">
-            <img src="/richy.svg" alt="Richy Logo" className="h-16 sm:h-18 md:h-20" />
+            <img
+              src="/richy.svg"
+              alt="Richy Logo"
+              className="h-16 sm:h-18 md:h-20"
+            />
           </div>
           <div className="absolute top-4 sm:top-6 right-4 sm:right-8 md:right-16">
             <button
@@ -240,3 +191,43 @@ function VoiceModule({
 }
 
 export default VoiceModule;
+
+const content = {
+  en: {
+    title: "Hi, tell me what you need!",
+    subtitle: "Speak your real estate need — Richy will listen and help!",
+    description: "Tap to start/stop speaking.",
+    backToText: "Back to Text",
+  },
+  th: {
+    title: "สวัสดี บอกฉันว่าคุณต้องการอะไร!",
+    subtitle:
+      "พูดความต้องการด้านอสังหาริมทรัพย์ของคุณ — Richy จะฟังและช่วยเหลือ!",
+    description: "กดค้างไมโครโฟนเพื่อเริ่มพูด หรือแตะเพื่อเริ่ม/หยุดการบันทึก",
+    backToText: "กลับไปพิมพ์ข้อความ",
+  },
+  zh: {
+    title: "您好，告诉我您需要什么！",
+    subtitle: "说出您的房地产需求 — Richy 会倾听并帮助您！",
+    description: "按住麦克风开始说话，或点击开始/停止录音。",
+    backToText: "返回文字输入",
+  },
+};
+
+const langOptions = [
+  {
+    flag: "/uk.svg",
+    label: "English",
+    value: "en",
+  },
+  {
+    flag: "/th.svg",
+    label: "แบบไทย",
+    value: "th",
+  },
+  {
+    flag: "/ch.svg",
+    label: "中国人",
+    value: "zh",
+  },
+];
