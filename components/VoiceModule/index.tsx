@@ -1,16 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
-
-// Speech Recognition API declarations
-declare global {
-  interface Window {
-    SpeechRecognition: any;
-    webkitSpeechRecognition: any;
-  }
-}
 
 interface VoiceModuleProps {
   isOpen: boolean;
@@ -31,21 +22,11 @@ function VoiceModule({
     label: "EN",
     value: "en",
   });
+
   const [isRecording, setIsRecording] = useState(false);
-  const [audioLevel, setAudioLevel] = useState(0);
-  const [transcript, setTranscript] = useState("");
-  const [liveTranscript, setLiveTranscript] = useState("");
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const analyserRef = useRef<AnalyserNode | null>(null);
-  const animationFrameRef = useRef<number | null>(null);
-  const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
     if (isOpen) {
-      setTranscript("");
-      setLiveTranscript("");
       setSelectedLang({
         flag: "/uk.svg",
         label: "EN",
@@ -56,46 +37,24 @@ function VoiceModule({
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
-      }
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-      }
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-    };
-  }, []);
-
   const content = {
     en: {
       title: "Hi, tell me what you need!",
       subtitle: "Speak your real estate need — Richy will listen and help!",
-      description:
-        "Press and hold the microphone to start speaking, or tap to start/stop recording.",
-      listeningText: "Listening...",
+      description: "Tap to start/stop speaking.",
       backToText: "Back to Text",
     },
     th: {
       title: "สวัสดี บอกฉันว่าคุณต้องการอะไร!",
       subtitle:
         "พูดความต้องการด้านอสังหาริมทรัพย์ของคุณ — Richy จะฟังและช่วยเหลือ!",
-      description:
-        "กดค้างไมโครโฟนเพื่อเริ่มพูด หรือแตะเพื่อเริ่ม/หยุดการบันทึก",
-      listeningText: "กำลังฟัง...",
+      description: "กดค้างไมโครโฟนเพื่อเริ่มพูด หรือแตะเพื่อเริ่ม/หยุดการบันทึก",
       backToText: "กลับไปพิมพ์ข้อความ",
     },
     zh: {
       title: "您好，告诉我您需要什么！",
       subtitle: "说出您的房地产需求 — Richy 会倾听并帮助您！",
       description: "按住麦克风开始说话，或点击开始/停止录音。",
-      listeningText: "正在倾听...",
       backToText: "返回文字输入",
     },
   };
@@ -118,143 +77,26 @@ function VoiceModule({
     },
   ];
 
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      streamRef.current = stream;
-
-      // Initialize speech recognition
-      if (
-        "webkitSpeechRecognition" in window ||
-        "SpeechRecognition" in window
-      ) {
-        const SpeechRecognition =
-          window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognitionRef.current = new SpeechRecognition();
-
-        recognitionRef.current.continuous = true;
-        recognitionRef.current.interimResults = true;
-        recognitionRef.current.lang =
-          selectedLang.value === "en"
-            ? "en-US"
-            : selectedLang.value === "th"
-            ? "th-TH"
-            : "zh-CN";
-
-        recognitionRef.current.onresult = (event: any) => {
-          let interim = "";
-          let final = "";
-
-          for (let i = 0; i < event.results.length; i++) {
-            const transcript = event.results[i][0].transcript;
-            if (event.results[i].isFinal) {
-              final += transcript;
-            } else {
-              interim += transcript;
-            }
-          }
-
-          setLiveTranscript(final + interim);
-        };
-
-        recognitionRef.current.start();
-      }
-
-      audioContextRef.current = new AudioContext();
-      const source = audioContextRef.current.createMediaStreamSource(stream);
-      analyserRef.current = audioContextRef.current.createAnalyser();
-      analyserRef.current.fftSize = 256;
-      source.connect(analyserRef.current);
-
-      mediaRecorderRef.current = new MediaRecorder(stream);
-      const chunks: BlobPart[] = [];
-
-      mediaRecorderRef.current.ondataavailable = (event) => {
-        chunks.push(event.data);
-      };
-
-      mediaRecorderRef.current.onstop = () => {
-        const finalTranscript = liveTranscript.trim();
-
-        setTranscript(finalTranscript);
-        setTimeout(async () => {
-          onOpenResult();
-        }, 200);
-      };
-
-      mediaRecorderRef.current.start();
-      setIsRecording(true);
-      setLiveTranscript("");
-      visualizeAudio();
-    } catch (error) {
-      console.error("Error accessing microphone:", error);
-      setIsRecording(false);
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-      setAudioLevel(0);
-
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
-        streamRef.current = null;
-      }
-
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-        animationFrameRef.current = null;
-      }
-
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
-      }
-    }
-  };
-
-  const visualizeAudio = () => {
-    if (!analyserRef.current) return;
-
-    const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
-
-    const updateAudioLevel = () => {
-      if (!analyserRef.current || !isRecording) return;
-
-      analyserRef.current.getByteFrequencyData(dataArray);
-      const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
-      setAudioLevel(average / 255);
-
-      animationFrameRef.current = requestAnimationFrame(updateAudioLevel);
-    };
-
-    updateAudioLevel();
-  };
-
   const handleMicClick = () => {
     if (isRecording) {
-      stopRecording();
+      setIsRecording(false);
+      // Call onOpenResult when stopping recording
+      setTimeout(() => {
+        onOpenResult();
+      }, 200);
     } else {
-      startRecording();
+      setIsRecording(true);
     }
   };
 
   const handleLanguageChange = (option: (typeof langOptions)[0]) => {
     setSelectedLang(option);
     setDropdownOpen(false);
-    setTranscript("");
-    setLiveTranscript("");
   };
 
   const handleBackToSearch = () => {
     if (isRecording) {
-      stopRecording();
+      setIsRecording(false);
     }
     onBackToSearch();
   };
@@ -380,38 +222,14 @@ function VoiceModule({
                 </button>
 
                 {isRecording && (
-                  <div
-                    className="absolute inset-0 rounded-full border-2 sm:border-3 md:border-4 border-red-400 animate-pulse pointer-events-none"
-                    style={{
-                      transform: `scale(${1 + audioLevel * 0.3})`,
-                      opacity: 0.6 + audioLevel * 0.4,
-                    }}
-                  ></div>
+                  <div className="absolute inset-0 rounded-full border-2 sm:border-3 md:border-4 border-red-400 animate-pulse pointer-events-none"></div>
                 )}
               </div>
 
               <div className="text-center mb-3 sm:mb-4 px-2">
-                {isRecording ? (
-                  <div>
-                    {liveTranscript && (
-                      <div className="bg-white rounded-lg px-3 sm:px-4 py-2 sm:py-3 shadow-md max-w-xs sm:max-w-lg md:max-w-2xl mx-auto">
-                        <p className="text-[#0D3D21] font-medium text-sm sm:text-base">
-                          {`"${liveTranscript}"`}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                ) : transcript ? (
-                  <div className="bg-white rounded-lg px-3 sm:px-4 py-2 sm:py-3 shadow-md max-w-xs sm:max-w-lg md:max-w-2xl mx-auto">
-                    <p className="text-[#0D3D21] font-medium text-sm sm:text-base">
-                      {`"${transcript}"`}
-                    </p>
-                  </div>
-                ) : (
-                  <p className="text-[#2e2e2e] text-sm sm:text-base md:text-lg">
-                    {currentContent.description}
-                  </p>
-                )}
+                <p className="text-[#2e2e2e] text-sm sm:text-base md:text-lg">
+                  {currentContent.description}
+                </p>
               </div>
             </div>
           </div>
