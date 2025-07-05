@@ -45,8 +45,8 @@ function VoiceBody({
         <Image
           src="/richy.svg"
           alt="Richy Logo"
-          width={48}
-          height={48}
+          width={140}
+          height={80}
           className="h-full object-contain"
         />
       </div>
