@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
 import { ChatMessage as ComponentsChatMessage } from "@livekit/components-react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const ChatFooterVoice = dynamic(() => import("./ChatFooterVoice"), {
+  ssr: false,
+});
 
 interface ChatFooterProps {
   onSend: (message: string) => Promise<ComponentsChatMessage>;
@@ -9,7 +14,7 @@ interface ChatFooterProps {
 
 function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
   const [userInput, setUserInput] = useState<string>("");
-  // const [isListening, setIsListening] = useState<boolean>(false);
+  const [isListening, setIsListening] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = () => {
@@ -17,6 +22,10 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
 
     onSend(userInput);
     setUserInput("");
+  };
+
+  const handleMicroPhone = () => {
+    setIsListening(!isListening);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -29,64 +38,66 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
   return (
     <div className="px-4 sm:px-6 md:px-8 pb-4 sm:pb-6 md:pb-8">
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg flex flex-col px-4 sm:px-6 py-3 sm:py-4">
-        <div className="flex items-center">
-          <textarea
-            onKeyDown={handleKeyDown}
-            ref={textareaRef}
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            placeholder="Ask Richy"
-            rows={1}
-            className="w-full bg-transparent outline-none text-[#1A7A4B] text-opacity-70 text-[16px] font-normal placeholder:text-[#4D8D67] placeholder:text-opacity-70 border-none py-2 mb-3 resize-none overflow-y-auto min-h-[40px] max-h-[120px] hide-scrollbar"
-            style={{ height: "auto" }}
+        {isListening ? (
+          <ChatFooterVoice
+            isListening={isListening}
+            setIsListening={setIsListening}
+            onSend={onSend}
           />
-        </div>
-        <div className="flex flex-col sm:flex-row sm:items-center mt-2 justify-between gap-2 sm:gap-0">
-          <div className="flex items-center justify-center sm:justify-start">
-            <span className="text-[#0D3D21] font-sans text-xs sm:text-sm mr-2">
-              Powered by
-            </span>
-            <Image
-              src="/prediqt.webp"
-              alt="PrediQt Logo"
-              width={60}
-              height={60}
-              className="h-8 sm:h-10 w-auto object-contain"
-            />
-          </div>
-          <div className="flex items-center justify-center sm:justify-end">
-            <button
-              className="text-[#1A7A4B] hover:bg-[#E6F9F0] rounded-full p-2 transition-all duration-200"
-              type="button"
-              onClick={handleSubmit}
-            >
-              <div className="relative size-5 sm:size-6 rounded-full">
+        ) : (
+          <React.Fragment>
+            <div className="flex items-center">
+              <textarea
+                onKeyDown={handleKeyDown}
+                ref={textareaRef}
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                placeholder="Ask Richy"
+                rows={1}
+                className="w-full bg-transparent outline-none text-[#1A7A4B] text-opacity-70 text-[16px] font-normal placeholder:text-[#4D8D67] placeholder:text-opacity-70 border-none py-2 mb-3 resize-none overflow-y-auto min-h-[40px] max-h-[120px] hide-scrollbar"
+                style={{ height: "auto" }}
+              />
+            </div>
+            <div className="flex flex-col sm:flex-row sm:items-center mt-2 justify-between gap-2 sm:gap-0">
+              <div className="flex items-center justify-center sm:justify-start">
+                <span className="text-[#0D3D21] font-sans text-xs sm:text-sm mr-2">
+                  Powered by
+                </span>
                 <Image
-                  src="/mic.svg"
-                  alt="Microphone"
-                  width={20}
-                  height={20}
-                  className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
-                    userInput.trim()
-                      ? "opacity-0 transform scale-75 rotate-12"
-                      : "opacity-100 transform scale-100 rotate-0"
-                  }`}
-                />
-                <Image
-                  src="/send.svg"
-                  alt="Send"
-                  width={28}
-                  height={28}
-                  className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
-                    userInput.trim()
-                      ? "opacity-100 transform scale-100 rotate-0"
-                      : "opacity-0 transform scale-75 rotate-12"
-                  }`}
+                  src="/prediqt.webp"
+                  alt="PrediQt Logo"
+                  width={60}
+                  height={60}
+                  className="object-contain"
                 />
               </div>
-            </button>
-          </div>
-        </div>
+              <button
+                className="text-[#1A7A4B] hover:bg-[#E6F9F0] p-2 rounded-full"
+                type="button"
+                onClick={
+                  userInput.trim()?.length === 0
+                    ? handleMicroPhone
+                    : handleSubmit
+                }
+              >
+                <Image
+                  src={
+                    userInput.trim()?.length === 0 ? "/mic.svg" : "/send.svg"
+                  }
+                  alt={userInput.trim()?.length === 0 ? "Microphone" : "Send"}
+                  width={18}
+                  height={18}
+                  className={`size-5 sm:size-6 transition-all duration-300 ease-in-out opacity-100 transform  ${
+                    userInput.trim()?.length === 0
+                      ? "rotate-0"
+                      : "rotate-[360deg]"
+                  }`}
+                />
+                <div className="relative "></div>
+              </button>
+            </div>
+          </React.Fragment>
+        )}
       </div>
     </div>
   );
