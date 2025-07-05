@@ -1,0 +1,63 @@
+name: CD - Deploy to VM
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy on VM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚀 SSH into VM and Deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          port: 22
+          script: |
+            echo "📁 Changing to project directory..."
+            PROJECT_DIR=~/app/richy-group-frontend
+            cd $PROJECT_DIR
+
+            # Check if this is a git repository
+            if [ ! -d ".git" ]; then
+              echo "❌ This is not a Git repository!"
+              exit 1
+            fi
+
+            echo "📥 Pulling latest changes from main branch..."
+            git reset --hard HEAD
+            git pull origin main
+
+            echo "📦 Installing dependencies..."
+            if [ ! -f package.json ]; then
+              echo "❌ package.json not found!"
+              exit 1
+            fi
+            yarn install --frozen-lockfile
+
+            if [ -d .next ]; then
+              echo "🧹 Removing previous Next.js build cache..."
+              rm -rf .next
+            fi
+
+            echo "🛠 Building the application..."
+            yarn build
+
+            if [ ! -f ecosystem.config.js ]; then
+              echo "❌ ERROR: ecosystem.config.js not found!"
+              exit 1
+            fi
+
+            echo "🚀 Restarting application with PM2..."
+            pm2 startOrReload ecosystem.config.js --env production
+
+            echo "📦 Saving PM2 process list..."
+            pm2 save
+
+            echo "🔄 Setting up PM2 to start on boot..."
+            pm2 startup --silent
+
+            echo "✅ Deployment complete!"
