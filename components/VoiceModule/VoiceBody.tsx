@@ -1,7 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
-import React from "react";
+import Image from "next/image";
+import React, { useCallback } from "react";
+import { ChatMessage as ComponentsChatMessage } from "@livekit/components-react";
 import { FaMicrophone } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
+import { useBrowserSpeech } from "../hooks/useBrowserSpeech";
 
 interface VoiceBodyProps {
   currentContent: {
@@ -10,22 +12,42 @@ interface VoiceBodyProps {
     description: string;
   };
   isRecording: boolean;
-  onMicClick: () => void;
+  onOpenResult: () => void;
+  setIsRecording: React.Dispatch<React.SetStateAction<boolean>>;
+  onSend: (message: string) => Promise<ComponentsChatMessage>;
 }
 
 function VoiceBody({
   currentContent,
   isRecording,
-  onMicClick,
+  onOpenResult,
+  setIsRecording,
+  onSend,
 }: VoiceBodyProps) {
+  const { transcript, isFinished, reset } = useBrowserSpeech(isRecording);
+
+  const sendMessage = useCallback(async () => {
+    if (!isRecording || transcript === "|") return;
+
+    // Slight delay for UX
+    setTimeout(async () => {
+      await onSend(transcript?.trim());
+      reset();
+      setIsRecording(false);
+      onOpenResult();
+    }, 300);
+  }, [isRecording, onOpenResult, onSend, reset, setIsRecording, transcript]);
+
   return (
     <div className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8">
       {/* Logo */}
       <div className="flex justify-center items-center w-full mt-4 sm:mt-6 md:mt-8 mb-2">
-        <img
+        <Image
           src="/richy.svg"
           alt="Richy Logo"
-          className="h-16 sm:h-18 md:h-20"
+          width={48}
+          height={48}
+          className="h-full object-contain"
         />
       </div>
 
@@ -48,24 +70,19 @@ function VoiceBody({
                 ? "bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg"
                 : "bg-gradient-to-br from-[#00804A] to-[#0D3D21] hover:from-green-500 hover:to-green-600 shadow-xl"
             }`}
-            onClick={onMicClick}
+            onClick={sendMessage}
             type="button"
           >
             <div className="relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center">
-              <FaMicrophone
-                className={`absolute text-white text-2xl sm:text-3xl md:text-4xl transition-all duration-500 ease-in-out ${
-                  isRecording
-                    ? "opacity-0 scale-75"
-                    : "opacity-100 scale-100"
-                }`}
-              />
-              <IoSend
-                className={`absolute text-white text-2xl sm:text-3xl md:text-4xl transition-all duration-500 ease-in-out ${
-                  isRecording
-                    ? "opacity-100 scale-110 animate-pulse"
-                    : "opacity-0 scale-75"
-                }`}
-              />
+              {isFinished ? (
+                <IoSend
+                  className={`absolute text-white text-2xl sm:text-3xl md:text-4xl`}
+                />
+              ) : (
+                <FaMicrophone
+                  className={`absolute text-white text-2xl sm:text-3xl md:text-4xl transition-all duration-500 ease-in-out opacity-100 scale-100 animate-pulse`}
+                />
+              )}
             </div>
           </button>
 
@@ -77,7 +94,9 @@ function VoiceBody({
         {/* Description */}
         <div className="text-center mb-3 sm:mb-4 px-2">
           <p className="text-[#2e2e2e] text-sm sm:text-base md:text-lg">
-            {currentContent.description}
+            {transcript?.trim() === "|"
+              ? currentContent?.description
+              : transcript}
           </p>
         </div>
       </div>

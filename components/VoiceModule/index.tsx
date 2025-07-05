@@ -1,13 +1,16 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import VoiceHeader from "./VoiceHeader";
-import VoiceBody from "./VoiceBody";
+import { ChatMessage as ComponentsChatMessage } from "@livekit/components-react";
+import dynamic from "next/dynamic";
+
+const VoiceHeader = dynamic(() => import("./VoiceHeader"));
+const VoiceBody = dynamic(() => import("./VoiceBody"));
 
 interface VoiceModuleProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenResult: () => void;
   onBackToSearch: () => void;
+  onSend: (message: string) => Promise<ComponentsChatMessage>;
 }
 
 function VoiceModule({
@@ -15,22 +18,11 @@ function VoiceModule({
   onClose,
   onOpenResult,
   onBackToSearch,
+  onSend,
 }: VoiceModuleProps) {
   const [isRecording, setIsRecording] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(langOptions[0]);
-
-  const handleMicClick = () => {
-    if (isRecording) {
-      setIsRecording(false);
-      // Call onOpenResult when stopping recording
-      setTimeout(() => {
-        onOpenResult();
-      }, 200);
-    } else {
-      setIsRecording(true);
-    }
-  };
 
   const handleLanguageChange = (option: (typeof langOptions)[0]) => {
     setSelectedLang(option);
@@ -57,7 +49,6 @@ function VoiceModule({
 
       <div className="fixed inset-0 z-[70] flex items-center justify-center p-2 sm:p-4">
         <div className="relative bg-[#FCF9E6] rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-7xl h-[90vh] sm:h-[80vh] md:h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
-          
           <VoiceHeader
             selectedLang={selectedLang}
             dropdownOpen={dropdownOpen}
@@ -72,9 +63,10 @@ function VoiceModule({
           <VoiceBody
             currentContent={currentContent}
             isRecording={isRecording}
-            onMicClick={handleMicClick}
+            setIsRecording={setIsRecording}
+            onOpenResult={onOpenResult}
+            onSend={onSend}
           />
-
         </div>
       </div>
     </>

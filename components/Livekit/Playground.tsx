@@ -87,6 +87,7 @@ function Playground({
         isOpen={isVoiceOpen && !isResultOpen}
         onClose={handleClose}
         onOpenResult={handleOpenResult}
+        onSend={sendChat}
         onBackToSearch={() => {
           setIsVoiceOpen(false);
           setIsSearchOpen(true);
