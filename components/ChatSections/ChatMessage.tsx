@@ -32,15 +32,20 @@ function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
             {message.products?.length > 0 && (
               <div className="pt-2 overflow-auto">
                 <div className="flex flex-col items-start gap-2 sm:gap-3 md:gap-4 pb-2 px-1 sm:px-2">
-                  {message.products.map((product, pid) => (
-                    <div className="w-full sm:w-9/12 md:w-8/12 lg:w-7/12" key={pid}>
+                  {message.products.map((property, pid) => (
+                    <div
+                      className="w-full sm:w-9/12 md:w-8/12 lg:w-7/12"
+                      key={pid}
+                    >
                       <SingleProductCard
-                        name={product.name}
-                        brand={product.brand}
-                        details={product.productDescription}
-                        image={product.imageUrls}
-                        price={product.price}
-                        link={product.webLink || "/"}
+                        name={property?.project_name
+                          .replace(/([A-Z])/g, " $1")
+                          .trim()}
+                        brand={property.project_owner}
+                        details={`${property.realestate_type} • ${property.room_area} • Located at ${property.location}`}
+                        image={property.project_images}
+                        price={property.budget}
+                        link={property.richyLink || "/"}
                       />
                     </div>
                   ))}
