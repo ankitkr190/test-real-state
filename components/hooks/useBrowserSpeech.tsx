@@ -75,6 +75,7 @@ export function useBrowserSpeech(isListening: boolean) {
     }
 
     return () => stopRecognition();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isListening]);
 
   const reset = () => {
