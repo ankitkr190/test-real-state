@@ -40,12 +40,12 @@ function SingleChatMessage({
                 ? "bg-[#DFF5E3] text-[#0D3D21] rounded-[8px] p-2 sm:p-3" //for user
                 : "bg-transparent text-[#171717] rounded-none py-2 sm:py-3" // for agent
             } 
-            text-[14px] sm:text-[16px] whitespace-pre-line mt-1`}
+            text-[14px] sm:text-[14px] whitespace-pre-line mt-1`}
           >
             {isSelf ? (
               message
             ) : (
-              <div className="markdown-content w-full sm:w-[95%] md:w-[90%] max-w-[700px] mx-auto overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0 text-[13px] sm:text-[14px] md:text-[15px]">
+              <div className="markdown-content w-full sm:w-[95%] md:w-[90%] max-w-[700px] mx-auto overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0 text-[13px] sm:text-[14px] md:text-[14px]">
                 <ReactMarkdown>{message}</ReactMarkdown>
               </div>
             )}
