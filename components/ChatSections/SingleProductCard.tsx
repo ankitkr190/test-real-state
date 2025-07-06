@@ -48,7 +48,7 @@ function SingleProductCard({
   }, [image]);
 
   return (
-    <div className="flex flex-col gap-1.5 sm:gap-2 min-w-[200px] sm:min-w-[250px] sm:max-w-[400px]  rounded-[16px] sm:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300 p-1.5 sm:p-2 bg-white border border-[#4D8D67]/20">
+    <div className="flex flex-col gap-1.5 sm:gap-2 min-w-[200px] sm:min-w-[250px] sm:max-w-[400px] rounded-[16px] sm:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300 p-1.5 sm:p-2 bg-white border border-[#4D8D67]/20">
       <div className="relative w-full h-[180px] sm:h-[220px] md:h-[249px]">
         {isLoading ? (
           <div className="w-full h-full flex items-center justify-center">
