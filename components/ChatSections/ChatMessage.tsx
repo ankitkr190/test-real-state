@@ -41,7 +41,7 @@ function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
                         name={property?.project_name
                           .replace(/([A-Z])/g, " $1")
                           .trim()}
-                        brand={property.project_owner}
+                        brand={property.room_name}
                         details={`${property.realestate_type} • ${property.room_area} • Located at ${property.location}`}
                         image={property.project_images}
                         price={property.budget}
