@@ -65,43 +65,50 @@ function SingleProductCard({
             slidesPerView={1}
             className="w-full h-full"
           >
-            {imageUrls.map((url, index) => (
-              <SwiperSlide key={index}>
-                <img
-                  src={url || image[index]}
-                  alt={name}
-                  className="w-full h-full object-contain rounded-md sm:rounded-lg"
-                  draggable={false}
-                />
-              </SwiperSlide>
-            ))}
+            {imageUrls.map(
+              (url, index) =>
+                index < 5 && (
+                  <SwiperSlide key={index}>
+                    <img
+                      src={url || image[index]}
+                      alt={name}
+                      className="w-full h-full object-contain rounded-md sm:rounded-lg"
+                      draggable={false}
+                    />
+                  </SwiperSlide>
+                )
+            )}
             <div className="swiper-pagination !-bottom-[5px]"></div>
           </Swiper>
         )}
       </div>
 
-      <div className="">
+      <div className="px-3 mt-1">
         <p className="mb-1 sm:mb-1.5 text-[11px] sm:text-[12px] md:text-[14px] font-normal text-[#0D3D21] line-clamp-1 capitalize">
           {brand}
         </p>
         <h2 className="mb-1 sm:mb-1.5 text-[14px] sm:text-[16px] md:text-[18px] font-semibold line-clamp-2 sm:line-clamp-3 text-[#0D3D21]">
           {name}
         </h2>
-        <p className="text-[11px] sm:text-[12px] md:text-[14px] font-normal mt-0.5 text-[#4D8D67] line-clamp-2 sm:line-clamp-3">
+        <p className="mb-2 text-[12px] sm:text-[12px] md:text-[14px] font-medium mt-0.5 text-[#4D8D67] line-clamp-2 sm:line-clamp-3">
           {details}
         </p>
-        <p className="mt-1 sm:mt-1.5 text-[14px] sm:text-[16px] md:text-[18px] font-bold text-[#1A7A4B]">
-          ฿{Number(price.toString().replace(/\s*Baht$/, "")).toFixed(2)}
-        </p>
+
+        <div className="pt-2 pb-1 flex justify-between items-center border-t-[1px] border-emerald-200">
+          <p className="w-[60%] mt-1 sm:mt-1.5 text-[14px] sm:text-[16px] md:text-[18px] font-bold text-green-700 capitalize">
+            ฿ {`${price.split(" ")[0]} ${price.split(" ")[1]}`}
+          </p>
+
+          <a
+            href={link || "/"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`w-[40%] bg-emerald-50 hover:bg-emerald-100 transition-colors duration-200 border border-emerald-400 px-4 sm:px-6 py-1 sm:py-1.5 mt-0.5 sm:mt-1 text-emerald-600 font-semibold rounded-full cursor-pointer text-center text-xs sm:text-sm shadow-sm`}
+          >
+            See Details
+          </a>
+        </div>
       </div>
-      <a
-        href={link || "/"}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`bg-[#1A7A4B] hover:bg-[#0D3D21] transition-colors duration-200 border px-4 sm:px-6 py-1 sm:py-1.5 mt-0.5 sm:mt-1 w-full text-white font-medium rounded-md sm:rounded-lg cursor-pointer text-center text-xs sm:text-sm shadow-sm`}
-      >
-        See Details
-      </a>
     </div>
   );
 }
