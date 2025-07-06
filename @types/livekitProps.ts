@@ -22,6 +22,7 @@ export interface ProductsProps {
   project_area: string;
   realestate_type: string;
   room_area: string;
+  room_name: string;
   budget: string;
   location: string;
   project_images: string[];
