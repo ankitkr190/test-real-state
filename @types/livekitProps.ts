@@ -16,13 +16,18 @@ export interface TokenResult {
 }
 
 export interface ProductsProps {
-  product_id: string;
-  name: string;
-  brand: string;
-  productDescription: string;
-  price: string;
-  imageUrls: string[];
-  harrodsLink?: string;
+  room_id: string;
+  project_name: string;
+  project_owner: string;
+  project_area: string;
+  realestate_type: string;
+  room_area: string;
+  room_name: string;
+  budget: string;
+  location: string;
+  project_images: string[];
+  ebook_url: string;
+  richyLink?: string;
 }
 
 export type ChatMessageType = {
@@ -32,3 +37,8 @@ export type ChatMessageType = {
   isSelf: boolean;
   timestamp: number;
 };
+
+export interface ChannelCartProps {
+  id: string;
+  quantity: number;
+}

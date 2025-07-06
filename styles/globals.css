@@ -12,6 +12,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: "PingFang", sans-serif;
+  --lk-va-bar-gap: 4px;
+  --lk-va-bar-width: 4px;
+  --lk-va-border-radius: 2px;
 }
 
 .markdown-content {
@@ -43,7 +46,7 @@ body {
 .loader {
   width: 26px;
   aspect-ratio: 2;
-  --_g: no-repeat radial-gradient(circle closest-side, #856630 90%, #0000);
+  --_g: no-repeat radial-gradient(circle closest-side, #1a7a4b 90%, #0000);
   background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
   background-size: calc(100% / 3) 50%;
   animation: l3 1s infinite linear;
@@ -69,6 +72,6 @@ body {
   opacity: 1 !important;
 }
 .swiper-pagination-bullet-active {
-  background: #856630 !important;
+  background: #1A7A4B !important;
   opacity: 1 !important;
 }
