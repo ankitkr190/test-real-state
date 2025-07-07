@@ -48,29 +48,29 @@ function SingleProductCard({
   }, [image]);
 
   return (
-    <div 
+    <div
       className="flex flex-col bg-white border border-[#4D8D67]/20 shadow-md hover:shadow-lg transition-shadow duration-300"
       style={{
-        minWidth: 'clamp(8rem, 18vw, 15rem)',
-        maxWidth: 'clamp(10rem, 22vw, 18rem)',
-        gap: 'clamp(0.2rem, 0.4vw, 0.6rem)',
-        borderRadius: 'clamp(0.6rem, 0.8vw, 0.8rem)',
-        padding: 'clamp(0.2rem, 0.4vw, 0.6rem)',
+        minWidth: "clamp(8rem, 18vw, 15rem)",
+        maxWidth: "clamp(10rem, 22vw, 18rem)",
+        gap: "clamp(0.2rem, 0.4vw, 0.6rem)",
+        borderRadius: "clamp(0.6rem, 0.8vw, 0.8rem)",
+        padding: "clamp(0.2rem, 0.4vw, 0.6rem)",
       }}
     >
-      <div 
+      <div
         className="relative w-full"
         style={{
-          height: 'clamp(7rem, 13vw, 10rem)',
+          height: "clamp(7rem, 13vw, 10rem)",
         }}
       >
         {isLoading ? (
           <div className="w-full h-full flex items-center justify-center">
-            <div 
+            <div
               className="animate-spin rounded-full border-b-2 border-[#1A7A4B]"
               style={{
-                width: 'clamp(1.2rem, 2.5vw, 1.8rem)',
-                height: 'clamp(1.2rem, 2.5vw, 1.8rem)',
+                width: "clamp(1.2rem, 2.5vw, 1.8rem)",
+                height: "clamp(1.2rem, 2.5vw, 1.8rem)",
               }}
             ></div>
           </div>
@@ -94,7 +94,7 @@ function SingleProductCard({
                       alt={name}
                       className="w-full h-full object-cover"
                       style={{
-                        borderRadius: 'clamp(0.4rem, 0.8vw, 0.6rem)',
+                        borderRadius: "clamp(0.4rem, 0.8vw, 0.6rem)",
                       }}
                       draggable={false}
                     />
@@ -106,53 +106,53 @@ function SingleProductCard({
         )}
       </div>
 
-      <div 
+      <div
         style={{
-          padding: 'clamp(0.2rem, 0.4vw, 0.6rem)',
-          marginTop: 'clamp(0.1rem, 0.2vw, 0.3rem)',
+          padding: "clamp(0.2rem, 0.4vw, 0.6rem)",
+          marginTop: "clamp(0.1rem, 0.2vw, 0.3rem)",
         }}
       >
-        <p 
+        <p
           className="font-normal text-[#0D3D21] line-clamp-1 capitalize"
           style={{
-            fontSize: 'clamp(0.55rem, 1.3vw, 0.7rem)',
-            marginBottom: 'clamp(0.1rem, 0.2vw, 0.3rem)',
+            fontSize: "clamp(0.55rem, 1.3vw, 0.7rem)",
+            marginBottom: "clamp(0.1rem, 0.2vw, 0.3rem)",
           }}
         >
           {brand}
         </p>
-        <h2 
+        <h2
           className="font-semibold line-clamp-2 text-[#0D3D21]"
           style={{
-            fontSize: 'clamp(0.7rem, 1.8vw, 0.9rem)',
-            marginBottom: 'clamp(0.1rem, 0.2vw, 0.3rem)',
+            fontSize: "clamp(0.7rem, 1.8vw, 0.9rem)",
+            marginBottom: "clamp(0.1rem, 0.2vw, 0.3rem)",
           }}
         >
           {name}
         </h2>
-        <p 
+        <p
           className="font-medium text-[#4D8D67] line-clamp-2"
           style={{
-            fontSize: 'clamp(0.55rem, 1.3vw, 0.7rem)',
-            marginBottom: 'clamp(0.6rem, 0.8vw, 0.9rem)',
-            marginTop: 'clamp(0.1rem, 0.2vw, 0.3rem)',
+            fontSize: "clamp(0.55rem, 1.3vw, 0.7rem)",
+            marginBottom: "clamp(0.6rem, 0.8vw, 0.9rem)",
+            marginTop: "clamp(0.1rem, 0.2vw, 0.3rem)",
           }}
         >
           {details}
         </p>
 
-        <div 
+        <div
           className="flex justify-between items-center border-t-[1px] border-emerald-200"
           style={{
-            paddingTop: 'clamp(0.3rem, 0.6vw, 0.4rem)',
-            paddingBottom: 'clamp(0.1rem, 0.2vw, 0.3rem)',
+            paddingTop: "clamp(0.3rem, 0.6vw, 0.4rem)",
+            paddingBottom: "clamp(0.1rem, 0.2vw, 0.3rem)",
           }}
         >
-          <p 
+          <p
             className="w-[60%] font-bold text-green-700 capitalize"
             style={{
-              fontSize: 'clamp(0.7rem, 1.8vw, 0.9rem)',
-              marginTop: 'clamp(0.1rem, 0.2vw, 0.3rem)',
+              fontSize: "clamp(0.7rem, 1.8vw, 0.9rem)",
+              marginTop: "clamp(0.1rem, 0.2vw, 0.3rem)",
             }}
           >
             ฿ {`${price.split(" ")[0]} ${price.split(" ")[1]}`}
@@ -164,9 +164,10 @@ function SingleProductCard({
             rel="noopener noreferrer"
             className="w-[40%] bg-emerald-50 hover:bg-emerald-100 transition-colors duration-200 border border-emerald-400 text-emerald-600 font-semibold rounded-full cursor-pointer text-center shadow-sm"
             style={{
-              fontSize: 'clamp(0.55rem, 1.3vw, 0.7rem)',
-              padding: 'clamp(0.2rem, 0.4vw, 0.4rem) clamp(0.4rem, 0.8vw, 0.6rem)',
-              marginTop: 'clamp(0.1rem, 0.2vw, 0.3rem)',
+              fontSize: "clamp(0.55rem, 1.3vw, 0.7rem)",
+              padding:
+                "clamp(0.2rem, 0.4vw, 0.4rem) clamp(0.4rem, 0.8vw, 0.6rem)",
+              marginTop: "clamp(0.1rem, 0.2vw, 0.3rem)",
             }}
           >
             See Details

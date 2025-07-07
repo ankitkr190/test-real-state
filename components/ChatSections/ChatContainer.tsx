@@ -15,12 +15,12 @@ function ChatContainer({ children }: ChatContainerProps) {
         }}
       >
         <div 
-          className="relative bg-[#FCF9E6] shadow-2xl flex flex-col animate-in fade-in zoom-in-95 duration-300"
+          className="relative backdrop-blur-md bg-white/100 shadow-2xl flex flex-col animate-in fade-in zoom-in-95 duration-300 overflow-hidden border border-white/40"
           style={{
             width: 'clamp(20rem, 90vw, 70rem)',
             maxWidth: 'clamp(22rem, 95vw, 85rem)',
             height: 'clamp(70vh, 90vh, 90vh)',
-            borderRadius: 'clamp(0.5rem, 1.5vw, 1rem)',
+            borderRadius: 'clamp(0.75rem, 2vw, 1rem)',
           }}
         >
           {children}

@@ -154,9 +154,9 @@ function ChatBody({
   return (
     <div
       ref={containerRef}
-      className="flex-1 overflow-y-auto bg-transparent m-0 flex flex-col"
+      className="flex-1 overflow-y-auto bg-transparent m-0 flex flex-col chat-body"
       style={{
-        padding: 'clamp(1.5rem, 3vw, 1.5rem) clamp(1rem, 3vw, 2rem)',
+        padding: "clamp(1.5rem, 3vw, 1.5rem) clamp(1rem, 3vw, 2rem)",
       }}
     >
       <ChatMessage
@@ -166,10 +166,10 @@ function ChatBody({
       />
 
       {isLoading && (
-        <div 
+        <div
           className="loader"
           style={{
-            marginTop: 'clamp(0.375rem, 1vw, 0.375rem)',
+            marginTop: "clamp(0.375rem, 1vw, 0.375rem)",
           }}
         ></div>
       )}
