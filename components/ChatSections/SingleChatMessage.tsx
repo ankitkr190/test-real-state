@@ -27,7 +27,7 @@ function SingleChatMessage({
       <div
         className={`flex ${isSelf ? "justify-end" : "justify-start"} w-full`}
         style={{
-          paddingTop: hideName ? '0' : 'clamp(0.5rem, 1.5vw, 1rem)',
+          paddingTop: hideName ? "0" : "clamp(0.5rem, 1.5vw, 1rem)",
         }}
       >
         <div
@@ -35,37 +35,41 @@ function SingleChatMessage({
             isSelf ? "mr-0 items-end" : "ml-0"
           }`}
           style={{
-            gap: 'clamp(0.25rem, 0.5vw, 0.5rem)',
-            maxWidth: isSelf ? '80%' : '90%',
+            gap: "clamp(0.25rem, 0.5vw, 0.5rem)",
+            maxWidth: isSelf ? "80%" : "90%",
           }}
         >
           <div
             className={`${
               isSelf
-                ? "bg-gradient-to-br from-[#00804A] to-[#00A056] text-white shadow-lg shadow-emerald-500/30" // Modern gradient for user
+                ? "bg-gradient-to-br from-[#DDDDDD4B] to-[#2D2D2D4B] text-gray-700 shadow-lg shadow-gray-500/30" // Modern gradient for user
                 : "bg-transparent text-[#2D2D2D]" // Modern clean styling for agent
-            } whitespace-pre-line transition-all duration-200 ${isSelf ? 'hover:shadow-lg' : ''}`}
+            } whitespace-pre-line transition-all duration-200 ${
+              isSelf ? "hover:shadow-lg" : ""
+            }`}
             style={{
-              padding: isSelf ? 'clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.25rem)' : 'clamp(0.25rem, 0.5vw, 0.5rem) 0',
-              fontSize: 'clamp(0.85rem, 1.9vw, 0.95rem)',
-              marginTop: 'clamp(0.25rem, 0.5vw, 0.25rem)',
-              borderRadius: isSelf ? '20px 20px 4px 20px' : undefined,
-              maxWidth: '100%',
-              wordBreak: 'break-word',
-              lineHeight: '1.6',
+              padding: isSelf
+                ? "clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.25rem)"
+                : "clamp(0.25rem, 0.5vw, 0.5rem) 0",
+              fontSize: "clamp(0.85rem, 1.9vw, 0.95rem)",
+              marginTop: "clamp(0.25rem, 0.5vw, 0.25rem)",
+              borderRadius: isSelf ? "20px 20px 4px 20px" : undefined,
+              maxWidth: "100%",
+              wordBreak: "break-word",
+              lineHeight: "1.6",
             }}
           >
             {isSelf ? (
               message
             ) : (
-              <div 
+              <div
                 className="markdown-content overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0 [&_h1]:text-lg [&_h1]:font-bold [&_h1]:mt-2 [&_h2]:text-base [&_h2]:font-semibold [&_h2]:mt-2 [&_h3]:font-medium [&_h3]:mt-1 [&_strong]:font-semibold [&_strong]:text-[#00804A] [&_em]:italic [&_ul]:pl-4 [&_ol]:pl-4 [&_li]:mb-1"
                 style={{
-                  width: 'clamp(95%, 90vw, 700px)',
-                  maxWidth: 'clamp(400px, 85vw, 700px)',
-                  fontSize: 'clamp(0.85rem, 1.9vw, 0.95rem)',
-                  lineHeight: '1.6',
-                  color: '#2D2D2D',
+                  width: "clamp(95%, 90vw, 700px)",
+                  maxWidth: "clamp(400px, 85vw, 700px)",
+                  fontSize: "clamp(0.85rem, 1.9vw, 0.95rem)",
+                  lineHeight: "1.6",
+                  color: "#2D2D2D",
                 }}
               >
                 <ReactMarkdown>{message}</ReactMarkdown>
@@ -76,18 +80,18 @@ function SingleChatMessage({
       </div>
 
       {!isSelf && (
-        <div 
+        <div
           className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center"
           style={{
-            marginTop: '0.125rem',
-            marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
-            gap: 'clamp(0.75rem, 1.5vw, 1rem)',
+            marginTop: "0.125rem",
+            marginBottom: "clamp(1rem, 2vw, 1.5rem)",
+            gap: "clamp(0.75rem, 1.5vw, 1rem)",
           }}
         >
-          <div 
+          <div
             className="flex justify-start items-center"
             style={{
-              gap: 'clamp(0.25rem, 0.5vw, 0.5rem)',
+              gap: "clamp(0.25rem, 0.5vw, 0.5rem)",
             }}
           >
             <button
@@ -101,8 +105,8 @@ function SingleChatMessage({
                 width={16}
                 height={16}
                 style={{
-                  width: 'clamp(1rem, 1.8vw, 1.2rem)',
-                  height: 'clamp(1rem, 1.8vw, 1.2rem)',
+                  width: "clamp(1rem, 1.8vw, 1.2rem)",
+                  height: "clamp(1rem, 1.8vw, 1.2rem)",
                 }}
               />
             </button>
@@ -111,14 +115,14 @@ function SingleChatMessage({
               aria-label="Like"
               title="Like"
             >
-              <Image 
-                src={"/actions/like.svg"} 
-                alt="like" 
-                width={16} 
+              <Image
+                src={"/actions/like.svg"}
+                alt="like"
+                width={16}
                 height={16}
                 style={{
-                  width: 'clamp(1rem, 1.6vw, 1.1rem)',
-                  height: 'clamp(1rem, 1.6vw, 1.1rem)',
+                  width: "clamp(1rem, 1.6vw, 1.1rem)",
+                  height: "clamp(1rem, 1.6vw, 1.1rem)",
                 }}
               />
             </button>
@@ -133,17 +137,17 @@ function SingleChatMessage({
                 width={16}
                 height={16}
                 style={{
-                  width: 'clamp(1rem, 1.6vw, 1.1rem)',
-                  height: 'clamp(1rem, 1.6vw, 1.1rem)',
+                  width: "clamp(1rem, 1.6vw, 1.1rem)",
+                  height: "clamp(1rem, 1.6vw, 1.1rem)",
                 }}
               />
             </button>
           </div>
           <div className="w-full sm:w-auto">
-            <p 
+            <p
               className="font-medium text-gray-400 text-start sm:text-end"
               style={{
-                fontSize: 'clamp(0.7rem, 1.3vw, 0.8rem)',
+                fontSize: "clamp(0.7rem, 1.3vw, 0.8rem)",
               }}
             >
               {date
