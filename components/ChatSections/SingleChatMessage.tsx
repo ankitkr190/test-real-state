@@ -42,10 +42,10 @@ function SingleChatMessage({
           <div
             className={`${
               isSelf
-                ? "bg-gradient-to-br from-[#DDDDDD4B] to-[#2D2D2D4B] text-gray-700 shadow-lg shadow-gray-500/30" // Modern gradient for user
+                ? "bg-gradient-to-br from-[#DDDDDD4B] to-[#2D2D2D4B] text-gray-700" // Modern gradient for user
                 : "bg-transparent text-[#2D2D2D]" // Modern clean styling for agent
             } whitespace-pre-line transition-all duration-200 ${
-              isSelf ? "hover:shadow-lg" : ""
+              isSelf ? "" : ""
             }`}
             style={{
               padding: isSelf
