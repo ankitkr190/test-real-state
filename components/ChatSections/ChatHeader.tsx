@@ -9,17 +9,36 @@ interface ChatHeader {
 
 function ChatHeader({ onClose, roomState }: ChatHeader) {
   return (
-    <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 sm:py-4 border-b border-[#0D3D21]">
-      <div className="flex items-center gap-1.5 sm:gap-2">
+    <div 
+      className="flex items-center justify-between border-b border-[#0D3D21]"
+      style={{
+        padding: 'clamp(0.5rem, 1.5vw, 1rem) clamp(1rem, 3vw, 2rem)',
+      }}
+    >
+      <div 
+        className="flex items-center"
+        style={{
+          gap: 'clamp(0.375rem, 1vw, 0.5rem)',
+        }}
+      >
         <div
-          className={`h-[6px] w-[6px] sm:h-[8px] sm:w-[8px] rounded-full inline-block ${
+          className={`rounded-full inline-block ${
             roomState === ConnectionState.Connected ||
             roomState === ConnectionState.Connecting
               ? "bg-[#00C853]"
               : "bg-red-500"
           }`}
+          style={{
+            width: 'clamp(0.375rem, 1vw, 0.5rem)',
+            height: 'clamp(0.375rem, 1vw, 0.5rem)',
+          }}
         ></div>
-        <p className={`text-gray-500 font-medium text-sm sm:text-base`}>
+        <p 
+          className="text-gray-500 font-medium"
+          style={{
+            fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+          }}
+        >
           {roomState === ConnectionState.Connected
             ? "Online"
             : roomState === ConnectionState.Connecting
@@ -38,11 +57,17 @@ function ChatHeader({ onClose, roomState }: ChatHeader) {
         height={72}
         src="/richy.svg"
         alt="Richy Logo"
-        className="object-fill h-8 sm:h-10 md:h-12"
+        className="object-fill"
+        style={{
+          height: 'clamp(2rem, 4vw, 3rem)',
+        }}
         loading="lazy"
       />
       <button
-        className="text-gray-400 hover:text-gray-600 text-xl sm:text-2xl"
+        className="text-gray-400 hover:text-gray-600"
+        style={{
+          fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
+        }}
         onClick={onClose}
         aria-label="Close"
       >

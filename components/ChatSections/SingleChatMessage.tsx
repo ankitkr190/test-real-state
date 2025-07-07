@@ -25,27 +25,42 @@ function SingleChatMessage({
   return (
     <>
       <div
-        className={`flex ${isSelf ? "justify-end" : "justify-start"} w-full ${
-          hideName ? "pt-0" : "pt-2 sm:pt-3 md:pt-4"
-        }`}
+        className={`flex ${isSelf ? "justify-end" : "justify-start"} w-full`}
+        style={{
+          paddingTop: hideName ? '0' : 'clamp(0.5rem, 1.5vw, 1rem)',
+        }}
       >
         <div
-          className={`flex flex-col items-start gap-1 sm:gap-2 ${
+          className={`flex flex-col items-start ${
             isSelf ? "mr-0" : "ml-0"
           }`}
+          style={{
+            gap: 'clamp(0.25rem, 0.5vw, 0.5rem)',
+          }}
         >
           <div
             className={`${
               isSelf
-                ? "bg-[#DFF5E3] text-[#0D3D21] rounded-[8px] p-2 sm:p-3" //for user
-                : "bg-transparent text-[#171717] rounded-none py-2 sm:py-3" // for agent
-            } 
-            text-[14px] sm:text-[14px] whitespace-pre-line mt-1`}
+                ? "bg-[#DFF5E3] text-[#0D3D21] rounded-[8px]" //for user
+                : "bg-transparent text-[#171717] rounded-none" // for agent
+            } whitespace-pre-line`}
+            style={{
+              padding: isSelf ? 'clamp(0.5rem, 1vw, 0.75rem)' : 'clamp(0.5rem, 1.5vw, 0.75rem) 0',
+              fontSize: 'clamp(0.8rem, 1.8vw, 0.875rem)',
+              marginTop: 'clamp(0.25rem, 0.5vw, 0.25rem)',
+            }}
           >
             {isSelf ? (
               message
             ) : (
-              <div className="markdown-content w-full sm:w-[95%] md:w-[90%] max-w-[700px] mx-auto overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0 text-[13px] sm:text-[14px] md:text-[14px]">
+              <div 
+                className="markdown-content overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0"
+                style={{
+                  width: 'clamp(95%, 90vw, 700px)',
+                  maxWidth: 'clamp(400px, 85vw, 700px)',
+                  fontSize: 'clamp(0.8rem, 1.8vw, 0.875rem)',
+                }}
+              >
                 <ReactMarkdown>{message}</ReactMarkdown>
               </div>
             )}
@@ -54,8 +69,19 @@ function SingleChatMessage({
       </div>
 
       {!isSelf && (
-        <div className="mb-2 sm:mb-3 md:mb-4 w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
-          <div className="flex justify-start items-center gap-x-2 sm:gap-x-3">
+        <div 
+          className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center"
+          style={{
+            marginBottom: 'clamp(0.5rem, 1.5vw, 1rem)',
+            gap: 'clamp(0.5rem, 1vw, 0.5rem)',
+          }}
+        >
+          <div 
+            className="flex justify-start items-center"
+            style={{
+              gap: 'clamp(0.5rem, 1vw, 0.75rem)',
+            }}
+          >
             <button
               className={`cursor-pointer active:opacity-60 text-gray-700`}
               onClick={() => setIsMuted(!isMuted)}
@@ -65,7 +91,10 @@ function SingleChatMessage({
                 alt="speaker"
                 width={14}
                 height={14}
-                className="sm:w-4 sm:h-4"
+                style={{
+                  width: 'clamp(0.875rem, 1.5vw, 1rem)',
+                  height: 'clamp(0.875rem, 1.5vw, 1rem)',
+                }}
               />
             </button>
             <button
@@ -78,7 +107,10 @@ function SingleChatMessage({
                 alt="like" 
                 width={12} 
                 height={12}
-                className="sm:w-[14px] sm:h-[14px]"
+                style={{
+                  width: 'clamp(0.75rem, 1.2vw, 0.875rem)',
+                  height: 'clamp(0.75rem, 1.2vw, 0.875rem)',
+                }}
               />
             </button>
             <button
@@ -91,12 +123,20 @@ function SingleChatMessage({
                 alt="dislike"
                 width={12}
                 height={12}
-                className="sm:w-[14px] sm:h-[14px]"
+                style={{
+                  width: 'clamp(0.75rem, 1.2vw, 0.875rem)',
+                  height: 'clamp(0.75rem, 1.2vw, 0.875rem)',
+                }}
               />
             </button>
           </div>
           <div className="w-full sm:w-auto">
-            <p className="text-[10px] sm:text-[12px] font-light text-[#4E4E4E] text-start sm:text-end">
+            <p 
+              className="font-light text-[#4E4E4E] text-start sm:text-end"
+              style={{
+                fontSize: 'clamp(0.625rem, 1.2vw, 0.75rem)',
+              }}
+            >
               {date
                 .toLocaleString("en-GB", {
                   day: "2-digit",
