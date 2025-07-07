@@ -1,6 +1,21 @@
+/**
+ * Description:
+ * This is the component that will display the cloned page
+ * It will display the cloned page in an iframe
+ * It will display a progress bar while the iframe is loading
+ * It will display an error message if the iframe fails to load
+ * It will display a message if there is no content to display
+ * It will display the cloned page in an iframe
+ */
+
 import { useEffect, useState } from "react";
 
-export default function HarrodsPage() {
+interface PageProps {
+  pageName: string;
+  pageUrl: string;
+}
+
+export default function ClonePage({ pageName, pageUrl }: PageProps) {
   const [htmlReady, setHtmlReady] = useState(false);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -11,7 +26,12 @@ export default function HarrodsPage() {
       try {
         const response = await fetch("/api/generate-website", {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ pageUrl }),
         });
+
         if (response.ok) {
           setHtmlReady(true);
         } else {
@@ -19,54 +39,42 @@ export default function HarrodsPage() {
           setError(data.message || "Failed to generate HTML");
         }
       } catch (err) {
+        console.error(err);
         setError("Network error");
-        console.log(err);
       } finally {
         setLoading(false);
       }
     };
 
     generateHtml();
-  }, []);
+  }, [pageUrl]);
 
   const handleIframeLoad = () => {
-    setProgress(100); // Set progress to 100% when iframe finishes loading
+    setProgress(100);
   };
 
   const handleIframeError = () => {
     setError("Failed to load the iframe");
   };
 
-  // Simulate a loading progress bar while the iframe is being loaded
-  const simulateProgress = () => {
-    let progressInterval: NodeJS.Timeout | null = null;
-    if (loading && progress < 100) {
-      progressInterval = setInterval(() => {
-        if (progress < 90) {
-          setProgress((prevProgress) => prevProgress + 5); // Increase progress
-        } else {
-          if (progressInterval) clearInterval(progressInterval);
-        }
-      }, 500);
-    }
-    return progressInterval;
-  };
-
+  // Simulate progress bar while iframe is loading
   useEffect(() => {
-    const interval = simulateProgress();
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [loading, progress]);
+    if (!loading) return;
+
+    const interval = setInterval(() => {
+      setProgress((prev) => (prev < 90 ? prev + 5 : prev));
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [loading]);
 
   return (
-    <div className="reltive flex flex-col items-center justify-center w-full h-screen bg-gray-50 overflow-x-hidden">
+    <div className="relative flex flex-col items-center justify-center w-full h-screen bg-gray-50 overflow-x-hidden">
       {loading && (
         <>
           <div className="text-gray-600 text-lg animate-pulse">
-            Generating Harrods page... Please wait.
+            Generating {pageName} page... Please wait.
           </div>
-          {/* Progress Bar */}
           <div className="absolute top-0 w-full bg-gray-200 h-1 mt-4">
             <div
               className="bg-[#8a7252] h-1"
@@ -80,22 +88,25 @@ export default function HarrodsPage() {
         <div className="text-red-500 font-semibold mt-4">Error: {error}</div>
       )}
 
-      {!loading && htmlReady && (
+      {!loading && htmlReady && !error && (
         <div className="relative w-full h-full">
           <iframe
             src="/harrods.html"
-            title="Harrods Page"
+            title={pageName}
             className="w-full h-full border-none"
             onLoad={handleIframeLoad}
             onError={handleIframeError}
           />
-          {/* Loading Overlay */}
           {progress < 100 && (
             <div className="absolute top-0 left-0 w-full h-full bg-white opacity-75 flex items-center justify-center">
               <div className="text-gray-800">Loading...</div>
             </div>
           )}
         </div>
+      )}
+
+      {!loading && !htmlReady && !error && (
+        <div className="text-gray-500 mt-4">No content to display.</div>
       )}
     </div>
   );

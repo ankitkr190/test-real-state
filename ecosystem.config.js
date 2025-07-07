@@ -7,7 +7,7 @@ module.exports = {
       exec_mode: "fork",
       env: {
         NODE_ENV: "development",
-        PORT: 3000
+        PORT: 3003
       },
       env_staging: {
         NODE_ENV: "staging",

@@ -1,3 +1,13 @@
+/**
+ * Description:
+ * This is a POST API to generate a website clone
+ * It will generate a HTML file in the public folder
+ * It will use puppeteer to generate the HTML file
+ * It will use the pageUrl to generate the HTML file
+ * It will use the pageName to generate the HTML file
+ * It will use the pageUrl to generate the HTML file
+ */
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import path from "path";
@@ -13,6 +23,13 @@ export default async function handler(
     return res.status(405).json({ message: "Only POST requests allowed" });
   }
 
+  const { pageUrl } = req.body;
+
+  // Validate pageUrl
+  if (!pageUrl || typeof pageUrl !== "string") {
+    return res.status(400).json({ message: "Invalid or missing pageUrl" });
+  }
+
   try {
     const browser = await puppeteer.launch({
       headless: true, // or false if you want to see the browser
@@ -22,7 +39,6 @@ export default async function handler(
 
     const page = await browser.newPage();
 
-    // Mimic real user by setting headers
     await page.setRequestInterception(true);
     page.on("request", (req) => {
       req.continue({
@@ -35,10 +51,9 @@ export default async function handler(
       });
     });
 
-    // Increase timeout and try different waitUntil strategy
-    await page.goto("https://www.richy.co.th/en/home_page", {
-      waitUntil: "domcontentloaded", // or try 'load'
-      timeout: 60000, // Increase timeout to 60 seconds
+    await page.goto(pageUrl, {
+      waitUntil: "domcontentloaded",
+      timeout: 60000,
     });
 
     const htmlContent = await page.content();
@@ -52,7 +67,6 @@ export default async function handler(
       .json({ message: "harrods.html generated successfully" });
   } catch (error) {
     console.error("Error generating harrods.html:", error);
-    console.error(error);
     return res.status(500).json({ message: "Failed to generate harrods.html" });
   }
 }
