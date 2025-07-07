@@ -56,7 +56,7 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
           />
         ) : (
           <React.Fragment>
-            <div className="flex items-center border border-gray-200/30 rounded-xl p-2 transition-all duration-200 focus-within:ring-2 focus-within:ring-gray-500/30 focus-within:border-gray-300">
+            <div className="flex items-center border border-gray-200/30 rounded-xl p-2 transition-all duration-200">
               <textarea
                 onKeyDown={handleKeyDown}
                 ref={textareaRef}
