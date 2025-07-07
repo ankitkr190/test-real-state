@@ -78,7 +78,7 @@ function ChatHeader({ onClose, roomState }: ChatHeader) {
                 }}
               >
                 {roomState === ConnectionState.Connected
-                  ? "Online & Ready"
+                  ? "Online"
                   : roomState === ConnectionState.Connecting
                   ? "Connecting..."
                   : roomState === ConnectionState.Reconnecting
