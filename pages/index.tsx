@@ -45,7 +45,7 @@ function HomePage() {
       </Head>
 
       <div
-        className="fixed top-4 right-6 sm:top-2 sm:right-4 md:top-3 md:right-5 lg:top-4 lg:right-6 xl:top-6 xl:right-12 z-40"
+        className="absolute top-4 right-6 sm:top-2 sm:right-4 md:top-3 md:right-5 lg:top-4 lg:right-6 xl:top-6 xl:right-12 z-40"
         onClick={handleLogout}
         title="Logout"
       >
