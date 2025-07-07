@@ -49,7 +49,7 @@ function VoiceModule({
 
       <div className="fixed inset-0 z-[70] flex items-center justify-center"
            style={{ padding: 'clamp(0.5rem, 2vw, 1rem)' }}>
-        <div className="relative bg-[#FCF9E6] shadow-2xl w-full p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300"
+        <div className="relative bg-white shadow-2xl w-full p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300"
              style={{
                borderRadius: 'clamp(0.75rem, 3vw, 1.5rem)',
                maxWidth: 'clamp(20rem, 85vw, 80rem)',

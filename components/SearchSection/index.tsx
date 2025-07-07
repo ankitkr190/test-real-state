@@ -20,6 +20,7 @@ function SearchSection({
 }: SearchSectionProps) {
   const [searchValue, setSearchValue] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
   const [selectedLang, setSelectedLang] = useState({
     flag: "/uk.svg",
     label: "EN",
@@ -29,6 +30,7 @@ function SearchSection({
   useEffect(() => {
     if (isOpen) {
       setSearchValue("");
+      setIsSearching(false);
       setSelectedLang({
         flag: "/uk.svg",
         label: "EN",
@@ -38,12 +40,14 @@ function SearchSection({
     }
   }, [isOpen]);
 
-  const handleSearch = useCallback(() => {
+  const handleSearch = useCallback(async () => {
     if (searchValue === "") return;
-
+    
+    setIsSearching(true);
     setTimeout(async () => {
       onOpenResult();
       await onSend(searchValue);
+      setIsSearching(false);
     }, 200);
   }, [onOpenResult, onSend, searchValue]);
 
@@ -91,7 +95,7 @@ function SearchSection({
       />
 
       <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ padding: 'clamp(0.5rem, 1vw, 1rem)' }}>
-        <div className="relative bg-[#FCF9E6] shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
+        <div className="relative bg-white shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
           borderRadius: 'clamp(0.75rem, 2vw, 2rem)', 
           maxWidth: 'clamp(16rem, 85vw, 80rem)', 
           height: 'clamp(32rem, 85vh, 37.5rem)' 
@@ -107,14 +111,14 @@ function SearchSection({
           </div>
           <div className="absolute flex" style={{ top: 'clamp(1rem, 2vh, 1.75rem)', right: 'clamp(1rem, 4vw, 4rem)' }}>
             <button
-              className="flex items-center bg-white rounded shadow"
+              className="flex items-center bg-white border border-[#00804A]/20 rounded-lg shadow-sm hover:shadow-md hover:border-[#00804A]/40 transition-all duration-300"
               onClick={() => setDropdownOpen((open) => !open)}
               type="button"
               style={{
                 gap: 'clamp(0.25rem, 1vw, 0.5rem)',
-                padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 0.75rem)',
+                padding: 'clamp(0.375rem, 1.5vh, 0.5rem) clamp(0.75rem, 2vw, 1rem)',
                 fontSize: 'clamp(0.875rem, 2vw, 1rem)',
-                borderRadius: 'clamp(0.25rem, 1vw, 0.5rem)'
+                borderRadius: 'clamp(0.5rem, 1vw, 0.75rem)'
               }}
             >
               <Image
@@ -206,7 +210,7 @@ function SearchSection({
                 }}>
               {currentContent.title}
             </h1>
-            <div className="flex items-center w-full bg-[#181B2B] rounded-full overflow-hidden drop-shadow-xl"
+            <div className="flex items-center w-full bg-white border-2 border-[#00804A]/20 rounded-full overflow-hidden drop-shadow-lg hover:border-[#00804A]/40 transition-all duration-300"
                  style={{
                    maxWidth: 'clamp(16rem, 80vw, 48rem)',
                    marginBottom: 'clamp(1rem, 3vh, 1rem)'
@@ -215,10 +219,10 @@ function SearchSection({
                    style={{ 
                      padding: 'clamp(0.5rem, 2vh, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)'
                    }}>
-                <FaSearch className="text-white mr-2"
+                <FaSearch className="text-[#00804A] mr-2"
                           style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }} />
                 <input
-                  className="flex-1 bg-transparent outline-none text-white placeholder-gray-400"
+                  className="flex-1 bg-transparent outline-none text-[#0D3D21] placeholder-gray-500"
                   placeholder={currentContent.placeholder}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
@@ -227,39 +231,44 @@ function SearchSection({
                 />
               </div>
               <button
-                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full rounded-bl-[30px] hover:from-green-400 transition-all duration-200"
+                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full rounded-r-full hover:from-[#00804A]/90 hover:to-[#0D3D21]/90 transition-all duration-300 disabled:opacity-50"
                 type="button"
                 onClick={handleButtonClick}
+                disabled={isSearching}
                 style={{ padding: '0 clamp(0.75rem, 3vw, 1.25rem)' }}
               >
-                <div className="relative"
-                     style={{
-                       height: 'clamp(1.25rem, 4vw, 1.75rem)',
-                       width: 'clamp(1.25rem, 4vw, 1.75rem)'
-                     }}>
-                  <Image
-                    src="/mic2.svg"
-                    alt="Microphone"
-                    width={28}
-                    height={28}
-                    className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
-                      searchValue.trim()
-                        ? "opacity-0 transform scale-75 rotate-12"
-                        : "opacity-100 transform scale-100 rotate-0"
-                    }`}
-                  />
-                  <Image
-                    src="/send1.svg"
-                    alt="Send"
-                    width={28}
-                    height={28}
-                    className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
-                      searchValue.trim()
-                        ? "opacity-100 transform scale-100 rotate-0"
-                        : "opacity-0 transform scale-75 rotate-12"
-                    }`}
-                  />
-                </div>
+                {isSearching ? (
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                ) : (
+                  <div className="relative"
+                       style={{
+                         height: 'clamp(1.25rem, 4vw, 1.75rem)',
+                         width: 'clamp(1.25rem, 4vw, 1.75rem)'
+                       }}>
+                    <Image
+                      src="/mic2.svg"
+                      alt="Microphone"
+                      width={28}
+                      height={28}
+                      className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
+                        searchValue.trim()
+                          ? "opacity-0 transform scale-75 rotate-12"
+                          : "opacity-100 transform scale-100 rotate-0"
+                      }`}
+                    />
+                    <Image
+                      src="/send1.svg"
+                      alt="Send"
+                      width={28}
+                      height={28}
+                      className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
+                        searchValue.trim()
+                          ? "opacity-100 transform scale-100 rotate-0"
+                          : "opacity-0 transform scale-75 rotate-12"
+                      }`}
+                    />
+                  </div>
+                )}
               </button>
             </div>
             <p className="text-center text-[#2e2e2e] px-2"
@@ -278,12 +287,12 @@ function SearchSection({
               {currentContent.suggestions.map((text) => (
                 <button
                   key={text}
-                  className="bg-white rounded-full shadow text-[#1A7A4B] font-medium hover:bg-[#F3F3F3]"
+                  className="bg-gradient-to-r from-[#00804A]/5 to-[#0D3D21]/5 border border-[#00804A]/20 rounded-full shadow-sm text-[#0D3D21] font-medium hover:from-[#00804A]/10 hover:to-[#0D3D21]/10 hover:border-[#00804A]/40 hover:shadow-md transition-all duration-300 hover:scale-105"
                   onClick={() => handleSuggestionClick(text)}
                   type="button"
                   style={{
-                    padding: 'clamp(0.375rem, 1.5vh, 0.5rem) clamp(0.75rem, 3vw, 1.25rem)',
-                    fontSize: 'clamp(0.75rem, 2vw, 1rem)',
+                    padding: 'clamp(0.5rem, 2vh, 0.75rem) clamp(1rem, 3vw, 1.5rem)',
+                    fontSize: 'clamp(0.75rem, 2vw, 0.9rem)',
                     borderRadius: 'clamp(1rem, 3vw, 1.5rem)'
                   }}
                 >
@@ -308,9 +317,7 @@ const content = {
       "Tell Richy what you need — listings, leads, or follow-ups — and it handles the rest.",
     subDescription: "Not sure where to start? Just ask!",
     suggestions: [
-      "Show me a flat near Saima MRT with a gym and a swimming pool",
-      "I want a ready-to-move-in flat near Srinakarin Road",
-      "Help me to find a flat near Ekkamai Road",
+      "Show me a flat near Saima MRT with a gym and a swimming pool",      
       "Suggest an apartment near Sukhumvit with a pool and garden",
       "Can you suggest a 1‑bedroom flat near Phahonyothin 59 Station for under 4 million baht",
     ],
@@ -323,9 +330,7 @@ const content = {
       "บอก Richy ว่าคุณต้องการอะไร — รายการ, ลูกค้าเป้าหมาย, หรือการติดตาม — และมันจะจัดการให้",
     subDescription: "ไม่แน่ใจว่าจะเริ่มจากไหน? แค่ถาม!",
     suggestions: [
-      "คอนโดโชว์ใกล้ MRT ไทรม้า มีฟิตเนสและสระว่ายน้ำ",
-      "อยากได้คอนโดพร้อมอยู่ บนถนนศรีนครินทร์",
-      "ช่วยหาคอนโดแถวถนนเอกมัยให้หน่อยคะ",
+      "คอนโดโชว์ใกล้ MRT ไทรม้า มีฟิตเนสและสระว่ายน้ำ",      
       "แนะนำอพาร์ตเมนท์แถวสุขุมวิท มีสระว่ายน้ำและสวน",
       "ช่วยแนะนำคอนโด 1 ห้องนอน ใกล้สถานีพหลโยธิน 59 ราคาไม่เกิน 4 ล้านบาท หน่อยคะ",
     ],
@@ -337,9 +342,7 @@ const content = {
       "告诉 Richy 您需要什么 — 房源列表、潜在客户或后续跟进 — 它会为您处理一切。",
     subDescription: "不知道从哪里开始？尽管问吧！",
     suggestions: [
-      "给我看看 Saima 地铁站附近有健身房和游泳池的公寓",
-      "我想要诗纳卡琳路附近的现房公寓",
-      "帮我找一套Ekkamai路附近的公寓",
+      "给我看看 Saima 地铁站附近有健身房和游泳池的公寓",      
       "推荐素坤逸附近有游泳池和花园的公寓",
       "你能推荐一套靠近 Phahonyothin 59 站、价格低于 400 万泰铢的一居室公寓吗",
     ],

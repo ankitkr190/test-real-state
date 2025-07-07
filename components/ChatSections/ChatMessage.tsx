@@ -13,12 +13,12 @@ interface ChatMessageProps {
 
 function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
   return (
-    <div>
+    <div className="w-full max-w-full space-y-4">
       {messages?.map((message, index, allMsg) => {
         const hideName = index >= 1 && allMsg[index - 1].name === message.name;
 
         return (
-          <div key={index}>
+          <div key={index} className="w-full">
             <SingleChatMessage
               hideName={hideName}
               name={message.name}
@@ -30,25 +30,24 @@ function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
             />
 
             {message.products?.length > 0 && (
-              <div 
-                className="overflow-auto"
+              <div
+                className="w-full overflow-hidden mt-3"
                 style={{
-                  paddingTop: 'clamp(0.5rem, 1vw, 0.5rem)',
+                  paddingTop: "clamp(0.5rem, 1vw, 0.5rem)",
                 }}
               >
-                <div 
-                  className="flex flex-col items-start"
+                <div
+                  className="flex justify-start items-start w-full flex-wrap gap-3.5"
                   style={{
-                    gap: 'clamp(0.5rem, 1.5vw, 1rem)',
-                    paddingBottom: 'clamp(0.5rem, 1vw, 0.5rem)',
-                    padding: 'clamp(0.25rem, 0.5vw, 0.5rem)',
+                    paddingBottom: "clamp(0.5rem, 1vw, 0.5rem)",
+                    padding: "clamp(0.25rem, 0.5vw, 0.5rem)",
                   }}
                 >
                   {message.products.map((property, pid) => (
                     <div
                       key={pid}
                       style={{
-                        width: 'clamp(100%, 85vw, 60%)',
+                        maxWidth: "min(100%, 400px)",
                       }}
                     >
                       <SingleProductCard
