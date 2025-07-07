@@ -90,58 +90,92 @@ function SearchSection({
         onClick={onClose}
       />
 
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
-        <div className="relative bg-[#FCF9E6] rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-7xl h-[90vh] sm:h-[80vh] md:h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
-          <div className="flex justify-center items-center w-full pt-4 sm:pt-6 md:pt-8 pb-2">
+      <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ padding: 'clamp(0.5rem, 1vw, 1rem)' }}>
+        <div className="relative bg-[#FCF9E6] shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
+          borderRadius: 'clamp(0.75rem, 2vw, 2rem)', 
+          maxWidth: 'clamp(16rem, 85vw, 80rem)', 
+          height: 'clamp(32rem, 85vh, 37.5rem)' 
+        }}>
+          <div className="flex justify-center items-center w-full" style={{ paddingTop: 'clamp(1rem, 2vh, 2rem)', paddingBottom: '0.5rem' }}>
             <Image
               src="/richy.svg"
               width={140}
               height={80}
               alt="Richy Logo"
-              className="h-16 sm:h-20 md:h-full"
+              style={{ height: 'clamp(4rem, 8vh, 5rem)' }}
             />
           </div>
-          <div className="absolute top-4 sm:top-6 right-4 sm:right-8 md:right-16">
+          <div className="absolute flex" style={{ top: 'clamp(1rem, 2vh, 1.75rem)', right: 'clamp(1rem, 4vw, 4rem)' }}>
             <button
-              className="flex items-center gap-1 sm:gap-2 bg-white rounded px-2 sm:px-3 py-1 sm:py-2 shadow text-sm sm:text-base"
+              className="flex items-center bg-white rounded shadow"
               onClick={() => setDropdownOpen((open) => !open)}
               type="button"
+              style={{
+                gap: 'clamp(0.25rem, 1vw, 0.5rem)',
+                padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 0.75rem)',
+                fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+                borderRadius: 'clamp(0.25rem, 1vw, 0.5rem)'
+              }}
             >
               <Image
                 src={selectedLang.flag}
                 alt={selectedLang.label}
                 width={24}
                 height={24}
-                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded"
+                className="rounded"
+                style={{
+                  width: 'clamp(1rem, 3vw, 1.5rem)',
+                  height: 'clamp(1rem, 3vw, 1.5rem)',
+                }}
               />
-              <span className="hidden sm:inline">{selectedLang.label}</span>
+              <span className="hidden md:inline">
+                {selectedLang.label}
+              </span>
               <svg
-                className="w-2 h-2 sm:w-3 sm:h-3"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 viewBox="0 0 24 24"
+                style={{
+                  width: 'clamp(0.5rem, 2vw, 0.75rem)',
+                  height: 'clamp(0.5rem, 2vw, 0.75rem)',
+                }}
               >
                 <path d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-28 sm:w-32 bg-white rounded-lg border-1 border-[#4D8D67] shadow z-10 py-1">
+              <div className="absolute right-0 bg-white rounded-lg border-1 border-[#4D8D67] shadow z-10"
+                   style={{
+                     width: 'clamp(7rem, 15vw, 8rem)',
+                     marginTop: 'clamp(2.75rem, 5vh, 3rem)',
+                     padding: 'clamp(0.25rem, 1vh, 0.25rem) 0',
+                     borderRadius: 'clamp(0.5rem, 2vw, 0.75rem)'
+                   }}>
                 {langOptions.map((option) => (
                   <button
                     key={option.value}
-                    className="flex items-center w-full px-2 sm:px-3 py-1.5 sm:py-2 hover:bg-green-100 gap-1 sm:gap-2 cursor-pointer"
+                    className="flex items-center w-full hover:bg-green-100 cursor-pointer"
                     onClick={() => handleLanguageChange(option)}
                     type="button"
+                    style={{
+                      padding: 'clamp(0.375rem, 1.5vh, 0.5rem) clamp(0.5rem, 2vw, 0.75rem)',
+                      gap: 'clamp(0.25rem, 1vw, 0.5rem)',
+                    }}
                   >
                     <Image
                       src={option.flag}
                       alt={option.label}
                       width={20}
                       height={20}
-                      className="w-4 h-4 sm:w-5 sm:h-5 rounded"
+                      className="rounded"
+                      style={{
+                        width: 'clamp(1rem, 3vw, 1.25rem)',
+                        height: 'clamp(1rem, 3vw, 1.25rem)',
+                      }}
                     />
-                    <span className="text-xs sm:text-sm text-[#0D3D21]">
+                    <span className="text-[#0D3D21]"
+                          style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
                       {option.label}
                     </span>
                   </button>
@@ -150,32 +184,59 @@ function SearchSection({
             )}
           </div>
           <button
-            className="absolute top-4 sm:top-6 md:top-7 right-2 sm:right-4 md:right-8 text-xl sm:text-2xl text-gray-400 hover:text-gray-600"
+            className="absolute text-gray-400 hover:text-gray-600"
             onClick={onClose}
+            style={{
+              top: 'clamp(1rem, 3vh, 1.75rem)',
+              right: 'clamp(0.5rem, 2vw, 2rem)',
+              fontSize: 'clamp(1.25rem, 4vw, 1.5rem)'
+            }}
           >
             &times;
           </button>
-          <div className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8">
-            <h1 className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 mt-2 sm:mt-4 text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1">
+          <div className="flex flex-col items-center justify-center w-full"
+               style={{ 
+                 padding: 'clamp(0.5rem, 3vh, 2rem) clamp(0.5rem, 4vw, 2rem)'
+               }}>
+            <h1 className="font-sans font-bold text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1"
+                style={{
+                  fontSize: 'clamp(1.25rem, 5vw, 3rem)',
+                  marginBottom: 'clamp(1rem, 3vh, 1.5rem)',
+                  marginTop: 'clamp(0.5rem, 2vh, 1rem)'
+                }}>
               {currentContent.title}
             </h1>
-            <div className="flex items-center w-full max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-3xl bg-[#181B2B] rounded-full overflow-hidden mb-4 drop-shadow-xl">
-              <div className="flex items-center flex-1 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
-                <FaSearch className="text-white text-base sm:text-lg md:text-xl mr-2 sm:mr-3" />
+            <div className="flex items-center w-full bg-[#181B2B] rounded-full overflow-hidden drop-shadow-xl"
+                 style={{
+                   maxWidth: 'clamp(16rem, 80vw, 48rem)',
+                   marginBottom: 'clamp(1rem, 3vh, 1rem)'
+                 }}>
+              <div className="flex items-center flex-1"
+                   style={{ 
+                     padding: 'clamp(0.5rem, 2vh, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)'
+                   }}>
+                <FaSearch className="text-white mr-2"
+                          style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }} />
                 <input
-                  className="flex-1 bg-transparent outline-none text-white text-sm sm:text-base md:text-lg placeholder-gray-400"
+                  className="flex-1 bg-transparent outline-none text-white placeholder-gray-400"
                   placeholder={currentContent.placeholder}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   onKeyPress={handleKeyPress}
+                  style={{ fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)' }}
                 />
               </div>
               <button
-                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full px-3 sm:px-4 md:px-5 rounded-bl-[30px] hover:from-green-400 transition-all duration-200"
+                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full rounded-bl-[30px] hover:from-green-400 transition-all duration-200"
                 type="button"
                 onClick={handleButtonClick}
+                style={{ padding: '0 clamp(0.75rem, 3vw, 1.25rem)' }}
               >
-                <div className="relative h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7">
+                <div className="relative"
+                     style={{
+                       height: 'clamp(1.25rem, 4vw, 1.75rem)',
+                       width: 'clamp(1.25rem, 4vw, 1.75rem)'
+                     }}>
                   <Image
                     src="/mic2.svg"
                     alt="Microphone"
@@ -201,20 +262,30 @@ function SearchSection({
                 </div>
               </button>
             </div>
-            <p className="text-center text-[#2e2e2e] text-sm sm:text-base md:text-lg mb-4 sm:mb-6 px-2">
+            <p className="text-center text-[#2e2e2e] px-2"
+               style={{
+                 fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)',
+                 marginBottom: 'clamp(1rem, 3vh, 1.5rem)'
+               }}>
               {currentContent.description}
               <br />
               <span className="text-[#0D3D21]">
                 {currentContent.subDescription}
               </span>
             </p>
-            <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center">
+            <div className="flex flex-wrap justify-center"
+                 style={{ gap: 'clamp(0.5rem, 2vw, 1rem)' }}>
               {currentContent.suggestions.map((text) => (
                 <button
                   key={text}
-                  className="bg-white rounded-full px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 shadow text-[#1A7A4B] font-medium hover:bg-[#F3F3F3] text-xs sm:text-sm md:text-base"
+                  className="bg-white rounded-full shadow text-[#1A7A4B] font-medium hover:bg-[#F3F3F3]"
                   onClick={() => handleSuggestionClick(text)}
                   type="button"
+                  style={{
+                    padding: 'clamp(0.375rem, 1.5vh, 0.5rem) clamp(0.75rem, 3vw, 1.25rem)',
+                    fontSize: 'clamp(0.75rem, 2vw, 1rem)',
+                    borderRadius: 'clamp(1rem, 3vw, 1.5rem)'
+                  }}
                 >
                   {text}
                 </button>
