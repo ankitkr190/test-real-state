@@ -21,10 +21,12 @@ function CustomBarVisualizer({
       {barHeights.map((height, idx) => (
         <div
           key={idx}
-          className="bg-[#00804a] rounded-sm transition-all duration-75 ease-in"
+          className="bg-gradient-to-t from-emerald-600 via-emerald-500 to-emerald-400 rounded-full shadow-sm transition-all duration-100 ease-out animate-pulse"
           style={{
-            height: `${height}%`,
-            width: 'clamp(2px, 0.5vw, 4px)',
+            height: `${Math.max(height, 10)}%`,
+            width: 'clamp(3px, 0.7vw, 5px)',
+            minHeight: '6px',
+            opacity: height > 20 ? 1 : 0.6,
           }}
         />
       ))}

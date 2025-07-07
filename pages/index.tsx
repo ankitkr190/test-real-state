@@ -102,7 +102,7 @@ function HomePage() {
         />
       </ConnectionProvider>
       <div
-        className="fixed bottom-10 right-10 z-50"
+        className="fixed bottom-10 right-10 z-10"
         onClick={handleBotIconClick}
       >
         <BotIcon />
