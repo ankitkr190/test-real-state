@@ -67,14 +67,30 @@ function ChatFooterVoice({
   }, [isListening, transcript, isFinished]);
 
   return (
-    <div className="min-h-[20vh] flex flex-col items-center justify-between">
-      <button className="mt-3 w-full cursor-pointer" onClick={handleReset}>
+    <div 
+      className="flex flex-col items-center justify-between"
+      style={{
+        minHeight: 'clamp(5rem, 8vw, 6rem)',
+      }}
+    >
+      <button 
+        className="cursor-pointer w-full"
+        style={{
+          marginTop: 'clamp(0.25rem, 0.8vw, 0.5rem)',
+        }}
+        onClick={handleReset}
+      >
         <CloseIcon />
       </button>
       <p
-        className={`md:text-[18px] mt-2.5 px-2 text-[16px] font-medium text-start w-full ${
+        className={`font-medium text-start w-full ${
           transcript?.length ? "text-[#171717]" : "text-[#737373]"
         }`}
+        style={{
+          fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+          marginTop: 'clamp(0.25rem, 0.8vw, 0.4rem)',
+          padding: '0 clamp(0.25rem, 0.8vw, 0.4rem)',
+        }}
       >
         {transcript !== "|"
           ? isFinished
