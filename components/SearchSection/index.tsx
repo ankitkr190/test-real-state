@@ -237,11 +237,11 @@ const content = {
       "Tell Richy what you need — listings, leads, or follow-ups — and it handles the rest.",
     subDescription: "Not sure where to start? Just ask!",
     suggestions: [
-      "Show me a flat near Simei MRT with a gym and a swimming pool",
+      "Show me a flat near Saima MRT with a gym and a swimming pool",
       "I want a ready-to-move-in flat near Srinakarin Road",
       "Help me to find a flat near Ekkamai Road",
       "Suggest an apartment near Sukhumvit with a pool and garden",
-      "Can you suggest a 1‑bedroom flat near Srinakarin Road for under 4 million baht",
+      "Can you suggest a 1‑bedroom flat near Phahonyothin 59 Station for under 4 million baht",
     ],
   },
   th: {
@@ -252,11 +252,11 @@ const content = {
       "บอก Richy ว่าคุณต้องการอะไร — รายการ, ลูกค้าเป้าหมาย, หรือการติดตาม — และมันจะจัดการให้",
     subDescription: "ไม่แน่ใจว่าจะเริ่มจากไหน? แค่ถาม!",
     suggestions: [
-      "แสดงห้องชุดใกล้ MRT ซิเมอิ พร้อมฟิตเนสและสระว่ายน้ำ",
+      "คอนโดโชว์ใกล้ MRT ไทรม้า มีฟิตเนสและสระว่ายน้ำ",
       "อยากได้คอนโดพร้อมอยู่ บนถนนศรีนครินทร์",
       "ช่วยหาคอนโดแถวถนนเอกมัยให้หน่อยคะ",
       "แนะนำอพาร์ตเมนท์แถวสุขุมวิท มีสระว่ายน้ำและสวน",
-      "ช่วยแนะนำคอนโด 1 ห้องนอน ใกล้ถนนศรีนครินทร์ ราคาไม่เกิน 4 ล้านบาท หน่อยคะ",
+      "ช่วยแนะนำคอนโด 1 ห้องนอน ใกล้สถานีพหลโยธิน 59 ราคาไม่เกิน 4 ล้านบาท หน่อยคะ",
     ],
   },
   zh: {
@@ -266,11 +266,11 @@ const content = {
       "告诉 Richy 您需要什么 — 房源列表、潜在客户或后续跟进 — 它会为您处理一切。",
     subDescription: "不知道从哪里开始？尽管问吧！",
     suggestions: [
-      "展示西美地铁站附近有健身房和游泳池的公寓",
+      "给我看看 Saima 地铁站附近有健身房和游泳池的公寓",
       "我想要诗纳卡琳路附近的现房公寓",
       "帮我找一套Ekkamai路附近的公寓",
       "推荐素坤逸附近有游泳池和花园的公寓",
-      "能否推荐诗纳卡琳路附近价格不超过400万泰铢的一室公寓",
+      "你能推荐一套靠近 Phahonyothin 59 站、价格低于 400 万泰铢的一居室公寓吗",
     ],
   },
 };
