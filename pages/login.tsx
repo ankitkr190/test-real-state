@@ -73,7 +73,7 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>Richy | Login</title>
+        <title>Best Property Agent in Bangkok | APK Real Estate | Thailand</title>
       </Head>
 
       <div className="min-h-screen bg-[#E2FFF3] flex items-center justify-center p-4">

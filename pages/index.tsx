@@ -41,11 +41,11 @@ function HomePage() {
   return (
     <React.Fragment>
       <Head>
-        <title>Richy | Home</title>
+        <title>Best Property Agent in Bangkok | APK Real Estate | Thailand</title>
       </Head>
 
       <div
-        className="absolute top-4 right-6 sm:top-2 sm:right-4 md:top-3 md:right-5 lg:top-4 lg:right-6 xl:top-6 xl:right-12 z-40"
+        className="absolute top-4 right-6 sm:top-2 sm:right-4 md:top-3 md:right-5 lg:top-4 lg:right-6 xl:top-15 xl:right-12 z-40"
         onClick={handleLogout}
         title="Logout"
       >
@@ -73,8 +73,8 @@ function HomePage() {
         /> */}
 
         <Image
-          src="/richy_ss.png"
-          alt="Richy Group Screenshot"
+          src="/apk_ss.png"
+          alt="APK Real Estate Screenshot"
           className="w-full"
           width={1920}
           height={1920}
