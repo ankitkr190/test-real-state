@@ -17,6 +17,10 @@ body {
   --lk-va-border-radius: 2px;
 }
 
+.chat-body::-webkit-scrollbar {
+  display: none;
+}
+
 .markdown-content {
   margin: 0;
   padding: 0;
@@ -72,6 +76,7 @@ body {
   opacity: 1 !important;
 }
 .swiper-pagination-bullet-active {
-  background: #1A7A4B !important;
+  background: #1a7a4b !important;
   opacity: 1 !important;
 }
+

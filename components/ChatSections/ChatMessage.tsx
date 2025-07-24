@@ -13,12 +13,12 @@ interface ChatMessageProps {
 
 function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
   return (
-    <div>
+    <div className="w-full max-w-full space-y-4">
       {messages?.map((message, index, allMsg) => {
         const hideName = index >= 1 && allMsg[index - 1].name === message.name;
 
         return (
-          <div key={index}>
+          <div key={index} className="w-full">
             <SingleChatMessage
               hideName={hideName}
               name={message.name}
@@ -30,12 +30,25 @@ function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
             />
 
             {message.products?.length > 0 && (
-              <div className="pt-2 overflow-auto">
-                <div className="flex flex-col items-start gap-2 sm:gap-3 md:gap-4 pb-2 px-1 sm:px-2">
+              <div
+                className="w-full overflow-hidden mt-3"
+                style={{
+                  paddingTop: "clamp(0.5rem, 1vw, 0.5rem)",
+                }}
+              >
+                <div
+                  className="flex justify-start items-start w-full flex-wrap gap-3.5"
+                  style={{
+                    paddingBottom: "clamp(0.5rem, 1vw, 0.5rem)",
+                    padding: "clamp(0.25rem, 0.5vw, 0.5rem)",
+                  }}
+                >
                   {message.products.map((property, pid) => (
                     <div
-                      className="w-full sm:w-9/12 md:w-8/12 lg:w-7/12"
                       key={pid}
+                      style={{
+                        maxWidth: "min(100%, 400px)",
+                      }}
                     >
                       <SingleProductCard
                         name={property?.project_name
