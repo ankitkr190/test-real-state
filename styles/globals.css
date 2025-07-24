@@ -17,13 +17,10 @@ body {
   --lk-va-border-radius: 2px;
 }
 
-<<<<<<< HEAD
-=======
 .chat-body::-webkit-scrollbar {
   display: none;
 }
 
->>>>>>> richy/main
 .markdown-content {
   margin: 0;
   padding: 0;
