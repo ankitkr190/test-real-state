@@ -76,10 +76,7 @@ body {
   opacity: 1 !important;
 }
 .swiper-pagination-bullet-active {
-<<<<<<< HEAD
-  background: #1A7A4B !important;
-=======
   background: #1a7a4b !important;
->>>>>>> richy/main
   opacity: 1 !important;
 }
+
