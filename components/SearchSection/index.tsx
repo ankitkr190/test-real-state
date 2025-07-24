@@ -95,23 +95,23 @@ function SearchSection({
       />
 
       <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ padding: 'clamp(0.5rem, 1vw, 1rem)' }}>
-        <div className="relative bg-white shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
+        <div className="relative bg-[#18181b] shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
           borderRadius: 'clamp(0.75rem, 2vw, 2rem)', 
           maxWidth: 'clamp(16rem, 85vw, 80rem)', 
           height: 'clamp(32rem, 85vh, 37.5rem)' 
         }}>
           <div className="flex justify-center items-center w-full" style={{ paddingTop: 'clamp(1rem, 2vh, 2rem)', paddingBottom: '0.5rem' }}>
             <Image
-              src="/richy.svg"
+              src="/apk.webp"
               width={140}
-              height={80}
+              height={140}
               alt="Richy Logo"
-              style={{ height: 'clamp(4rem, 8vh, 5rem)' }}
+              style={{ height: 'clamp(4rem, 10vh, 8rem)', width: 'clamp(4rem, 10vh, 8rem)' }}
             />
           </div>
           <div className="absolute flex" style={{ top: 'clamp(1rem, 2vh, 1.75rem)', right: 'clamp(1rem, 4vw, 4rem)' }}>
             <button
-              className="flex items-center bg-white border border-[#00804A]/20 rounded-lg shadow-sm hover:shadow-md hover:border-[#00804A]/40 transition-all duration-300"
+              className="flex items-center bg-[#18181b] border border-[#FFD700]/50 rounded-lg shadow-sm hover:shadow-md hover:border-[#FFD700]/60 transition-all duration-300 text-white"
               onClick={() => setDropdownOpen((open) => !open)}
               type="button"
               style={{
@@ -149,7 +149,7 @@ function SearchSection({
               </svg>
             </button>
             {dropdownOpen && (
-              <div className="absolute right-0 bg-white rounded-lg border-1 border-[#4D8D67] shadow z-10"
+              <div className="absolute right-0 bg-[#18181b] rounded-lg border-1 border-[#FFD700] shadow z-10"
                    style={{
                      width: 'clamp(7rem, 15vw, 8rem)',
                      marginTop: 'clamp(2.75rem, 5vh, 3rem)',
@@ -159,7 +159,7 @@ function SearchSection({
                 {langOptions.map((option) => (
                   <button
                     key={option.value}
-                    className="flex items-center w-full hover:bg-green-100 cursor-pointer"
+                    className="flex items-center w-full hover:bg-[#FFD700]/10 cursor-pointer"
                     onClick={() => handleLanguageChange(option)}
                     type="button"
                     style={{
@@ -178,7 +178,7 @@ function SearchSection({
                         height: 'clamp(1rem, 3vw, 1.25rem)',
                       }}
                     />
-                    <span className="text-[#0D3D21]"
+                    <span className="text-white"
                           style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
                       {option.label}
                     </span>
@@ -202,7 +202,7 @@ function SearchSection({
                style={{ 
                  padding: 'clamp(0.5rem, 3vh, 2rem) clamp(0.5rem, 4vw, 2rem)'
                }}>
-            <h1 className="font-sans font-bold text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1"
+            <h1 className="font-sans font-bold text-center bg-gradient-to-r from-[#FFD700] to-[#bfa76a] bg-clip-text text-transparent leading-tight pb-1"
                 style={{
                   fontSize: 'clamp(1.25rem, 5vw, 3rem)',
                   marginBottom: 'clamp(1rem, 3vh, 1.5rem)',
@@ -210,7 +210,7 @@ function SearchSection({
                 }}>
               {currentContent.title}
             </h1>
-            <div className="flex items-center w-full bg-white border-2 border-[#00804A]/20 rounded-full overflow-hidden drop-shadow-lg hover:border-[#00804A]/40 transition-all duration-300"
+            <div className="flex items-center w-full bg-[#232323] border-2 border-[#FFD700]/20 rounded-full overflow-hidden drop-shadow-lg hover:border-[#FFD700]/40 transition-all duration-300"
                  style={{
                    maxWidth: 'clamp(16rem, 80vw, 48rem)',
                    marginBottom: 'clamp(1rem, 3vh, 1rem)'
@@ -219,10 +219,10 @@ function SearchSection({
                    style={{ 
                      padding: 'clamp(0.5rem, 2vh, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)'
                    }}>
-                <FaSearch className="text-[#00804A] mr-2"
+                <FaSearch className="text-white mr-2"
                           style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }} />
                 <input
-                  className="flex-1 bg-transparent outline-none text-[#0D3D21] placeholder-gray-500"
+                  className="flex-1 bg-transparent outline-none text-white placeholder-gray-400"
                   placeholder={currentContent.placeholder}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
@@ -231,14 +231,14 @@ function SearchSection({
                 />
               </div>
               <button
-                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full rounded-r-full hover:from-[#00804A]/90 hover:to-[#0D3D21]/90 transition-all duration-300 disabled:opacity-50"
+                className="flex items-center justify-center bg-gradient-to-br from-[#FFD700] to-[#4d3c10] h-full rounded-r-full hover:from-[#FFD700]/90 hover:to-[#bfa76a]/90 transition-all duration-300 disabled:opacity-50"
                 type="button"
                 onClick={handleButtonClick}
                 disabled={isSearching}
                 style={{ padding: '0 clamp(0.75rem, 3vw, 1.25rem)' }}
               >
                 {isSearching ? (
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#FFD700]"></div>
                 ) : (
                   <div className="relative"
                        style={{
@@ -271,14 +271,14 @@ function SearchSection({
                 )}
               </button>
             </div>
-            <p className="text-center text-[#2e2e2e] px-2"
+            <p className="text-center text-white px-2"
                style={{
                  fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)',
                  marginBottom: 'clamp(1rem, 3vh, 1.5rem)'
                }}>
               {currentContent.description}
               <br />
-              <span className="text-[#0D3D21]">
+              <span className="text-white/70">
                 {currentContent.subDescription}
               </span>
             </p>
@@ -287,7 +287,7 @@ function SearchSection({
               {currentContent.suggestions.map((text) => (
                 <button
                   key={text}
-                  className="bg-gradient-to-r from-[#00804A]/5 to-[#0D3D21]/5 border border-[#00804A]/20 rounded-full shadow-sm text-[#0D3D21] font-medium hover:from-[#00804A]/10 hover:to-[#0D3D21]/10 hover:border-[#00804A]/40 hover:shadow-md transition-all duration-300 hover:scale-105"
+                  className="bg-gradient-to-r from-[#FFD700]/10 to-[#bfa76a]/10 border border-[#FFD700]/20 rounded-full shadow-sm text-white font-medium hover:from-[#FFD700]/20 hover:to-[#bfa76a]/20 hover:border-[#FFD700]/40 hover:shadow-md transition-all duration-300 hover:scale-105"
                   onClick={() => handleSuggestionClick(text)}
                   type="button"
                   style={{
