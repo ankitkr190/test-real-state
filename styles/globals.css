@@ -17,6 +17,13 @@ body {
   --lk-va-border-radius: 2px;
 }
 
+<<<<<<< HEAD
+=======
+.chat-body::-webkit-scrollbar {
+  display: none;
+}
+
+>>>>>>> richy/main
 .markdown-content {
   margin: 0;
   padding: 0;
@@ -72,6 +79,10 @@ body {
   opacity: 1 !important;
 }
 .swiper-pagination-bullet-active {
+<<<<<<< HEAD
   background: #1A7A4B !important;
+=======
+  background: #1a7a4b !important;
+>>>>>>> richy/main
   opacity: 1 !important;
 }

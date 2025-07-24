@@ -41,21 +41,33 @@ function HomePage() {
   return (
     <React.Fragment>
       <Head>
-        <title>Best Property Agent in Bangkok | APK Real Estate | Thailand</title>
+        <title>Richy | Home</title>
       </Head>
 
       <div
-        className="absolute top-4 right-6 sm:top-2 sm:right-4 md:top-3 md:right-5 lg:top-4 lg:right-6 xl:top-12 xl:right-10 z-40"
+        className="absolute z-40 cursor-pointer"
         onClick={handleLogout}
         title="Logout"
+        style={{
+          top: 'clamp(0.5rem, 3vh, 1.5rem)',
+          right: 'clamp(1rem, 4vw, 3rem)'
+        }}
       >
-        <div className="w-4 h-4 sm:w-2 sm:h-2 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8 bg-red-50 hover:bg-red-100 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 border border-red-200 hover:border-red-300 shadow-sm hover:shadow-md">
+        <div className="bg-red-50 hover:bg-red-100 rounded-full flex items-center justify-center transition-all duration-200 border border-red-200 hover:border-red-300 shadow-sm hover:shadow-md"
+             style={{
+               width: 'clamp(1rem, 4vw, 2rem)',
+               height: 'clamp(1rem, 4vw, 2rem)'
+             }}>
           <svg
-            className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-red-600"
+            className="text-red-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
             strokeWidth="2.5"
+            style={{
+              width: 'clamp(0.5rem, 2vw, 1rem)',
+              height: 'clamp(0.5rem, 2vw, 1rem)'
+            }}
           >
             <path
               strokeLinecap="round"
@@ -73,8 +85,8 @@ function HomePage() {
         /> */}
 
         <Image
-          src="/apk_ss.webp"
-          alt="APK Real Estate Screenshot"
+          src="/richy_ss.png"
+          alt="Richy Group Screenshot"
           className="w-full"
           width={1920}
           height={1920}
@@ -90,7 +102,7 @@ function HomePage() {
         />
       </ConnectionProvider>
       <div
-        className="fixed bottom-10 right-10 z-50"
+        className="fixed bottom-10 right-10 z-10"
         onClick={handleBotIconClick}
       >
         <BotIcon />

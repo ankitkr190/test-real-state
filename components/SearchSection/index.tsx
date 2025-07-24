@@ -20,6 +20,7 @@ function SearchSection({
 }: SearchSectionProps) {
   const [searchValue, setSearchValue] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
   const [selectedLang, setSelectedLang] = useState({
     flag: "/uk.svg",
     label: "EN",
@@ -29,6 +30,7 @@ function SearchSection({
   useEffect(() => {
     if (isOpen) {
       setSearchValue("");
+      setIsSearching(false);
       setSelectedLang({
         flag: "/uk.svg",
         label: "EN",
@@ -38,12 +40,14 @@ function SearchSection({
     }
   }, [isOpen]);
 
-  const handleSearch = useCallback(() => {
+  const handleSearch = useCallback(async () => {
     if (searchValue === "") return;
-
+    
+    setIsSearching(true);
     setTimeout(async () => {
       onOpenResult();
       await onSend(searchValue);
+      setIsSearching(false);
     }, 200);
   }, [onOpenResult, onSend, searchValue]);
 
@@ -90,58 +94,92 @@ function SearchSection({
         onClick={onClose}
       />
 
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
-        <div className="relative bg-[#FCF9E6] rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-7xl h-[90vh] sm:h-[80vh] md:h-[600px] p-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
-          <div className="flex justify-center items-center w-full pt-4 sm:pt-6 md:pt-8 pb-2">
+      <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ padding: 'clamp(0.5rem, 1vw, 1rem)' }}>
+        <div className="relative bg-white shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
+          borderRadius: 'clamp(0.75rem, 2vw, 2rem)', 
+          maxWidth: 'clamp(16rem, 85vw, 80rem)', 
+          height: 'clamp(32rem, 85vh, 37.5rem)' 
+        }}>
+          <div className="flex justify-center items-center w-full" style={{ paddingTop: 'clamp(1rem, 2vh, 2rem)', paddingBottom: '0.5rem' }}>
             <Image
               src="/richy.svg"
               width={140}
               height={80}
               alt="Richy Logo"
-              className="h-16 sm:h-20 md:h-full"
+              style={{ height: 'clamp(4rem, 8vh, 5rem)' }}
             />
           </div>
-          <div className="absolute top-4 sm:top-6 right-4 sm:right-8 md:right-16">
+          <div className="absolute flex" style={{ top: 'clamp(1rem, 2vh, 1.75rem)', right: 'clamp(1rem, 4vw, 4rem)' }}>
             <button
-              className="flex items-center gap-1 sm:gap-2 bg-white rounded px-2 sm:px-3 py-1 sm:py-2 shadow text-sm sm:text-base"
+              className="flex items-center bg-white border border-[#00804A]/20 rounded-lg shadow-sm hover:shadow-md hover:border-[#00804A]/40 transition-all duration-300"
               onClick={() => setDropdownOpen((open) => !open)}
               type="button"
+              style={{
+                gap: 'clamp(0.25rem, 1vw, 0.5rem)',
+                padding: 'clamp(0.375rem, 1.5vh, 0.5rem) clamp(0.75rem, 2vw, 1rem)',
+                fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+                borderRadius: 'clamp(0.5rem, 1vw, 0.75rem)'
+              }}
             >
               <Image
                 src={selectedLang.flag}
                 alt={selectedLang.label}
                 width={24}
                 height={24}
-                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded"
+                className="rounded"
+                style={{
+                  width: 'clamp(1rem, 3vw, 1.5rem)',
+                  height: 'clamp(1rem, 3vw, 1.5rem)',
+                }}
               />
-              <span className="hidden sm:inline">{selectedLang.label}</span>
+              <span className="hidden md:inline">
+                {selectedLang.label}
+              </span>
               <svg
-                className="w-2 h-2 sm:w-3 sm:h-3"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 viewBox="0 0 24 24"
+                style={{
+                  width: 'clamp(0.5rem, 2vw, 0.75rem)',
+                  height: 'clamp(0.5rem, 2vw, 0.75rem)',
+                }}
               >
                 <path d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-28 sm:w-32 bg-white rounded-lg border-1 border-[#4D8D67] shadow z-10 py-1">
+              <div className="absolute right-0 bg-white rounded-lg border-1 border-[#4D8D67] shadow z-10"
+                   style={{
+                     width: 'clamp(7rem, 15vw, 8rem)',
+                     marginTop: 'clamp(2.75rem, 5vh, 3rem)',
+                     padding: 'clamp(0.25rem, 1vh, 0.25rem) 0',
+                     borderRadius: 'clamp(0.5rem, 2vw, 0.75rem)'
+                   }}>
                 {langOptions.map((option) => (
                   <button
                     key={option.value}
-                    className="flex items-center w-full px-2 sm:px-3 py-1.5 sm:py-2 hover:bg-green-100 gap-1 sm:gap-2 cursor-pointer"
+                    className="flex items-center w-full hover:bg-green-100 cursor-pointer"
                     onClick={() => handleLanguageChange(option)}
                     type="button"
+                    style={{
+                      padding: 'clamp(0.375rem, 1.5vh, 0.5rem) clamp(0.5rem, 2vw, 0.75rem)',
+                      gap: 'clamp(0.25rem, 1vw, 0.5rem)',
+                    }}
                   >
                     <Image
                       src={option.flag}
                       alt={option.label}
                       width={20}
                       height={20}
-                      className="w-4 h-4 sm:w-5 sm:h-5 rounded"
+                      className="rounded"
+                      style={{
+                        width: 'clamp(1rem, 3vw, 1.25rem)',
+                        height: 'clamp(1rem, 3vw, 1.25rem)',
+                      }}
                     />
-                    <span className="text-xs sm:text-sm text-[#0D3D21]">
+                    <span className="text-[#0D3D21]"
+                          style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
                       {option.label}
                     </span>
                   </button>
@@ -150,71 +188,113 @@ function SearchSection({
             )}
           </div>
           <button
-            className="absolute top-4 sm:top-6 md:top-7 right-2 sm:right-4 md:right-8 text-xl sm:text-2xl text-gray-400 hover:text-gray-600"
+            className="absolute text-gray-400 hover:text-gray-600"
             onClick={onClose}
+            style={{
+              top: 'clamp(1rem, 3vh, 1.75rem)',
+              right: 'clamp(0.5rem, 2vw, 2rem)',
+              fontSize: 'clamp(1.25rem, 4vw, 1.5rem)'
+            }}
           >
             &times;
           </button>
-          <div className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8">
-            <h1 className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 mt-2 sm:mt-4 text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1">
+          <div className="flex flex-col items-center justify-center w-full"
+               style={{ 
+                 padding: 'clamp(0.5rem, 3vh, 2rem) clamp(0.5rem, 4vw, 2rem)'
+               }}>
+            <h1 className="font-sans font-bold text-center bg-gradient-to-r from-[#00804A] to-[#0D3D21] bg-clip-text text-transparent leading-tight pb-1"
+                style={{
+                  fontSize: 'clamp(1.25rem, 5vw, 3rem)',
+                  marginBottom: 'clamp(1rem, 3vh, 1.5rem)',
+                  marginTop: 'clamp(0.5rem, 2vh, 1rem)'
+                }}>
               {currentContent.title}
             </h1>
-            <div className="flex items-center w-full max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-3xl bg-[#181B2B] rounded-full overflow-hidden mb-4 drop-shadow-xl">
-              <div className="flex items-center flex-1 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
-                <FaSearch className="text-white text-base sm:text-lg md:text-xl mr-2 sm:mr-3" />
+            <div className="flex items-center w-full bg-white border-2 border-[#00804A]/20 rounded-full overflow-hidden drop-shadow-lg hover:border-[#00804A]/40 transition-all duration-300"
+                 style={{
+                   maxWidth: 'clamp(16rem, 80vw, 48rem)',
+                   marginBottom: 'clamp(1rem, 3vh, 1rem)'
+                 }}>
+              <div className="flex items-center flex-1"
+                   style={{ 
+                     padding: 'clamp(0.5rem, 2vh, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)'
+                   }}>
+                <FaSearch className="text-[#00804A] mr-2"
+                          style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }} />
                 <input
-                  className="flex-1 bg-transparent outline-none text-white text-sm sm:text-base md:text-lg placeholder-gray-400"
+                  className="flex-1 bg-transparent outline-none text-[#0D3D21] placeholder-gray-500"
                   placeholder={currentContent.placeholder}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   onKeyPress={handleKeyPress}
+                  style={{ fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)' }}
                 />
               </div>
               <button
-                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full px-3 sm:px-4 md:px-5 rounded-bl-[30px] hover:from-green-400 transition-all duration-200"
+                className="flex items-center justify-center bg-gradient-to-br from-[#00804A] to-[#0D3D21] h-full rounded-r-full hover:from-[#00804A]/90 hover:to-[#0D3D21]/90 transition-all duration-300 disabled:opacity-50"
                 type="button"
                 onClick={handleButtonClick}
+                disabled={isSearching}
+                style={{ padding: '0 clamp(0.75rem, 3vw, 1.25rem)' }}
               >
-                <div className="relative h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7">
-                  <Image
-                    src="/mic2.svg"
-                    alt="Microphone"
-                    width={28}
-                    height={28}
-                    className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
-                      searchValue.trim()
-                        ? "opacity-0 transform scale-75 rotate-12"
-                        : "opacity-100 transform scale-100 rotate-0"
-                    }`}
-                  />
-                  <Image
-                    src="/send1.svg"
-                    alt="Send"
-                    width={28}
-                    height={28}
-                    className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
-                      searchValue.trim()
-                        ? "opacity-100 transform scale-100 rotate-0"
-                        : "opacity-0 transform scale-75 rotate-12"
-                    }`}
-                  />
-                </div>
+                {isSearching ? (
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                ) : (
+                  <div className="relative"
+                       style={{
+                         height: 'clamp(1.25rem, 4vw, 1.75rem)',
+                         width: 'clamp(1.25rem, 4vw, 1.75rem)'
+                       }}>
+                    <Image
+                      src="/mic2.svg"
+                      alt="Microphone"
+                      width={28}
+                      height={28}
+                      className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
+                        searchValue.trim()
+                          ? "opacity-0 transform scale-75 rotate-12"
+                          : "opacity-100 transform scale-100 rotate-0"
+                      }`}
+                    />
+                    <Image
+                      src="/send1.svg"
+                      alt="Send"
+                      width={28}
+                      height={28}
+                      className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
+                        searchValue.trim()
+                          ? "opacity-100 transform scale-100 rotate-0"
+                          : "opacity-0 transform scale-75 rotate-12"
+                      }`}
+                    />
+                  </div>
+                )}
               </button>
             </div>
-            <p className="text-center text-[#2e2e2e] text-sm sm:text-base md:text-lg mb-4 sm:mb-6 px-2">
+            <p className="text-center text-[#2e2e2e] px-2"
+               style={{
+                 fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)',
+                 marginBottom: 'clamp(1rem, 3vh, 1.5rem)'
+               }}>
               {currentContent.description}
               <br />
               <span className="text-[#0D3D21]">
                 {currentContent.subDescription}
               </span>
             </p>
-            <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center">
+            <div className="flex flex-wrap justify-center"
+                 style={{ gap: 'clamp(0.5rem, 2vw, 1rem)' }}>
               {currentContent.suggestions.map((text) => (
                 <button
                   key={text}
-                  className="bg-white rounded-full px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 shadow text-[#1A7A4B] font-medium hover:bg-[#F3F3F3] text-xs sm:text-sm md:text-base"
+                  className="bg-gradient-to-r from-[#00804A]/5 to-[#0D3D21]/5 border border-[#00804A]/20 rounded-full shadow-sm text-[#0D3D21] font-medium hover:from-[#00804A]/10 hover:to-[#0D3D21]/10 hover:border-[#00804A]/40 hover:shadow-md transition-all duration-300 hover:scale-105"
                   onClick={() => handleSuggestionClick(text)}
                   type="button"
+                  style={{
+                    padding: 'clamp(0.5rem, 2vh, 0.75rem) clamp(1rem, 3vw, 1.5rem)',
+                    fontSize: 'clamp(0.75rem, 2vw, 0.9rem)',
+                    borderRadius: 'clamp(1rem, 3vw, 1.5rem)'
+                  }}
                 >
                   {text}
                 </button>
@@ -237,9 +317,7 @@ const content = {
       "Tell Richy what you need — listings, leads, or follow-ups — and it handles the rest.",
     subDescription: "Not sure where to start? Just ask!",
     suggestions: [
-      "Show me a flat near Saima MRT with a gym and a swimming pool",
-      "I want a ready-to-move-in flat near Srinakarin Road",
-      "Help me to find a flat near Ekkamai Road",
+      "Show me a flat near Saima MRT with a gym and a swimming pool",      
       "Suggest an apartment near Sukhumvit with a pool and garden",
       "Can you suggest a 1‑bedroom flat near Phahonyothin 59 Station for under 4 million baht",
     ],
@@ -252,9 +330,7 @@ const content = {
       "บอก Richy ว่าคุณต้องการอะไร — รายการ, ลูกค้าเป้าหมาย, หรือการติดตาม — และมันจะจัดการให้",
     subDescription: "ไม่แน่ใจว่าจะเริ่มจากไหน? แค่ถาม!",
     suggestions: [
-      "คอนโดโชว์ใกล้ MRT ไทรม้า มีฟิตเนสและสระว่ายน้ำ",
-      "อยากได้คอนโดพร้อมอยู่ บนถนนศรีนครินทร์",
-      "ช่วยหาคอนโดแถวถนนเอกมัยให้หน่อยคะ",
+      "คอนโดโชว์ใกล้ MRT ไทรม้า มีฟิตเนสและสระว่ายน้ำ",      
       "แนะนำอพาร์ตเมนท์แถวสุขุมวิท มีสระว่ายน้ำและสวน",
       "ช่วยแนะนำคอนโด 1 ห้องนอน ใกล้สถานีพหลโยธิน 59 ราคาไม่เกิน 4 ล้านบาท หน่อยคะ",
     ],
@@ -266,9 +342,7 @@ const content = {
       "告诉 Richy 您需要什么 — 房源列表、潜在客户或后续跟进 — 它会为您处理一切。",
     subDescription: "不知道从哪里开始？尽管问吧！",
     suggestions: [
-      "给我看看 Saima 地铁站附近有健身房和游泳池的公寓",
-      "我想要诗纳卡琳路附近的现房公寓",
-      "帮我找一套Ekkamai路附近的公寓",
+      "给我看看 Saima 地铁站附近有健身房和游泳池的公寓",      
       "推荐素坤逸附近有游泳池和花园的公寓",
       "你能推荐一套靠近 Phahonyothin 59 站、价格低于 400 万泰铢的一居室公寓吗",
     ],

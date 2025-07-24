@@ -67,23 +67,44 @@ function ChatFooterVoice({
   }, [isListening, transcript, isFinished]);
 
   return (
-    <div className="min-h-[20vh] flex flex-col items-center justify-between">
-      <button className="mt-3 w-full cursor-pointer" onClick={handleReset}>
-        <CloseIcon />
-      </button>
+    <div 
+      className="flex flex-col items-center justify-between bg-gradient-to-b from-gray-50/50 to-gray-100/30 backdrop-blur-sm rounded-xl border border-gray-200/30 shadow-lg"
+      style={{
+        minHeight: 'clamp(5rem, 8vw, 6rem)',
+        padding: 'clamp(0.5rem, 1.5vw, 0.75rem)',
+      }}
+    >
+      <div className="w-full flex justify-end">
+        <button 
+          className="cursor-pointer hover:bg-red-50 hover:text-red-600 transition-all duration-200 rounded-lg p-2"
+          style={{
+            marginTop: 'clamp(0.25rem, 0.8vw, 0.5rem)',
+          }}
+          onClick={handleReset}
+        >
+          <CloseIcon />
+        </button>
+      </div>
       <p
-        className={`md:text-[18px] mt-2.5 px-2 text-[16px] font-medium text-start w-full ${
-          transcript?.length ? "text-[#171717]" : "text-[#737373]"
+        className={`font-medium text-center w-full transition-all duration-300 ${
+          transcript?.length ? "text-emerald-800" : "text-emerald-600"
         }`}
+        style={{
+          fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+          marginTop: 'clamp(0.25rem, 0.8vw, 0.4rem)',
+          padding: '0 clamp(0.25rem, 0.8vw, 0.4rem)',
+        }}
       >
         {transcript !== "|"
           ? isFinished
-            ? transcript
+            ? `"${transcript}"`
             : `${transcript}...`
-          : "Listening..."}
+          : "🎤 Listening..."}
       </p>
 
-      {micTrack && <CustomBarVisualizer micTrack={micTrack} />}
+      <div className="w-full flex justify-center mt-2">
+        {micTrack && <CustomBarVisualizer micTrack={micTrack} />}
+      </div>
     </div>
   );
 }
