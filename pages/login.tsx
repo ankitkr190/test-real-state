@@ -73,111 +73,163 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>Best Property Agent in Bangkok | APK Real Estate | Thailand</title>
+        <title>Login | APK Real Estate | Thailand</title>
       </Head>
 
-      <div className="min-h-screen bg-[#E2FFF3] flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
-          <div className="flex items-center justify-center mb-6">
-            <Image
-              src="/richy.svg"
-              alt="Richy Logo"
-              width={100}
-              height={100}
-              className="h-12 w-auto"
-            />
-          </div>
-
-          <h2 className="font-bold text-gray-900 text-center">
-            Login for reserve right
-          </h2>
-
-          <hr className="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded-sm" />
-
-          <form className="space-y-6 mt-6" onSubmit={handleSubmit}>
-            {/* Username */}
-            <div>
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={form.username}
-                onChange={handleChange}
-                className="w-full px-2 py-2 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#00804A] transition-all"
-                placeholder="Enter your username"
-                autoComplete="username"
-                required
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  className="w-full px-2 py-2 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#00804A] transition-all"
-                  placeholder="••••••••"
-                  autoComplete="current-password"
-                  required
+      {/* Full Screen Container */}
+      <div className="min-h-screen bg-amber-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+          <div className="flex h-full min-h-[600px]">
+            {/* Left Side - Image with Text Overlay */}
+            <div className="hidden md:flex md:w-1/2 relative bg-gradient-to-br from-[#000] to-[#000]">
+              <div className="absolute inset-0">
+                <Image
+                  src="/loginimg.webp" // Replace with your actual image
+                  alt="Bangkok Property"
+                  fill
+                  className="object-cover opacity-30"
+                  priority
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[#00804A] text-xl focus:outline-none"
-                  tabIndex={-1}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                </button>
+              </div>
+              
+              {/* Text Overlay */}
+              <div className="relative z-10 flex flex-col justify-center items-start p-12 text-white">
+                <div className="mb-8">
+                  <Image
+                    src="/apk.webp"
+                    alt="APK Logo"
+                    width={120}
+                    height={120}
+                    className="h-16 w-auto mb-6"
+                  />
+                </div>
+                
+                <h1 className="text-4xl font-bold mb-4 leading-tight">
+                  Welcome to
+                  <br />
+                  <span className="text-amber-200">APK Real Estate</span>
+                </h1>
+                
+                <p className="text-lg mb-6 text-amber-100 leading-relaxed">
+                  Your trusted property partner in Bangkok. 
+                  Discover premium properties and reserve your dream home today.
+                </p>
+                
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-1 bg-[#E2FFF3] rounded"></div>
+                  <span className="text-sm text-amber-100">Premium Properties</span>
+                </div>
               </div>
             </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              className="w-full bg-[#0D3D21] hover:bg-[#00804A] text-white font-medium py-2.5 rounded-lg transition-colors"
-              disabled={isLoading}
-            >
-              {isLoading ? "Logging in..." : "LOGIN"}
-            </button>
-          </form>
+            {/* Right Side - Login Form */}
+            <div className="w-full md:w-1/2 flex flex-col justify-center p-8 md:p-12">
+              <div className="w-full max-w-sm mx-auto">
+                {/* Mobile Logo */}
+                <div className="flex items-center justify-center mb-8 md:hidden">
+                  <Image
+                    src="/richy.svg"
+                    alt="Richy Logo"
+                    width={100}
+                    height={100}
+                    className="h-12 w-auto"
+                  />
+                </div>
 
-          {/* Links */}
-          <div className="flex items-center justify-between mt-4 text-sm text-[#0D3D21]">
-            <a href="#" className="hover:underline">
-              Forgot Your Password
-            </a>
-            <a href="#" className="hover:underline">
-              Register
-            </a>
-          </div>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    Welcome Back
+                  </h2>
+                  <p className="text-gray-600">Login to reserve your property</p>
+                </div>
 
-          {/* Footer */}
-          <div className="mt-6 text-center text-sm text-gray-600">
-            Powered by
-            <Image
-              src="/prediqt.webp"
-              alt="Pred Logo"
-              width={100}
-              height={100}
-              className="inline h-4 w-auto ml-1"
-            />
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  {/* Username */}
+                  <div>
+                    <label
+                      htmlFor="username"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      id="username"
+                      name="username"
+                      value={form.username}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent transition-all"
+                      placeholder="Enter your username"
+                      autoComplete="username"
+                      required
+                    />
+                  </div>
+
+                  {/* Password */}
+                  <div>
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent transition-all pr-12"
+                        placeholder="••••••••"
+                        autoComplete="current-password"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-amber-600 transition-colors"
+                        tabIndex={-1}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Logging in..." : "LOGIN"}
+                  </button>
+                </form>
+
+                {/* Links */}
+                <div className="flex items-center justify-between mt-6 text-sm">
+                  <a href="#" className="text-amber-500 hover:text-amber-600 hover:underline transition-colors">
+                    Forgot Password?
+                  </a>
+                  <a href="#" className="text-amber-500 hover:text-amber-600 hover:underline transition-colors">
+                    Register
+                  </a>
+                </div>
+
+                {/* Footer */}
+                <div className="mt-8 text-center text-sm text-gray-500">
+                  <span>Powered by </span>
+                  <Image
+                    src="/prediqt.webp"
+                    alt="Pred Logo"
+                    width={80}
+                    height={80}
+                    className="inline h-4 w-auto ml-1"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

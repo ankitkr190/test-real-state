@@ -45,7 +45,7 @@ function HomePage() {
       </Head>
 
       <div
-        className="absolute top-4 right-6 sm:top-2 sm:right-4 md:top-3 md:right-5 lg:top-4 lg:right-6 xl:top-15 xl:right-12 z-40"
+        className="absolute top-4 right-6 sm:top-2 sm:right-4 md:top-3 md:right-5 lg:top-4 lg:right-6 xl:top-12 xl:right-10 z-40"
         onClick={handleLogout}
         title="Logout"
       >
@@ -73,7 +73,7 @@ function HomePage() {
         /> */}
 
         <Image
-          src="/apk_ss.png"
+          src="/apk_ss.webp"
           alt="APK Real Estate Screenshot"
           className="w-full"
           width={1920}

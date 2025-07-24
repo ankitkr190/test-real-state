@@ -44,15 +44,15 @@ function PermissionPopup({ isVisible, setIsVisible }: PermissionPopupProps) {
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl max-w-md w-[90%] p-6 shadow-lg relative border border-[#4D8D67]/20">
-        <h2 className="text-2xl font-semibold text-[#0D3D21] mb-4">
+      <div className="bg-white rounded-xl max-w-md w-[90%] p-6 shadow-lg relative border border-amber-200">
+        <h2 className="text-2xl font-semibold text-amber-600 mb-4">
           Permissions Required
         </h2>
 
         <div className="space-y-4 mb-6">
-          <div className="flex items-start space-x-3 p-3 rounded-lg bg-[#E6F9F0]">
+          <div className="flex items-start space-x-3 p-3 rounded-lg bg-amber-100">
             <svg
-              className="w-6 h-6 text-[#1A7A4B] mt-1"
+              className="w-6 h-6 text-amber-600 mt-1"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -65,16 +65,16 @@ function PermissionPopup({ isVisible, setIsVisible }: PermissionPopupProps) {
               />
             </svg>
             <div>
-              <h3 className="font-medium text-[#0D3D21]">Microphone Access</h3>
-              <p className="text-sm text-[#4D8D67]">
+              <h3 className="font-medium text-amber-600">Microphone Access</h3>
+              <p className="text-sm text-amber-700">
                 Allow microphone access for voice interactions and audio input
               </p>
             </div>
           </div>
 
-          <div className="flex items-start space-x-3 p-3 rounded-lg bg-[#E6F9F0]">
+          <div className="flex items-start space-x-3 p-3 rounded-lg bg-amber-100">
             <svg
-              className="w-6 h-6 text-[#1A7A4B] mt-1"
+              className="w-6 h-6 text-amber-600 mt-1"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -87,17 +87,17 @@ function PermissionPopup({ isVisible, setIsVisible }: PermissionPopupProps) {
               />
             </svg>
             <div>
-              <h3 className="font-medium text-[#0D3D21]">Background Audio</h3>
-              <p className="text-sm text-[#4D8D67]">
+              <h3 className="font-medium text-amber-600">Background Audio</h3>
+              <p className="text-sm text-amber-700">
                 Allow audio playback to continue when the app is in the
                 background
               </p>
             </div>
           </div>
 
-          <div className="flex items-start space-x-3 p-3 rounded-lg bg-[#E6F9F0]">
+          <div className="flex items-start space-x-3 p-3 rounded-lg bg-amber-100">
             <svg
-              className="w-6 h-6 text-[#1A7A4B] mt-1"
+              className="w-6 h-6 text-amber-600 mt-1"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -110,10 +110,10 @@ function PermissionPopup({ isVisible, setIsVisible }: PermissionPopupProps) {
               />
             </svg>
             <div>
-              <h3 className="font-medium text-[#0D3D21]">
+              <h3 className="font-medium text-amber-600">
                 Third-party Cookies
               </h3>
-              <p className="text-sm text-[#4D8D67]">
+              <p className="text-sm text-amber-700">
                 Allow cookies from trusted partners for enhanced functionality,
                 analytics, and personalization
               </p>
@@ -124,13 +124,13 @@ function PermissionPopup({ isVisible, setIsVisible }: PermissionPopupProps) {
         <div className="flex space-x-4">
           <button
             onClick={handleReject}
-            className="flex-1 border border-[#4D8D67]/30 text-[#0D3D21] px-4 py-2 rounded-lg hover:bg-[#E6F9F0] transition-colors"
+            className="flex-1 border border-amber-200 text-amber-600 px-4 py-2 rounded-lg hover:bg-amber-100 transition-colors"
           >
             Reject
           </button>
           <button
             onClick={handleAccept}
-            className="flex-1 bg-[#1A7A4B] text-white px-4 py-2 rounded-lg hover:bg-[#0D3D21] transition-colors shadow-sm"
+            className="flex-1 bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition-colors shadow-sm"
           >
             Accept All
           </button>
