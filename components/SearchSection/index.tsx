@@ -95,7 +95,7 @@ function SearchSection({
       />
 
       <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ padding: 'clamp(0.5rem, 1vw, 1rem)' }}>
-        <div className="relative bg-[#18181b] shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
+        <div className="relative bg-[#18181b]/70 shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
           borderRadius: 'clamp(0.75rem, 2vw, 2rem)', 
           maxWidth: 'clamp(16rem, 85vw, 80rem)', 
           height: 'clamp(32rem, 85vh, 37.5rem)' 
@@ -311,40 +311,40 @@ export default SearchSection;
 
 const content = {
   en: {
-    title: "Hi, how can I help you today?",
-    placeholder: "Type your real estate need — Richy will handle the rest!",
+    title: "Welcome to APK Real Estate",
+    placeholder: "Type your property need — APK will handle the rest!",
     description:
-      "Tell Richy what you need — listings, leads, or follow-ups — and it handles the rest.",
-    subDescription: "Not sure where to start? Just ask!",
+      "Your trusted property partner in Bangkok. Discover premium properties and reserve your dream home today.",
+    subDescription: "Premium Properties • Trusted Service • Bangkok's Best",
     suggestions: [
-      "Show me a flat near Saima MRT with a gym and a swimming pool",      
+      "Show me a flat near Saima MRT with a gym and a swimming pool",
       "Suggest an apartment near Sukhumvit with a pool and garden",
-      "Can you suggest a 1‑bedroom flat near Phahonyothin 59 Station for under 4 million baht",
+      "Can you suggest a 1‑bedroom flat near Phahonyothin 59 Station for under 4 million baht?",
     ],
   },
   th: {
-    title: "สวัสดี วันนี้ฉันช่วยอะไรคุณได้บ้าง?",
+    title: "ยินดีต้อนรับสู่ เอพีเคอสังหาริมทรัพย์",
     placeholder:
-      "พิมพ์ความต้องการด้านอสังหาริมทรัพย์ของคุณ — Richy จะจัดการให้!",
+      "พิมพ์ความต้องการด้านอสังหาริมทรัพย์ของคุณ — APK จะจัดการให้!",
     description:
-      "บอก Richy ว่าคุณต้องการอะไร — รายการ, ลูกค้าเป้าหมาย, หรือการติดตาม — และมันจะจัดการให้",
-    subDescription: "ไม่แน่ใจว่าจะเริ่มจากไหน? แค่ถาม!",
+      "พันธมิตรอสังหาริมทรัพย์ที่คุณไว้วางใจในกรุงเทพฯ ค้นหาทรัพย์สินพรีเมียมและจองบ้านในฝันของคุณวันนี้.",
+    subDescription: "ทรัพย์สินพรีเมียม • บริการที่เชื่อถือได้ • อสังหาฯ กรุงเทพฯ",
     suggestions: [
-      "คอนโดโชว์ใกล้ MRT ไทรม้า มีฟิตเนสและสระว่ายน้ำ",      
+      "คอนโดโชว์ใกล้ MRT ไทรม้า มีฟิตเนสและสระว่ายน้ำ",
       "แนะนำอพาร์ตเมนท์แถวสุขุมวิท มีสระว่ายน้ำและสวน",
       "ช่วยแนะนำคอนโด 1 ห้องนอน ใกล้สถานีพหลโยธิน 59 ราคาไม่เกิน 4 ล้านบาท หน่อยคะ",
     ],
   },
   zh: {
-    title: "您好，今天我能为您做些什么？",
-    placeholder: "输入您的房地产需求 — Richy 将为您处理其余事务！",
+    title: "欢迎来到 APK 房地产",
+    placeholder: "输入您的房地产需求 — APK 将为您处理其余事务！",
     description:
-      "告诉 Richy 您需要什么 — 房源列表、潜在客户或后续跟进 — 它会为您处理一切。",
-    subDescription: "不知道从哪里开始？尽管问吧！",
+      "您在曼谷值得信赖的房地产合作伙伴。发现优质房源，预订您的梦想家园。",
+    subDescription: "优质房源 • 值得信赖的服务 • 曼谷精选",
     suggestions: [
-      "给我看看 Saima 地铁站附近有健身房和游泳池的公寓",      
+      "给我看看 Saima 地铁站附近有健身房和游泳池的公寓",
       "推荐素坤逸附近有游泳池和花园的公寓",
-      "你能推荐一套靠近 Phahonyothin 59 站、价格低于 400 万泰铢的一居室公寓吗",
+      "你能推荐一套靠近 Phahonyothin 59 站、价格低于 400 万泰铢的一居室公寓吗?",
     ],
   },
 };

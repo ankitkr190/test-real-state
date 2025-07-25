@@ -14,7 +14,7 @@ function BotIcon() {
   }, [images.length]);
 
   return (
-    <div className="flex items-center justify-center w-12 h-12 bg-[#FCF9E6] rounded-full shadow-lg relative overflow-hidden">
+    <div className="flex items-center justify-center w-12 h-12 bg-[#FCF9E6]/40 rounded-full shadow-lg relative overflow-hidden">
       {images.map((src, index) => (
         <img
           key={src}
