@@ -45,7 +45,7 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
           boxShadow:
             "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
           backgroundImage:
-            "linear-gradient(to left bottom, #ffffff, #dddddd90)",
+            "linear-gradient(to right top, #ffffff, #f7f7f7, #f0f0f0, #e8e8e8, #e1e1e1)",
         }}
       >
         {isListening ? (
@@ -75,10 +75,10 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
                 }}
               />
               <button
-                className={`ml-2 transition-all duration-300 ease-in-out rounded-lg ${
+                className={`ml-2 transition-all duration-300 ease-in-out rounded-lg cursor-pointer ${
                   userInput.trim()?.length === 0
                     ? "bg-gradient-to-r from-gray-200 to-gray-300 hover:from-gray-300 hover:to-gray-400 text-gray-700 shadow-md"
-                    : "bg-gradient-to-r from-[#00804A] to-[#00A056] hover:from-[#006B3F] hover:to-[#008A4A] text-white shadow-lg shadow-emerald-500/30"
+                    : "bg-gradient-to-r from-[#ffd700] to-[#b5a26d] hover:from-[#b5a26d] hover:to-[#ffd700] text-white shadow-lg shadow-emerald-500/30"
                 }`}
                 style={{
                   padding: "clamp(0.4rem, 1vw, 0.5rem)",

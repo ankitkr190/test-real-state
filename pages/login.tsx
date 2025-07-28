@@ -41,7 +41,7 @@ function LoginPage() {
       const responseData = await response.json();
 
       if (!response.ok) {
-        throw new Error(responseData?.message || "Login failed");
+        throw responseData?.message || "Login failed";
       }
 
       setCookie(
@@ -91,7 +91,7 @@ function LoginPage() {
                   priority
                 />
               </div>
-              
+
               {/* Text Overlay */}
               <div className="relative z-10 flex flex-col justify-center items-start p-12 text-white">
                 <div className="mb-8">
@@ -103,21 +103,23 @@ function LoginPage() {
                     className="h-16 w-auto mb-6"
                   />
                 </div>
-                
+
                 <h1 className="text-4xl font-bold mb-4 leading-tight">
                   Welcome to
                   <br />
                   <span className="text-amber-200">APK Real Estate</span>
                 </h1>
-                
+
                 <p className="text-lg mb-6 text-amber-100 leading-relaxed">
-                  Your trusted property partner in Bangkok. 
-                  Discover premium properties and reserve your dream home today.
+                  Your trusted property partner in Bangkok. Discover premium
+                  properties and reserve your dream home today.
                 </p>
-                
+
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-1 bg-[#E2FFF3] rounded"></div>
-                  <span className="text-sm text-amber-100">Premium Properties</span>
+                  <span className="text-sm text-amber-100">
+                    Premium Properties
+                  </span>
                 </div>
               </div>
             </div>
@@ -140,7 +142,9 @@ function LoginPage() {
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     Welcome Back
                   </h2>
-                  <p className="text-gray-600">Login to reserve your property</p>
+                  <p className="text-gray-600">
+                    Login to reserve your property
+                  </p>
                 </div>
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
@@ -187,12 +191,16 @@ function LoginPage() {
                       />
                       <button
                         type="button"
-                        onClick={() => setShowPassword((prev) => !prev)}
+                        onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-amber-600 transition-colors"
                         tabIndex={-1}
-                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
                       >
-                        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                        <FontAwesomeIcon
+                          icon={showPassword ? faEyeSlash : faEye}
+                        />
                       </button>
                     </div>
                   </div>
@@ -209,10 +217,16 @@ function LoginPage() {
 
                 {/* Links */}
                 <div className="flex items-center justify-between mt-6 text-sm">
-                  <a href="#" className="text-amber-500 hover:text-amber-600 hover:underline transition-colors">
+                  <a
+                    href="#"
+                    className="text-amber-500 hover:text-amber-600 hover:underline transition-colors"
+                  >
                     Forgot Password?
                   </a>
-                  <a href="#" className="text-amber-500 hover:text-amber-600 hover:underline transition-colors">
+                  <a
+                    href="#"
+                    className="text-amber-500 hover:text-amber-600 hover:underline transition-colors"
+                  >
                     Register
                   </a>
                 </div>

@@ -42,7 +42,7 @@ function SingleChatMessage({
           <div
             className={`${
               isSelf
-                ? "bg-gradient-to-br from-[#DDDDDD4B] to-[#2D2D2D4B] text-gray-700" // Modern gradient for user
+                ? "bg-gradient-to-br from-[#ffffffe7] to-[#fff0cae0] text-gray-700" // Modern gradient for user
                 : "bg-transparent text-[#2D2D2D]" // Modern clean styling for agent
             } whitespace-pre-line transition-all duration-200 ${
               isSelf ? "" : ""
@@ -63,13 +63,13 @@ function SingleChatMessage({
               message
             ) : (
               <div
-                className="markdown-content overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0 [&_h1]:text-lg [&_h1]:font-bold [&_h1]:mt-2 [&_h2]:text-base [&_h2]:font-semibold [&_h2]:mt-2 [&_h3]:font-medium [&_h3]:mt-1 [&_strong]:font-semibold [&_strong]:text-[#00804A] [&_em]:italic [&_ul]:pl-4 [&_ol]:pl-4 [&_li]:mb-1"
+                className="markdown-content overflow-hidden [&_p]:m-0 [&_ul]:m-0 [&_ol]:m-0 [&_li]:m-0 [&_li_p]:m-0 [&_h1]:text-lg [&_h1]:font-bold [&_h1]:mt-2 [&_h2]:text-base [&_h2]:font-semibold [&_h2]:mt-2 [&_h3]:font-medium [&_h3]:mt-1 [&_strong]:font-semibold [&_strong]:text-amber-500 [&_em]:italic [&_ul]:pl-4 [&_ol]:pl-4 [&_li]:mb-1"
                 style={{
                   width: "clamp(95%, 90vw, 700px)",
                   maxWidth: "clamp(400px, 85vw, 700px)",
                   fontSize: "clamp(0.85rem, 1.9vw, 0.95rem)",
                   lineHeight: "1.6",
-                  color: "#2D2D2D",
+                  color: "#ffffff",
                 }}
               >
                 <ReactMarkdown>{message}</ReactMarkdown>

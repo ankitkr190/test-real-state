@@ -8,19 +8,19 @@ function ChatContainer({ children }: ChatContainerProps) {
   return (
     <React.Fragment>
       <div className="fixed inset-0 z-[80] bg-black/50 backdrop-blur-sm transition-opacity duration-300"></div>
-      <div 
+      <div
         className="fixed inset-0 z-[90] flex items-center justify-center"
         style={{
-          padding: 'clamp(0.5rem, 2vw, 1rem)',
+          padding: "clamp(0.5rem, 2vw, 1rem)",
         }}
       >
-        <div 
-          className="relative backdrop-blur-md bg-white/100 shadow-2xl flex flex-col animate-in fade-in zoom-in-95 duration-300 overflow-hidden border border-white/40"
+        <div
+          className="relative backdrop-blur-md bg-[#2c2c2c]/50 shadow-2xl flex flex-col animate-in fade-in zoom-in-95 duration-300 overflow-hidden border border-white/40"
           style={{
-            width: 'clamp(20rem, 90vw, 70rem)',
-            maxWidth: 'clamp(22rem, 95vw, 85rem)',
-            height: 'clamp(70vh, 90vh, 90vh)',
-            borderRadius: 'clamp(0.75rem, 2vw, 1rem)',
+            width: "clamp(20rem, 90vw, 70rem)",
+            maxWidth: "clamp(22rem, 95vw, 85rem)",
+            height: "clamp(70vh, 90vh, 90vh)",
+            borderRadius: "clamp(0.75rem, 2vw, 1rem)",
           }}
         >
           {children}
