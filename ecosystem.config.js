@@ -1,21 +1,21 @@
 module.exports = {
   apps: [
     {
-      name: "richy-group-poc",
+      name: "apk-group-poc-test",
       script: "node_modules/next/dist/bin/next",
       args: "start",
       exec_mode: "fork",
       env: {
         NODE_ENV: "development",
-        PORT: 3003
+        PORT: 3008
       },
       env_staging: {
         NODE_ENV: "staging",
-        PORT: 3006
+        PORT: 3009
       },
       env_production: {
         NODE_ENV: "production",
-        PORT: 3007,
+        PORT: 3010,
       },
     },
   ],
