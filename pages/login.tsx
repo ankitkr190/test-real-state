@@ -130,8 +130,8 @@ function LoginPage() {
                 {/* Mobile Logo */}
                 <div className="flex items-center justify-center mb-8 md:hidden">
                   <Image
-                    src="/richy.svg"
-                    alt="Richy Logo"
+                    src="/apk.webp"
+                    alt="APK Logo"
                     width={100}
                     height={100}
                     className="h-12 w-auto"

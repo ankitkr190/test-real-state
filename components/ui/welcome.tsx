@@ -23,7 +23,7 @@ function Search({ name = "KB" }: { name?: string }) {
           Welcome Back, {name}!
         </div>
         <div className="text-lg text-green-800 font-medium">
-          Login Successful! Redirecting to Richy Website.
+          Login Successful! Redirecting to APK Website.
         </div>
       </div>
     </div>
