@@ -113,7 +113,7 @@ function SingleProductCard({
         }}
       >
         <p
-          className="font-normal text-[#0D3D21] line-clamp-1 capitalize"
+          className="font-normal text-gray-700 line-clamp-1 capitalize"
           style={{
             fontSize: "clamp(0.55rem, 1.3vw, 0.7rem)",
             marginBottom: "clamp(0.1rem, 0.2vw, 0.3rem)",
@@ -122,7 +122,7 @@ function SingleProductCard({
           {brand}
         </p>
         <h2
-          className="font-semibold line-clamp-2 text-[#0D3D21]"
+          className="font-semibold line-clamp-2 text-gray-600"
           style={{
             fontSize: "clamp(0.7rem, 1.8vw, 0.9rem)",
             marginBottom: "clamp(0.1rem, 0.2vw, 0.3rem)",
@@ -131,7 +131,7 @@ function SingleProductCard({
           {name}
         </h2>
         <p
-          className="font-medium text-[#4D8D67] line-clamp-2"
+          className="font-medium text-yellow-600 line-clamp-2"
           style={{
             fontSize: "clamp(0.55rem, 1.3vw, 0.7rem)",
             marginBottom: "clamp(0.6rem, 0.8vw, 0.9rem)",
@@ -142,14 +142,14 @@ function SingleProductCard({
         </p>
 
         <div
-          className="flex justify-between items-center border-t-[1px] border-emerald-200"
+          className="flex justify-between items-center border-t-[1px] border-amber-200"
           style={{
             paddingTop: "clamp(0.3rem, 0.6vw, 0.4rem)",
             paddingBottom: "clamp(0.1rem, 0.2vw, 0.3rem)",
           }}
         >
           <p
-            className="w-[60%] font-bold text-green-700 capitalize"
+            className="w-[60%] font-bold text-yellow-600 capitalize"
             style={{
               fontSize: "clamp(0.7rem, 1.8vw, 0.9rem)",
               marginTop: "clamp(0.1rem, 0.2vw, 0.3rem)",
@@ -162,7 +162,7 @@ function SingleProductCard({
             href={link || "/"}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-[40%] bg-emerald-50 hover:bg-emerald-100 transition-colors duration-200 border border-emerald-400 text-emerald-600 font-semibold rounded-full cursor-pointer text-center shadow-sm"
+            className="w-[40%] bg-yellow-50 hover:bg-yellow-100 transition-colors duration-200 border border-yellow-300 text-yellow-600 font-semibold rounded-full cursor-pointer text-center shadow-sm"
             style={{
               fontSize: "clamp(0.55rem, 1.3vw, 0.7rem)",
               padding:

@@ -16,12 +16,12 @@ export async function deleteRoom(roomName: string): Promise<string> {
     const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(data.error || "Failed to delete room");
+      throw data.error || "Failed to delete room";
     }
 
     return data.message as string;
   } catch (error: any) {
     console.error("Error deleting room:", error);
-    throw new Error(error.message || "Unexpected error occurred");
+    throw error.message || "Unexpected error occurred";
   }
 }
