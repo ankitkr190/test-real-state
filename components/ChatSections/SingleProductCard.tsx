@@ -56,6 +56,9 @@ function SingleProductCard({
         gap: "clamp(0.2rem, 0.4vw, 0.6rem)",
         borderRadius: "clamp(0.6rem, 0.8vw, 0.8rem)",
         padding: "clamp(0.2rem, 0.4vw, 0.6rem)",
+        height: "clamp(18rem, 28vw, 22rem)",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <div
@@ -110,6 +113,9 @@ function SingleProductCard({
         style={{
           padding: "clamp(0.2rem, 0.4vw, 0.6rem)",
           marginTop: "clamp(0.1rem, 0.2vw, 0.3rem)",
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <p
@@ -142,7 +148,7 @@ function SingleProductCard({
         </p>
 
         <div
-          className="flex justify-between items-center border-t-[1px] border-amber-200"
+          className="flex justify-between items-center border-t-[1px] border-amber-200 mt-auto"
           style={{
             paddingTop: "clamp(0.3rem, 0.6vw, 0.4rem)",
             paddingBottom: "clamp(0.1rem, 0.2vw, 0.3rem)",
