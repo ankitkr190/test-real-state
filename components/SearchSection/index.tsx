@@ -317,9 +317,9 @@ const content = {
       "Your trusted property partner in Bangkok. Discover premium properties and reserve your dream home today.",
     subDescription: "Premium Properties • Trusted Service • Bangkok's Best",
     suggestions: [
-      "Show me a flat near Saima MRT with a gym and a swimming pool",
-      "Suggest an apartment near Sukhumvit with a pool and garden",
-      "Can you suggest a 1‑bedroom flat near Phahonyothin 59 Station for under 4 million baht?",
+      "Show me some 1bhk property over 200 Million Baht",
+      "What do you have for office rent with security near Nana",
+      "I want to buy a 3 bedroom flat with gym and swimming pool near Petchburi",
     ],
   },
   th: {
@@ -330,9 +330,9 @@ const content = {
       "พันธมิตรอสังหาริมทรัพย์ที่คุณไว้วางใจในกรุงเทพฯ ค้นหาทรัพย์สินพรีเมียมและจองบ้านในฝันของคุณวันนี้.",
     subDescription: "ทรัพย์สินพรีเมียม • บริการที่เชื่อถือได้ • อสังหาฯ กรุงเทพฯ",
     suggestions: [
-      "คอนโดโชว์ใกล้ MRT ไทรม้า มีฟิตเนสและสระว่ายน้ำ",
-      "แนะนำอพาร์ตเมนท์แถวสุขุมวิท มีสระว่ายน้ำและสวน",
-      "ช่วยแนะนำคอนโด 1 ห้องนอน ใกล้สถานีพหลโยธิน 59 ราคาไม่เกิน 4 ล้านบาท หน่อยคะ",
+      "แสดงทรัพย์สิน 1 ห้องนอน มูลค่ากว่า 200 ล้านบาทให้ฉันดูหน่อย",
+      "ให้เช่าออฟฟิศพร้อมรปภ.แถวนานามีอะไรบ้าง",
+      "ฉันต้องการซื้อแฟลต 3 ห้องนอนพร้อมฟิตเนสและสระว่ายน้ำใกล้เพชรบุรี",
     ],
   },
   zh: {
@@ -342,9 +342,9 @@ const content = {
       "您在曼谷值得信赖的房地产合作伙伴。发现优质房源，预订您的梦想家园。",
     subDescription: "优质房源 • 值得信赖的服务 • 曼谷精选",
     suggestions: [
-      "给我看看 Saima 地铁站附近有健身房和游泳池的公寓",
-      "推荐素坤逸附近有游泳池和花园的公寓",
-      "你能推荐一套靠近 Phahonyothin 59 站、价格低于 400 万泰铢的一居室公寓吗?",
+      "给我看看一些超过 2 亿泰铢的 1bhk 房产",
+      "娜娜附近有哪些带保安的办公室出租",
+      "我想在碧武里附近买一套带健身房和游泳池的三居室公寓",
     ],
   },
 };
