@@ -51,7 +51,7 @@ export const ConnectionProvider = ({
             Authorization: `Bearer ${JSON.parse(identity || "")}`,
           },
           body: JSON.stringify({
-            is_voice: false,
+            is_voice: true,
           }),
         }
       ).then((res) => res.json());

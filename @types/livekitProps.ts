@@ -43,3 +43,8 @@ export interface ChannelCartProps {
   id: string;
   quantity: number;
 }
+
+export interface UserTranscriptionProps {
+  transcript: string;
+  is_final: boolean;
+}

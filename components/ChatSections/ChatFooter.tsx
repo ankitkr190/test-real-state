@@ -1,31 +1,92 @@
-import React, { useRef, useState } from "react";
-import { ChatMessage as ComponentsChatMessage } from "@livekit/components-react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
+import {
+  ChatMessage as ComponentsChatMessage,
+  useLocalParticipant,
+} from "@livekit/components-react";
+import ArrowUp from "../Icons/ArrowUp";
 import dynamic from "next/dynamic";
+import { Track } from "livekit-client";
+import { UserTranscriptionProps } from "@/@types/livekitProps";
 
 const ChatFooterVoice = dynamic(() => import("./ChatFooterVoice"), {
   ssr: false,
 });
+const MicButton = dynamic(() => import("../ui/MicButton"), {
+  ssr: true,
+});
 
-interface ChatFooterProps {
+interface ChatFooterAltProps {
+  userTranscription: UserTranscriptionProps;
   onSend: (message: string) => Promise<ComponentsChatMessage>;
   isLoading: boolean;
 }
 
-function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
+function ChatFooter({
+  userTranscription,
+  onSend,
+  isLoading,
+}: ChatFooterAltProps) {
   const [userInput, setUserInput] = useState<string>("");
   const [isListening, setIsListening] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { localParticipant } = useLocalParticipant();
+  const audioStreamRef = useRef<MediaStream | null>(null);
+  const audioTrackRef = useRef<MediaStreamTrack | null>(null);
+
+  // Memoized cleanup function to avoid recreating it on every render
+  const cleanup = useCallback(() => {
+    if (audioStreamRef.current) {
+      audioStreamRef.current.getTracks().forEach((track) => track.stop());
+      audioStreamRef.current = null;
+    }
+    if (audioTrackRef.current) {
+      audioTrackRef.current = null;
+    }
+    setIsListening(false);
+  }, [setIsListening]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return cleanup;
+  }, [cleanup]);
+
+  const handleStartListening = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioStreamRef.current = stream;
+      const audioTrack = stream.getAudioTracks()[0];
+      audioTrackRef.current = audioTrack;
+
+      if (localParticipant) {
+        await localParticipant.publishTrack(audioTrack, {
+          source: Track.Source.Microphone,
+        });
+      }
+      setIsListening(true);
+    } catch (error) {
+      console.error("Error accessing microphone:", error);
+      cleanup();
+    }
+  }, [localParticipant, setIsListening, cleanup]);
+
+  const handleStopListening = useCallback(() => {
+    if (localParticipant) {
+      const audioTrackPub = localParticipant.getTrackPublication(
+        Track.Source.Microphone
+      );
+      if (audioTrackPub?.track) {
+        localParticipant.unpublishTrack(audioTrackPub.track);
+      }
+    }
+    cleanup();
+  }, [localParticipant, cleanup]);
 
   const handleSubmit = () => {
     if (userInput === "" || isLoading) return;
 
     onSend(userInput);
     setUserInput("");
-  };
-
-  const handleMicroPhone = () => {
-    setIsListening(!isListening);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -36,122 +97,74 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
   };
 
   return (
-    <div className="bg-transparent px-4 py-3">
-      <div
-        className="shadow-xl border border-white/20 flex flex-col relative overflow-hidden"
-        style={{
-          borderRadius: "clamp(0.75rem, 2vw, 1rem)",
-          padding: "clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.75rem, 2.5vw, 1rem)",
-          boxShadow:
-            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-          backgroundImage:
-            "linear-gradient(to right top, #ffffff, #f7f7f7, #f0f0f0, #e8e8e8, #e1e1e1)",
-        }}
-      >
-        {isListening ? (
-          <ChatFooterVoice
-            isListening={isListening}
-            setIsListening={setIsListening}
-            onSend={onSend}
+    <div
+      className="bg-white rounded-bl-3xl rounded-br-3xl ps-3 pe-2 pt-2 pb-2.5 flex flex-col justify-between"
+      style={{ boxShadow: "0 -3px 4px 1px rgba(0,0,0,0.1)" }}
+    >
+      {isListening ? (
+        <ChatFooterVoice
+          userTranscription={userTranscription}
+          handleStopListening={handleStopListening}
+        />
+      ) : (
+        <>
+          <textarea
+            onKeyDown={handleKeyDown}
+            ref={textareaRef}
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder={"Ask me anything..."}
+            rows={1}
+            className="w-full outline-none text-[#191919] text-opacity-70 text-[16px] font-normal placeholder:text-[#737373] placeholder:text-opacity-70 border-none py-2 mb-3 resize-none overflow-y-auto min-h-[40px] max-h-[120px] hide-scrollbar"
+            style={{ height: "auto" }}
           />
-        ) : (
-          <React.Fragment>
-            <div className="flex items-center border border-gray-200/30 rounded-xl p-2 transition-all duration-200">
-              <textarea
-                onKeyDown={handleKeyDown}
-                ref={textareaRef}
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                placeholder="Ask APK anything..."
-                rows={1}
-                className="w-full bg-transparent outline-none text-gray-700 font-medium placeholder:text-gray-400 border-none resize-none overflow-y-auto hide-scrollbar"
-                style={{
-                  height: "auto",
-                  fontSize: "clamp(0.8rem, 1.8vw, 0.9rem)",
-                  padding: "clamp(0.2rem, 0.6vw, 0.3rem) 0",
-                  minHeight: "clamp(1.25rem, 2.5vw, 1.5rem)",
-                  maxHeight: "clamp(3rem, 6vw, 4rem)",
-                  lineHeight: "1.4",
-                }}
+          <div className="flex items-center justify-between">
+            <div className="flex items-end justify-start">
+              <p className="text-[12px] text-[#737373]">Powered by</p>
+              <Image
+                src={"/prediqt.webp"}
+                alt="logo"
+                width={53}
+                height={16}
+                className="ml-[4px] mb-0.5"
               />
-              <button
-                className={`ml-2 transition-all duration-300 ease-in-out rounded-lg cursor-pointer ${
-                  userInput.trim()?.length === 0
-                    ? "bg-gradient-to-r from-gray-200 to-gray-300 hover:from-gray-300 hover:to-gray-400 text-gray-700 shadow-md"
-                    : "bg-gradient-to-r from-[#ffd700] to-[#b5a26d] hover:from-[#b5a26d] hover:to-[#ffd700] text-white shadow-lg shadow-emerald-500/30"
-                }`}
-                style={{
-                  padding: "clamp(0.4rem, 1vw, 0.5rem)",
-                  minWidth: "clamp(2rem, 3.5vw, 2.5rem)",
-                  minHeight: "clamp(2rem, 3.5vw, 2.5rem)",
-                }}
-                type="button"
-                onClick={
-                  userInput.trim()?.length === 0
-                    ? handleMicroPhone
-                    : handleSubmit
-                }
-                disabled={isLoading}
-              >
-                <Image
-                  src={
-                    userInput.trim()?.length === 0 ? "/mic2.svg" : "/send1.svg"
-                  }
-                  alt={userInput.trim()?.length === 0 ? "Microphone" : "Send"}
-                  width={18}
-                  height={18}
-                  className={`transition-all duration-300 ease-in-out transform ${
-                    userInput.trim()?.length === 0
-                      ? "rotate-0 scale-100"
-                      : "rotate-[360deg] scale-110"
+            </div>
+            <div className="flex items-center gap-4">
+              {userInput?.length === 0 ? (
+                <MicButton
+                  isListening={isListening}
+                  isLoading={isLoading}
+                  handleStartListening={handleStartListening}
+                  handleStopListening={handleStopListening}
+                />
+              ) : (
+                <button
+                  type="button"
+                  className={`bg-[#856630] p-1.5 rounded-full outline-none border-none active:opacity-60 hover:opacity-70 cursor-pointer ${
+                    isLoading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
-                  style={{
-                    width: "clamp(1rem, 1.8vw, 1.25rem)",
-                    height: "clamp(1rem, 1.8vw, 1.25rem)",
-                    filter:
-                      userInput.trim()?.length === 0
-                        ? "brightness(0) saturate(0) brightness(0.3) sepia(1) hue-rotate(120deg) saturate(5) brightness(1.2)"
-                        : "brightness(0) invert(1)",
-                  }}
-                />
-              </button>
-            </div>
-            <div
-              className="flex flex-col sm:flex-row sm:items-center justify-between mt-2"
-              style={{
-                gap: "clamp(0.25rem, 0.8vw, 0.5rem)",
-              }}
-            >
-              <div className="flex items-center justify-center sm:justify-start">
-                <span
-                  className="text-gray-500 font-medium mr-2"
-                  style={{
-                    fontSize: "clamp(0.65rem, 1.2vw, 0.75rem)",
-                  }}
+                  onClick={handleSubmit}
+                  disabled={isLoading}
                 >
-                  Powered by
-                </span>
-                <Image
-                  src="/prediqt.webp"
-                  alt="PrediQt Logo"
-                  width={100}
-                  height={100}
-                  className="object-contain"
-                  style={{
-                    width: "clamp(2.5rem, 5vw, 4rem)",
-                    height: "clamp(1.5rem, 3vw, 2rem)",
-                  }}
-                />
-              </div>
-              <div className="text-xs text-gray-400 text-center sm:text-right">
-                <span style={{ fontSize: "clamp(0.6rem, 1vw, 0.7rem)" }}>
-                  Press Enter to send • Shift+Enter for new line
-                </span>
-              </div>
+                  <ArrowUp className="w-[24px] h-[24px]" />
+                </button>
+              )}
+
+              {/* <button
+            type="submit"
+            className={
+              userInput !== ""
+                ? "bg-[#8a7252] rounded-lg p-2 border-none cursor-pointer"
+                : "bg-[#F0F0F0] rounded-lg p-2 border-none cursor-default"
+            }
+            onClick={handleSubmit}
+          >
+            <SendIcon color={userInput !== "" ? "#ffffff" : "#000000"} />
+          </button> */}
             </div>
-          </React.Fragment>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
