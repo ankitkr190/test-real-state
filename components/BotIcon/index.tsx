@@ -19,7 +19,7 @@ function BotIcon() {
         <img
           key={src}
           src={src}
-          alt="Richy Logo"
+          alt="APK Logo"
           className={`h-7 w-9 absolute transition-transform duration-300 ease-in-out ${
             index === currentImage ? "opacity-100" : "opacity-0"
           }`}

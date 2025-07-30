@@ -62,7 +62,7 @@ function ChatFooter({ isLoading, onSend }: ChatFooterProps) {
                 ref={textareaRef}
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
-                placeholder="Ask Richy anything..."
+                placeholder="Ask APK anything..."
                 rows={1}
                 className="w-full bg-transparent outline-none text-gray-700 font-medium placeholder:text-gray-400 border-none resize-none overflow-y-auto hide-scrollbar"
                 style={{

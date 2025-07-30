@@ -105,7 +105,7 @@ function SearchSection({
               src="/apk.webp"
               width={140}
               height={140}
-              alt="Richy Logo"
+              alt="APK Logo"
               style={{ height: 'clamp(4rem, 10vh, 8rem)', width: 'clamp(4rem, 10vh, 8rem)' }}
             />
           </div>
