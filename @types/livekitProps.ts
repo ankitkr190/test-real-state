@@ -17,17 +17,18 @@ export interface TokenResult {
 
 export interface ProductsProps {
   room_id: string;
-  project_name: string;
-  project_owner: string;
-  project_area: string;
-  realestate_type: string;
-  room_area: string;
-  room_name: string;
-  budget: string;
+  title: string;
+  land_area: string;
+  project_type: string;
+  home_area: string;
+  price: number;
   location: string;
-  project_images: string[];
-  ebook_url: string;
-  richyLink?: string;
+  gallery_images: string[];
+  url?: string;
+  description: string;
+  completion_year: string;
+  project_status: string;
+  status: string;
 }
 
 export type ChatMessageType = {
