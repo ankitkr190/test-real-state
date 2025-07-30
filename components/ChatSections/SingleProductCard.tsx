@@ -9,7 +9,7 @@ interface SingleProductCardProps {
   name: string;
   brand?: string;
   image: string[];
-  price: string;
+  price: number;
   details: string;
   link: string;
 }
@@ -155,7 +155,11 @@ function SingleProductCard({
               marginTop: "clamp(0.1rem, 0.2vw, 0.3rem)",
             }}
           >
-            ฿ {`${price.split(" ")[0]} ${price.split(" ")[1]}`}
+            ฿{" "}
+            {`${price.toLocaleString("en-US", {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}`}
           </p>
 
           <a

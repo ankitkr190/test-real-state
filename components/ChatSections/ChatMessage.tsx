@@ -51,14 +51,12 @@ function ChatMessage({ isMuted, messages, setIsMuted }: ChatMessageProps) {
                       }}
                     >
                       <SingleProductCard
-                        name={property?.project_name
-                          .replace(/([A-Z])/g, " $1")
-                          .trim()}
-                        brand={property.room_name}
-                        details={`${property.realestate_type} • ${property.room_area} • Located at ${property.location}`}
-                        image={property.project_images}
-                        price={property.budget}
-                        link={property.richyLink || "/"}
+                        name={property?.title.replace(/([A-Z])/g, " $1").trim()}
+                        brand={`${property.project_type}, ${property.status}`}
+                        details={`${property.project_status} • ${property.home_area} sq.m • Located at ${property.location}`}
+                        image={property.gallery_images}
+                        price={property.price}
+                        link={property.url || "/"}
                       />
                     </div>
                   ))}
