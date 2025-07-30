@@ -42,7 +42,7 @@ function Playground({
   const { chatMessages, send: sendChat } = useChat(); // in-build
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { products, clearProduct } = useCustomChannel(); // custom channel
+  const { products, clearProduct, userTranscription } = useCustomChannel(); // custom channel
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -107,7 +107,11 @@ function Playground({
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
-          <ChatFooter isLoading={isLoading} onSend={sendChat} />
+          <ChatFooter
+            userTranscription={userTranscription}
+            isLoading={isLoading}
+            onSend={sendChat}
+          />
         </ChatContainer>
       )}
     </>

@@ -5,7 +5,10 @@ import { deleteCookie, getCookie } from "cookies-next/client";
 import { useDataChannel } from "@livekit/components-react";
 import { useRouter } from "next/router";
 import { CartDataProps } from "@/@types/cartProps";
-import { ChannelCartProps } from "@/@types/livekitProps";
+import {
+  ChannelCartProps,
+  UserTranscriptionProps,
+} from "@/@types/livekitProps";
 
 interface FetchOptions {
   endpoint: string;
@@ -19,6 +22,10 @@ function useCustomChannel() {
   const [products, setProducts] = useState<any[]>([]);
   const [cartData, setCartData] = useState<CartDataProps[]>([]);
   const [checkoutProduct, setCheckoutProduct] = useState<any[]>([]);
+  const [transcript, setTranscript] = useState<UserTranscriptionProps>({
+    transcript: "",
+    is_final: false,
+  });
 
   const fetchData = async ({
     endpoint,
@@ -72,6 +79,15 @@ function useCustomChannel() {
     setCartData(new_data);
   };
 
+  // All Data Channel Logs
+  useDataChannel((msg) => {
+    if (msg?.payload) {
+      const decodedPayload = new TextDecoder().decode(msg.payload);
+      const jsonData = JSON.parse(decodedPayload);
+      console.log(msg.topic, jsonData);
+    }
+  });
+
   useDataChannel("products", (msg) => {
     if (msg?.payload) {
       const decodedPayload = new TextDecoder().decode(msg.payload);
@@ -91,14 +107,6 @@ function useCustomChannel() {
     }
   });
 
-  useDataChannel((msg) => {
-    if (msg?.payload) {
-      const decodedPayload = new TextDecoder().decode(msg.payload);
-      const jsonData = JSON.parse(decodedPayload);
-      console.log(msg.topic, jsonData);
-    }
-  });
-
   useDataChannel("checkout", (msg) => {
     if (msg?.payload) {
       const decodedPayload = new TextDecoder().decode(msg.payload);
@@ -108,11 +116,20 @@ function useCustomChannel() {
     }
   });
 
+  useDataChannel("user.transcription", (msg) => {
+    if (msg?.payload) {
+      const decodedPayload = new TextDecoder().decode(msg.payload);
+      const jsonData = JSON.parse(decodedPayload);
+      setTranscript(jsonData);
+    }
+  });
+
   const clearProduct = () => {
     setProducts([]);
   };
 
   return {
+    userTranscription: transcript,
     products,
     cartData,
     checkoutProduct,
