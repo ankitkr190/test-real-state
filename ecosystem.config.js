@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "apk-group-test",
+      name: "apk-group-prod",
       script: "node_modules/next/dist/bin/next",
       args: "start",
       exec_mode: "fork",
