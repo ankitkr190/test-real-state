@@ -98,7 +98,7 @@ function ChatFooter({
 
   return (
     <div
-      className="bg-white rounded-bl-3xl rounded-br-3xl ps-3 pe-2 pt-2 pb-2.5 flex flex-col justify-between"
+      className="bg-white ps-3 pe-2 pt-2 pb-2.5 flex flex-col justify-between"
       style={{ boxShadow: "0 -3px 4px 1px rgba(0,0,0,0.1)" }}
     >
       {isListening ? (
