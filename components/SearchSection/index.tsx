@@ -317,9 +317,9 @@ const content = {
       "Your trusted property partner in Bangkok. Discover premium properties and reserve your dream home today.",
     subDescription: "Premium Properties • Trusted Service • Bangkok's Best",
     suggestions: [
-      "Show me some 1bhk property over 200 Million Baht",
+      "Suggest some 2 BHK property for rent under 2 lakh Baht",
       "What do you have for office rent with security near Nana",
-      "I want to buy a 3 bedroom flat with gym and swimming pool near Petchburi",
+      "I want to buy a 3 bedroom flat with gym and swimming pool",
     ],
   },
   th: {
@@ -330,9 +330,9 @@ const content = {
       "พันธมิตรอสังหาริมทรัพย์ที่คุณไว้วางใจในกรุงเทพฯ ค้นหาทรัพย์สินพรีเมียมและจองบ้านในฝันของคุณวันนี้.",
     subDescription: "ทรัพย์สินพรีเมียม • บริการที่เชื่อถือได้ • อสังหาฯ กรุงเทพฯ",
     suggestions: [
-      "แสดงทรัพย์สิน 1 ห้องนอน มูลค่ากว่า 200 ล้านบาทให้ฉันดูหน่อย",
+      "แนะนำบ้าน 2 ห้องนอนให้เช่าราคาไม่เกิน 2 แสนบาท",
       "ให้เช่าออฟฟิศพร้อมรปภ.แถวนานามีอะไรบ้าง",
-      "ฉันต้องการซื้อแฟลต 3 ห้องนอนพร้อมฟิตเนสและสระว่ายน้ำใกล้เพชรบุรี",
+      "ฉันต้องการซื้อแฟลต 3 ห้องนอนพร้อมห้องออกกำลังกายและสระว่ายน้ำ",
     ],
   },
   zh: {
@@ -342,9 +342,9 @@ const content = {
       "您在曼谷值得信赖的房地产合作伙伴。发现优质房源，预订您的梦想家园。",
     subDescription: "优质房源 • 值得信赖的服务 • 曼谷精选",
     suggestions: [
-      "给我看看一些超过 2 亿泰铢的 1bhk 房产",
+      "推荐一些2室1厅的出租房产，租金在2万泰铢以下。",
       "娜娜附近有哪些带保安的办公室出租",
-      "我想在碧武里附近买一套带健身房和游泳池的三居室公寓",
+      "我想购买一套带健身房和游泳池的三居室公寓。",
     ],
   },
 };
