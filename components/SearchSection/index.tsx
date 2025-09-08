@@ -42,7 +42,7 @@ function SearchSection({
 
   const handleSearch = useCallback(async () => {
     if (searchValue === "") return;
-    
+
     setIsSearching(true);
     setTimeout(async () => {
       onOpenResult();
@@ -79,9 +79,30 @@ function SearchSection({
 
   const handleLanguageChange = (option: (typeof langOptions)[0]) => {
     setSelectedLang(option);
+
     setDropdownOpen(false);
     setSearchValue("");
   };
+
+  const handleBackendLanguageChange = async (option: (typeof langOptions)[0]) => {
+    try {
+      console.log(option)
+      const res = await fetch(`${process.env.ENDPOINT_URL}/room/my-room/update-language/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          language_code: option.value
+        })
+      })
+      console.log(res)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   if (!isOpen) return null;
 
@@ -95,10 +116,10 @@ function SearchSection({
       />
 
       <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ padding: 'clamp(0.5rem, 1vw, 1rem)' }}>
-        <div className="relative bg-[#18181b]/70 shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{ 
-          borderRadius: 'clamp(0.75rem, 2vw, 2rem)', 
-          maxWidth: 'clamp(16rem, 85vw, 80rem)', 
-          height: 'clamp(32rem, 85vh, 37.5rem)' 
+        <div className="relative bg-[#18181b]/70 shadow-2xl w-full flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300" style={{
+          borderRadius: 'clamp(0.75rem, 2vw, 2rem)',
+          maxWidth: 'clamp(16rem, 85vw, 80rem)',
+          height: 'clamp(32rem, 85vh, 37.5rem)'
         }}>
           <div className="flex justify-center items-center w-full" style={{ paddingTop: 'clamp(1rem, 2vh, 2rem)', paddingBottom: '0.5rem' }}>
             <Image
@@ -150,17 +171,20 @@ function SearchSection({
             </button>
             {dropdownOpen && (
               <div className="absolute right-0 bg-[#18181b] rounded-lg border-1 border-[#FFD700] shadow z-10"
-                   style={{
-                     width: 'clamp(7rem, 15vw, 8rem)',
-                     marginTop: 'clamp(2.75rem, 5vh, 3rem)',
-                     padding: 'clamp(0.25rem, 1vh, 0.25rem) 0',
-                     borderRadius: 'clamp(0.5rem, 2vw, 0.75rem)'
-                   }}>
+                style={{
+                  width: 'clamp(7rem, 15vw, 8rem)',
+                  marginTop: 'clamp(2.75rem, 5vh, 3rem)',
+                  padding: 'clamp(0.25rem, 1vh, 0.25rem) 0',
+                  borderRadius: 'clamp(0.5rem, 2vw, 0.75rem)'
+                }}>
                 {langOptions.map((option) => (
                   <button
                     key={option.value}
                     className="flex items-center w-full hover:bg-[#FFD700]/10 cursor-pointer"
-                    onClick={() => handleLanguageChange(option)}
+                    onClick={() => {
+                      handleLanguageChange(option)
+                      handleBackendLanguageChange(option)
+                    }}
                     type="button"
                     style={{
                       padding: 'clamp(0.375rem, 1.5vh, 0.5rem) clamp(0.5rem, 2vw, 0.75rem)',
@@ -179,7 +203,7 @@ function SearchSection({
                       }}
                     />
                     <span className="text-white"
-                          style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
+                      style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
                       {option.label}
                     </span>
                   </button>
@@ -199,28 +223,28 @@ function SearchSection({
             &times;
           </button>
           <div className="flex flex-col items-center justify-center w-full"
-               style={{ 
-                 padding: 'clamp(0.5rem, 3vh, 2rem) clamp(0.5rem, 4vw, 2rem)'
-               }}>
+            style={{
+              padding: 'clamp(0.5rem, 3vh, 2rem) clamp(0.5rem, 4vw, 2rem)'
+            }}>
             <h1 className="font-sans font-bold text-center bg-gradient-to-r from-[#FFD700] to-[#bfa76a] bg-clip-text text-transparent leading-tight pb-1"
-                style={{
-                  fontSize: 'clamp(1.25rem, 5vw, 3rem)',
-                  marginBottom: 'clamp(1rem, 3vh, 1.5rem)',
-                  marginTop: 'clamp(0.5rem, 2vh, 1rem)'
-                }}>
+              style={{
+                fontSize: 'clamp(1.25rem, 5vw, 3rem)',
+                marginBottom: 'clamp(1rem, 3vh, 1.5rem)',
+                marginTop: 'clamp(0.5rem, 2vh, 1rem)'
+              }}>
               {currentContent.title}
             </h1>
             <div className="flex items-center w-full bg-[#232323] border-2 border-[#FFD700]/20 rounded-full overflow-hidden drop-shadow-lg hover:border-[#FFD700]/40 transition-all duration-300"
-                 style={{
-                   maxWidth: 'clamp(16rem, 80vw, 48rem)',
-                   marginBottom: 'clamp(1rem, 3vh, 1rem)'
-                 }}>
+              style={{
+                maxWidth: 'clamp(16rem, 80vw, 48rem)',
+                marginBottom: 'clamp(1rem, 3vh, 1rem)'
+              }}>
               <div className="flex items-center flex-1"
-                   style={{ 
-                     padding: 'clamp(0.5rem, 2vh, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)'
-                   }}>
+                style={{
+                  padding: 'clamp(0.5rem, 2vh, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)'
+                }}>
                 <FaSearch className="text-white mr-2"
-                          style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }} />
+                  style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }} />
                 <input
                   className="flex-1 bg-transparent outline-none text-white placeholder-gray-400"
                   placeholder={currentContent.placeholder}
@@ -241,41 +265,39 @@ function SearchSection({
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#FFD700]"></div>
                 ) : (
                   <div className="relative"
-                       style={{
-                         height: 'clamp(1.25rem, 4vw, 1.75rem)',
-                         width: 'clamp(1.25rem, 4vw, 1.75rem)'
-                       }}>
+                    style={{
+                      height: 'clamp(1.25rem, 4vw, 1.75rem)',
+                      width: 'clamp(1.25rem, 4vw, 1.75rem)'
+                    }}>
                     <Image
                       src="/mic2.svg"
                       alt="Microphone"
                       width={28}
                       height={28}
-                      className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
-                        searchValue.trim()
-                          ? "opacity-0 transform scale-75 rotate-12"
-                          : "opacity-100 transform scale-100 rotate-0"
-                      }`}
+                      className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${searchValue.trim()
+                        ? "opacity-0 transform scale-75 rotate-12"
+                        : "opacity-100 transform scale-100 rotate-0"
+                        }`}
                     />
                     <Image
                       src="/send1.svg"
                       alt="Send"
                       width={28}
                       height={28}
-                      className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${
-                        searchValue.trim()
-                          ? "opacity-100 transform scale-100 rotate-0"
-                          : "opacity-0 transform scale-75 rotate-12"
-                      }`}
+                      className={`absolute inset-0 h-full w-full transition-all duration-300 ease-in-out ${searchValue.trim()
+                        ? "opacity-100 transform scale-100 rotate-0"
+                        : "opacity-0 transform scale-75 rotate-12"
+                        }`}
                     />
                   </div>
                 )}
               </button>
             </div>
             <p className="text-center text-white px-2"
-               style={{
-                 fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)',
-                 marginBottom: 'clamp(1rem, 3vh, 1.5rem)'
-               }}>
+              style={{
+                fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)',
+                marginBottom: 'clamp(1rem, 3vh, 1.5rem)'
+              }}>
               {currentContent.description}
               <br />
               <span className="text-white/70">
@@ -283,7 +305,7 @@ function SearchSection({
               </span>
             </p>
             <div className="flex flex-wrap justify-center"
-                 style={{ gap: 'clamp(0.5rem, 2vw, 1rem)' }}>
+              style={{ gap: 'clamp(0.5rem, 2vw, 1rem)' }}>
               {currentContent.suggestions.map((text) => (
                 <button
                   key={text}

@@ -13,7 +13,8 @@ const nextConfig: NextConfig = {
     ],
   },
   env: {
-    ENDPOINT_URL: "https://prod.apk.api.prediqt.ai", 
+    ENDPOINT_URL: "https://prod.apk.api.prediqt.ai",
+    TEST_ENDPOINT_URL: "https://test.apk.prediqt.it",
     // ENDPOINT_URL: "https://dev.api.harrods.rezolve.prediqt.ai",
     // ENDPOINT_URL: "http://127.0.0.1:8000",
     NEXT_PUBLIC_LIVEKIT_URL: "wss://apk-ew2toxp5.livekit.cloud",
