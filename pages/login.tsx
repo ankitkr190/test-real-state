@@ -31,6 +31,8 @@ function LoginPage() {
       return;
     }
 
+    console.log(process.env.ENDPOINT_URL);
+
     try {
       const response = await fetch(`${process.env.ENDPOINT_URL}/auth/login/`, {
         method: "POST",
