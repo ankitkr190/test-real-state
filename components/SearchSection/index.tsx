@@ -91,7 +91,7 @@ function SearchSection({
     try {
       console.log(option);
       const res = await fetch(
-        `${process.env.ENDPOINT_URL}/room/${roomId}/update-language/`,
+        `${process.env.ENDPOINT_URL}/service/livekit/room/${roomId}/update-language/`,
         {
           method: "POST",
           headers: {
