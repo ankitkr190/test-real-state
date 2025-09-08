@@ -9,6 +9,7 @@ interface SearchSectionProps {
   onOpenResult: () => void;
   onOpenVoice: () => void;
   onSend: (message: string) => Promise<ComponentsChatMessage>;
+  roomState: string
 }
 
 function SearchSection({
@@ -16,6 +17,7 @@ function SearchSection({
   onClose,
   onOpenResult,
   onOpenVoice,
+  roomState,
   onSend,
 }: SearchSectionProps) {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -26,7 +28,6 @@ function SearchSection({
     label: "EN",
     value: "en",
   });
-
   useEffect(() => {
     if (isOpen) {
       setSearchValue("");
@@ -87,7 +88,7 @@ function SearchSection({
   const handleBackendLanguageChange = async (option: (typeof langOptions)[0]) => {
     try {
       console.log(option)
-      const res = await fetch(`${process.env.ENDPOINT_URL}/room/my-room/update-language/`, {
+      const res = await fetch(`${process.env.ENDPOINT_URL}/room/${roomState}/update-language/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

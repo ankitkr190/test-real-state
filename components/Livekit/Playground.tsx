@@ -80,6 +80,7 @@ function Playground({
           setIsSearchOpen(false);
           setIsVoiceOpen(true);
         }}
+        roomState={name}
         onSend={sendChat}
       />
 
