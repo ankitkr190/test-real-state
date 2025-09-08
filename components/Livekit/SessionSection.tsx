@@ -27,7 +27,7 @@ function SessionSection({
   const [isPermissionPopupOpen, setIsPermissionPopupOpen] = useState(true);
   const [isAudioReady, setIsAudioReady] = useState(false);
 
-  const { shouldConnect, wsUrl, token, mode, connect, disconnect } =
+  const { shouldConnect, wsUrl, token, mode, roomId, connect, disconnect } =
     useConnection();
 
   // Handle permission check
@@ -113,6 +113,7 @@ function SessionSection({
         }}
         isMuted={isMuted}
         setIsMuted={setIsMuted}
+        roomId={roomId}
       />
 
       {/* Audio output renderer (speaker) */}

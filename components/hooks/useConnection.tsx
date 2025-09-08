@@ -8,6 +8,7 @@ type TokenGeneratorData = {
   wsUrl: string;
   token: string;
   mode: ConnectionMode;
+  roomId: string;
   disconnect: () => Promise<void>;
   connect: (mode: ConnectionMode) => Promise<void>;
 };
@@ -26,11 +27,13 @@ export const ConnectionProvider = ({
     token: string;
     mode: ConnectionMode;
     shouldConnect: boolean;
-  }>({ wsUrl: "", token: "", shouldConnect: true, mode: "manual" });
+    roomId: string;
+  }>({ wsUrl: "", token: "", shouldConnect: true, mode: "manual", roomId: "" });
 
   const connect = useCallback(async (mode: ConnectionMode) => {
     let token: string = "";
     let url = "";
+    let roomId = "";
     const identity = getCookie("authUser");
 
     if (mode === "env") {
@@ -42,7 +45,7 @@ export const ConnectionProvider = ({
       //   `/api/token?identity=${identity}`
       // ).then((res) => res.json());
 
-      const { token: accessToken } = await fetch(
+      const { token: accessToken, room_id } = await fetch(
         `${process.env.ENDPOINT_URL}/service/livekit/create-room/`,
         {
           method: "POST",
@@ -60,6 +63,7 @@ export const ConnectionProvider = ({
         throw "Failed to fetch access token";
       }
       token = accessToken;
+      roomId = room_id;
       // console.log(room_id);
       // token = STATIC_TEST_TOKEN;
     }
@@ -68,6 +72,7 @@ export const ConnectionProvider = ({
       token,
       shouldConnect: true,
       mode,
+      roomId,
     });
   }, []);
 
@@ -82,6 +87,7 @@ export const ConnectionProvider = ({
         token: connectionDetails.token,
         shouldConnect: connectionDetails.shouldConnect,
         mode: connectionDetails.mode,
+        roomId: connectionDetails.roomId,
         connect,
         disconnect,
       }}

@@ -24,6 +24,7 @@ interface PlaygroundProps {
   isMuted: boolean;
   setIsMuted: React.Dispatch<React.SetStateAction<boolean>>;
   onConnect: (connect: boolean, opts?: { token: string; url: string }) => void;
+  roomId?: string;
 }
 
 function Playground({
@@ -32,6 +33,7 @@ function Playground({
   onConnect,
   isMuted,
   setIsMuted,
+  roomId,
 }: PlaygroundProps) {
   const router = useRouter();
   const [isVoiceOpen, setIsVoiceOpen] = useState(false);
@@ -80,8 +82,8 @@ function Playground({
           setIsSearchOpen(false);
           setIsVoiceOpen(true);
         }}
-        roomState={name}
         onSend={sendChat}
+        roomId={roomId}
       />
 
       <VoiceModule
