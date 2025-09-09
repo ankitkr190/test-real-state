@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import CloseIcon from "../Icons/CloseIcon";
 import dynamic from "next/dynamic";
 import { useMicrophoneTrack } from "../hooks/useMicrophoneTrack";
@@ -26,13 +26,13 @@ function ChatFooterVoiceAlt({
   const { transcript, isFinished, reset } = useBrowserSpeech(isListening);
   const sendTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
-  const handleSend = async () => {
+  const handleSend = useCallback(async () => {
     if (!transcript || transcript === "|") return;
 
     await onSend(transcript);
     reset();
     setIsListening(false);
-  };
+  }, [transcript, onSend, reset, setIsListening]);
 
   const handleReset = () => {
     reset();
@@ -67,7 +67,7 @@ function ChatFooterVoiceAlt({
     return () => {
       if (sendTimeoutRef.current) clearTimeout(sendTimeoutRef.current);
     };
-  }, [isListening, transcript, isFinished]);
+  }, [isListening, transcript, isFinished, handleSend]);
 
   return (
     <div className="min-h-[20vh] flex flex-col items-center justify-between">

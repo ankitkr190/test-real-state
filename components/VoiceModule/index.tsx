@@ -21,13 +21,7 @@ function VoiceModule({
   onSend,
 }: VoiceModuleProps) {
   const [isRecording, setIsRecording] = useState(true);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState(langOptions[0]);
-
-  const handleLanguageChange = (option: (typeof langOptions)[0]) => {
-    setSelectedLang(option);
-    setDropdownOpen(false);
-  };
+  const [selectedLang] = useState(langOptions[0]);
 
   const handleBackToSearch = () => {
     if (isRecording) {
@@ -60,14 +54,9 @@ function VoiceModule({
           }}
         >
           <VoiceHeader
-            selectedLang={selectedLang}
-            dropdownOpen={dropdownOpen}
-            setDropdownOpen={setDropdownOpen}
-            onLanguageChange={handleLanguageChange}
             onClose={onClose}
             onBackToSearch={handleBackToSearch}
             currentContent={currentContent}
-            langOptions={langOptions}
           />
 
           <VoiceBody

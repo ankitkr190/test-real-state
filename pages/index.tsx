@@ -8,6 +8,7 @@ const BotIcon = dynamic(() => import("@/components/BotIcon"));
 const LivekitSession = dynamic(
   () => import("@/components/Livekit/SessionSection")
 );
+const LanguageDropdown = dynamic(() => import("@/components/LanguageDropdown"));
 
 declare global {
   interface Navigator {
@@ -22,9 +23,15 @@ declare global {
 
 function HomePage() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [selectedLang, setSelectedLang] = useState(langOptions[0]);
 
   const handleBotIconClick = () => {
     setIsSearchOpen(true);
+  };
+
+  const handleLanguageChange = (option: typeof langOptions[0]) => {
+    console.log("Language changed to:", option.value);
+    setSelectedLang(option);
   };
 
   const handleLogout = () => {
@@ -44,6 +51,18 @@ function HomePage() {
         <title>Best Property Agent in Bangkok | APK Real Estate | Thailand</title>
       </Head>
 
+      {/* Language Dropdown */}
+      <div
+        className="absolute top-4 right-20 sm:top-2 sm:right-16 md:top-3 md:right-20 lg:top-4 lg:right-24 xl:top-12 xl:right-28 z-40"
+      >
+        <LanguageDropdown
+          langOptions={langOptions}
+          selectedLang={selectedLang}
+          onLanguageChange={handleLanguageChange}
+        />
+      </div>
+
+      {/* Logout Button */}
       <div
         className="absolute top-4 right-6 sm:top-2 sm:right-4 md:top-3 md:right-5 lg:top-4 lg:right-6 xl:top-12 xl:right-10 z-40"
         onClick={handleLogout}
@@ -83,7 +102,7 @@ function HomePage() {
         />
       </section>
 
-      <ConnectionProvider>
+      <ConnectionProvider selectedLanguage={selectedLang.value}>
         <LivekitSession
           isSearchOpen={isSearchOpen}
           setIsSearchOpen={setIsSearchOpen}
@@ -100,3 +119,21 @@ function HomePage() {
 }
 
 export default HomePage;
+
+const langOptions = [
+  {
+    flag: "/uk.svg",
+    label: "English",
+    value: "en",
+  },
+  {
+    flag: "/th.svg",
+    label: "แบบไทย",
+    value: "th",
+  },
+  {
+    flag: "/ch.svg",
+    label: "中国人",
+    value: "zh",
+  },
+];

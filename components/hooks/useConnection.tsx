@@ -19,8 +19,10 @@ const ConnectionContext = createContext<TokenGeneratorData | undefined>(
 
 export const ConnectionProvider = ({
   children,
+  selectedLanguage = "en",
 }: {
   children: React.ReactNode;
+  selectedLanguage?: string;
 }) => {
   const [connectionDetails, setConnectionDetails] = useState<{
     wsUrl: string;
@@ -45,6 +47,7 @@ export const ConnectionProvider = ({
       //   `/api/token?identity=${identity}`
       // ).then((res) => res.json());
 
+      console.log("Creating room with language:", selectedLanguage);
       const { token: accessToken, room_id } = await fetch(
         `${process.env.ENDPOINT_URL}/service/livekit/create-room/`,
         {
@@ -55,6 +58,7 @@ export const ConnectionProvider = ({
           },
           body: JSON.stringify({
             is_voice: true,
+            language_code: selectedLanguage,
           }),
         }
       ).then((res) => res.json());
@@ -74,7 +78,7 @@ export const ConnectionProvider = ({
       mode,
       roomId,
     });
-  }, []);
+  }, [selectedLanguage]);
 
   const disconnect = useCallback(async () => {
     setConnectionDetails((prev) => ({ ...prev, shouldConnect: false }));
