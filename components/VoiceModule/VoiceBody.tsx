@@ -7,9 +7,9 @@ import { useBrowserSpeech } from "../hooks/useBrowserSpeech";
 
 interface VoiceBodyProps {
   currentContent: {
-    title: string;
-    subtitle: string;
-    description: string;
+    voiceTitle: string;
+    voiceSubtitle: string;
+    voiceDescription: string;
   };
   isRecording: boolean;
   onOpenResult: () => void;
@@ -71,7 +71,7 @@ function VoiceBody({
           marginTop: "clamp(0.5rem, 2vh, 1rem)",
         }}
       >
-        {currentContent.title}
+        {currentContent.voiceTitle}
       </h1>
 
       {/* Subtitle */}
@@ -82,7 +82,7 @@ function VoiceBody({
           marginBottom: "clamp(1rem, 3vh, 1.5rem)",
         }}
       >
-        {currentContent.subtitle}
+        {currentContent.voiceSubtitle}
       </h2>
 
       {/* Voice Input */}
@@ -146,7 +146,7 @@ function VoiceBody({
             style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)" }}
           >
             {transcript?.trim() === "|"
-              ? currentContent?.description
+              ? currentContent?.voiceDescription
               : transcript}
           </p>
         </div>

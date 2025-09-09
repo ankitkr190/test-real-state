@@ -4,7 +4,7 @@ interface VoiceHeaderProps {
   onClose: () => void;
   onBackToSearch: () => void;
   currentContent: {
-    backToText: string;
+    voiceBackToText: string;
   };
 }
 
@@ -20,7 +20,7 @@ function VoiceHeader({
         className="absolute flex items-center justify-center border border-[#FFD700]/50  hover:border-[#FFD700]/60 duration-300 text-white rounded-full transition-colors cursor-pointer"
         onClick={onBackToSearch}
         type="button"
-        title={currentContent.backToText}
+        title={currentContent.voiceBackToText}
         style={{
           top: "clamp(1rem, 3vh, 1.5rem)",
           left: "clamp(1rem, 3vw, 1.5rem)",

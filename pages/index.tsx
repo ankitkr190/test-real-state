@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ConnectionProvider } from "@/components/hooks/useConnection";
+import { LanguageProvider, useLanguage } from "@/components/hooks/useLanguage";
 
 const BotIcon = dynamic(() => import("@/components/BotIcon"));
 const LivekitSession = dynamic(
@@ -21,9 +22,9 @@ declare global {
   }
 }
 
-function HomePage() {
+function HomePageContent() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState(langOptions[0]);
+  const { selectedLanguage, setSelectedLanguage, langOptions } = useLanguage();
 
   const handleBotIconClick = () => {
     setIsSearchOpen(true);
@@ -31,7 +32,7 @@ function HomePage() {
 
   const handleLanguageChange = (option: typeof langOptions[0]) => {
     console.log("Language changed to:", option.value);
-    setSelectedLang(option);
+    setSelectedLanguage(option);
   };
 
   const handleLogout = () => {
@@ -57,7 +58,7 @@ function HomePage() {
       >
         <LanguageDropdown
           langOptions={langOptions}
-          selectedLang={selectedLang}
+          selectedLang={selectedLanguage}
           onLanguageChange={handleLanguageChange}
         />
       </div>
@@ -102,7 +103,7 @@ function HomePage() {
         />
       </section>
 
-      <ConnectionProvider selectedLanguage={selectedLang.value}>
+      <ConnectionProvider selectedLanguage={selectedLanguage.value}>
         <LivekitSession
           isSearchOpen={isSearchOpen}
           setIsSearchOpen={setIsSearchOpen}
@@ -118,22 +119,12 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+function HomePage() {
+  return (
+    <LanguageProvider>
+      <HomePageContent />
+    </LanguageProvider>
+  );
+}
 
-const langOptions = [
-  {
-    flag: "/uk.svg",
-    label: "English",
-    value: "en",
-  },
-  {
-    flag: "/th.svg",
-    label: "แบบไทย",
-    value: "th",
-  },
-  {
-    flag: "/ch.svg",
-    label: "中国人",
-    value: "zh",
-  },
-];
+export default HomePage;

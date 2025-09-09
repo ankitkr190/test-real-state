@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { ChatMessage as ComponentsChatMessage } from "@livekit/components-react";
 import dynamic from "next/dynamic";
+import { useLanguage } from "@/components/hooks/useLanguage";
+import { translations } from "@/lib/translations";
 
 const VoiceHeader = dynamic(() => import("./VoiceHeader"));
 const VoiceBody = dynamic(() => import("./VoiceBody"));
@@ -21,7 +23,7 @@ function VoiceModule({
   onSend,
 }: VoiceModuleProps) {
   const [isRecording, setIsRecording] = useState(true);
-  const [selectedLang] = useState(langOptions[0]);
+  const { selectedLanguage } = useLanguage();
 
   const handleBackToSearch = () => {
     if (isRecording) {
@@ -32,7 +34,15 @@ function VoiceModule({
 
   if (!isOpen) return null;
 
-  const currentContent = content[selectedLang.value as keyof typeof content];
+  const currentContent = translations[selectedLanguage.value as keyof typeof translations];
+  const voiceContent = {
+    voiceTitle: currentContent.voiceTitle,
+    voiceSubtitle: currentContent.voiceSubtitle,
+    voiceDescription: currentContent.voiceDescription,
+  };
+  const headerContent = {
+    voiceBackToText: currentContent.voiceBackToText,
+  };
 
   return (
     <>
@@ -56,11 +66,11 @@ function VoiceModule({
           <VoiceHeader
             onClose={onClose}
             onBackToSearch={handleBackToSearch}
-            currentContent={currentContent}
+            currentContent={headerContent}
           />
 
           <VoiceBody
-            currentContent={currentContent}
+            currentContent={voiceContent}
             isRecording={isRecording}
             setIsRecording={setIsRecording}
             onOpenResult={onOpenResult}
@@ -74,42 +84,3 @@ function VoiceModule({
 
 export default VoiceModule;
 
-const content = {
-  en: {
-    title: "Hi, tell me what you need!",
-    subtitle: "Speak your real estate need — APK will listen and help!",
-    description: "Tap to start/stop speaking.",
-    backToText: "Back to Text",
-  },
-  th: {
-    title: "สวัสดี บอกฉันว่าคุณต้องการอะไร!",
-    subtitle:
-      "พูดความต้องการด้านอสังหาริมทรัพย์ของคุณ — APK จะฟังและช่วยเหลือ!",
-    description: "กดค้างไมโครโฟนเพื่อเริ่มพูด หรือแตะเพื่อเริ่ม/หยุดการบันทึก",
-    backToText: "กลับไปพิมพ์ข้อความ",
-  },
-  zh: {
-    title: "您好，告诉我您需要什么！",
-    subtitle: "说出您的房地产需求 — APK 会倾听并帮助您！",
-    description: "按住麦克风开始说话，或点击开始/停止录音。",
-    backToText: "返回文字输入",
-  },
-};
-
-const langOptions = [
-  {
-    flag: "/uk.svg",
-    label: "English",
-    value: "en",
-  },
-  {
-    flag: "/th.svg",
-    label: "แบบไทย",
-    value: "th",
-  },
-  {
-    flag: "/ch.svg",
-    label: "中国人",
-    value: "zh",
-  },
-];

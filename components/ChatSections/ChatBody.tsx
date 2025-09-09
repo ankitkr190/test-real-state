@@ -13,6 +13,8 @@ import {
 } from "livekit-client";
 import dynamic from "next/dynamic";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useLanguage } from "@/components/hooks/useLanguage";
+import { translations } from "@/lib/translations";
 
 const ChatMessage = dynamic(() => import("./ChatMessage"));
 
@@ -40,6 +42,7 @@ function ChatBody({
 }: ChatBodyProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const transcripts = useRef<Map<string, ChatMessageType>>(new Map());
+  const { selectedLanguage } = useLanguage();
 
   const { localParticipant, microphoneTrack } = useLocalParticipant() || {};
   const localSegments = useTrackTranscription({
@@ -82,7 +85,7 @@ function ChatBody({
       if (matchedProducts.length > 0) clearMessage();
 
       transcripts.current.set(key, {
-        name: isSelf ? "You" : "Agent",
+        name: isSelf ? translations[selectedLanguage.value as keyof typeof translations].chatYou : translations[selectedLanguage.value as keyof typeof translations].chatAgent,
         message: newText,
         products: matchedProducts,
         isSelf,

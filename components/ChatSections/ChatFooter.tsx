@@ -8,6 +8,8 @@ import ArrowUp from "../Icons/ArrowUp";
 import dynamic from "next/dynamic";
 import { Track } from "livekit-client";
 import { UserTranscriptionProps } from "@/@types/livekitProps";
+import { useLanguage } from "@/components/hooks/useLanguage";
+import { translations } from "@/lib/translations";
 
 const ChatFooterVoice = dynamic(() => import("./ChatFooterVoice"), {
   ssr: false,
@@ -30,6 +32,7 @@ function ChatFooter({
   const [userInput, setUserInput] = useState<string>("");
   const [isListening, setIsListening] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { selectedLanguage } = useLanguage();
   const { localParticipant } = useLocalParticipant();
   const audioStreamRef = useRef<MediaStream | null>(null);
   const audioTrackRef = useRef<MediaStreamTrack | null>(null);
@@ -113,7 +116,7 @@ function ChatFooter({
             ref={textareaRef}
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            placeholder={"Ask me anything..."}
+            placeholder={translations[selectedLanguage.value as keyof typeof translations].chatPlaceholder}
             rows={1}
             className="w-full outline-none text-[#191919] text-opacity-70 text-[16px] font-normal placeholder:text-[#737373] placeholder:text-opacity-70 border-none py-2 mb-3 resize-none overflow-y-auto min-h-[40px] max-h-[120px] hide-scrollbar"
             style={{ height: "auto" }}

@@ -5,7 +5,7 @@ export async function deleteRoom(roomName: string): Promise<string> {
   }
 
   try {
-    const res = await fetch("/api/delete-room", {
+    const res = await fetch("https://prod.apk.api.prediqt.ai/api/delete-room", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

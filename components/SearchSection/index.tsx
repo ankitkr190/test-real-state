@@ -2,6 +2,8 @@ import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ChatMessage as ComponentsChatMessage } from "@livekit/components-react";
+import { useLanguage } from "@/components/hooks/useLanguage";
+import { translations } from "@/lib/translations";
 
 interface SearchSectionProps {
   isOpen: boolean;
@@ -21,20 +23,12 @@ function SearchSection({
 }: SearchSectionProps) {
   const [searchValue, setSearchValue] = useState<string>("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [selectedLang, setSelectedLang] = useState({
-    flag: "/uk.svg",
-    label: "EN",
-    value: "en",
-  });
+  const { selectedLanguage } = useLanguage();
+  
   useEffect(() => {
     if (isOpen) {
       setSearchValue("");
       setIsSearching(false);
-      setSelectedLang({
-        flag: "/uk.svg",
-        label: "EN",
-        value: "en",
-      });
     }
   }, [isOpen]);
 
@@ -79,7 +73,7 @@ function SearchSection({
 
   if (!isOpen) return null;
 
-  const currentContent = content[selectedLang.value as keyof typeof content];
+  const currentContent = translations[selectedLanguage.value as keyof typeof translations];
 
   return (
     <>
@@ -144,7 +138,7 @@ function SearchSection({
                 marginTop: "clamp(0.5rem, 2vh, 1rem)",
               }}
             >
-              {currentContent.title}
+              {currentContent.searchTitle}
             </h1>
             <div
               className="flex items-center w-full bg-[#232323] border-2 border-[#FFD700]/20 rounded-full overflow-hidden drop-shadow-lg hover:border-[#FFD700]/40 transition-all duration-300"
@@ -166,7 +160,7 @@ function SearchSection({
                 />
                 <input
                   className="flex-1 bg-transparent outline-none text-white placeholder-gray-400"
-                  placeholder={currentContent.placeholder}
+                  placeholder={currentContent.searchPlaceholder}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   onKeyPress={handleKeyPress}
@@ -223,17 +217,17 @@ function SearchSection({
                 marginBottom: "clamp(1rem, 3vh, 1.5rem)",
               }}
             >
-              {currentContent.description}
+              {currentContent.searchDescription}
               <br />
               <span className="text-white/70">
-                {currentContent.subDescription}
+                {currentContent.searchSubDescription}
               </span>
             </p>
             <div
               className="flex flex-wrap justify-center"
               style={{ gap: "clamp(0.5rem, 2vw, 1rem)" }}
             >
-              {currentContent.suggestions.map((text) => (
+              {currentContent.searchSuggestions.map((text) => (
                 <button
                   key={text}
                   className="bg-gradient-to-r from-[#FFD700]/10 to-[#bfa76a]/10 border border-[#FFD700]/20 rounded-full shadow-sm text-white font-medium hover:from-[#FFD700]/20 hover:to-[#bfa76a]/20 hover:border-[#FFD700]/40 hover:shadow-md transition-all duration-300 hover:scale-105"
@@ -259,43 +253,4 @@ function SearchSection({
 
 export default SearchSection;
 
-const content = {
-  en: {
-    title: "Welcome to APK Real Estate",
-    placeholder: "Type your property need — APK will handle the rest!",
-    description:
-      "Your trusted property partner in Bangkok. Discover premium properties and reserve your dream home today.",
-    subDescription: "Premium Properties • Trusted Service • Bangkok's Best",
-    suggestions: [
-      "Suggest some 2 BHK property for rent under 2 lakh Baht",
-      "What do you have for office rent with security near Nana",
-      "I want to buy a 3 bedroom flat with gym and swimming pool",
-    ],
-  },
-  th: {
-    title: "ยินดีต้อนรับสู่ เอพีเคอสังหาริมทรัพย์",
-    placeholder: "พิมพ์ความต้องการด้านอสังหาริมทรัพย์ของคุณ — APK จะจัดการให้!",
-    description:
-      "พันธมิตรอสังหาริมทรัพย์ที่คุณไว้วางใจในกรุงเทพฯ ค้นหาทรัพย์สินพรีเมียมและจองบ้านในฝันของคุณวันนี้.",
-    subDescription:
-      "ทรัพย์สินพรีเมียม • บริการที่เชื่อถือได้ • อสังหาฯ กรุงเทพฯ",
-    suggestions: [
-      "แนะนำบ้าน 2 ห้องนอนให้เช่าราคาไม่เกิน 2 แสนบาท",
-      "ให้เช่าออฟฟิศพร้อมรปภ.แถวนานามีอะไรบ้าง",
-      "ฉันต้องการซื้อแฟลต 3 ห้องนอนพร้อมห้องออกกำลังกายและสระว่ายน้ำ",
-    ],
-  },
-  zh: {
-    title: "欢迎来到 APK 房地产",
-    placeholder: "输入您的房地产需求 — APK 将为您处理其余事务！",
-    description:
-      "您在曼谷值得信赖的房地产合作伙伴。发现优质房源，预订您的梦想家园。",
-    subDescription: "优质房源 • 值得信赖的服务 • 曼谷精选",
-    suggestions: [
-      "推荐一些2室1厅的出租房产，租金在2万泰铢以下。",
-      "娜娜附近有哪些带保安的办公室出租",
-      "我想购买一套带健身房和游泳池的三居室公寓。",
-    ],
-  },
-};
 
